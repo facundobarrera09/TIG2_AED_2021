@@ -5,6 +5,9 @@
  * 
  */
 
+#ifndef H_STRUCTS
+#define H_STRUCTS
+
 struct Fecha
 {
     int dia, mes, anio;
@@ -49,3 +52,5 @@ struct Sesion
 {
     Usuario usuario;
 };
+
+#endif
