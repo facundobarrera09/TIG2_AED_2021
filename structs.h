@@ -16,7 +16,7 @@ struct Fecha
 struct Usuario
 {
     char usuario[10];
-    char contrasena[10];
+    char contrasena[32];
     int tipo;
 };
 
