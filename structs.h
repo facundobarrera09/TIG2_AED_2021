@@ -8,6 +8,7 @@
 #ifndef H_STRUCTS
 #define H_STRUCTS
 
+// Estructuras comunes
 struct Fecha
 {
     int dia, mes, anio;
@@ -52,5 +53,11 @@ struct Sesion
 {
     Usuario usuario;
 };
+
+// Direcciones de archivos
+const char USUARIOS_DAT[] = "usuarios.dat";
+const char PROFESIONALES_DAT[] = "profesionales.dat";
+const char CLIENTES_DAT[] = "clientes.dat";
+const char TURNOS_DAT[] = "turnos.dat";
 
 #endif
