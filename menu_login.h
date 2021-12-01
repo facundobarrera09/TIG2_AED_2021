@@ -32,13 +32,16 @@ void actualizar_menu(int seleccion, const char dato[])
     {
         strcpy(menu.usuario, dato);
         for (int x = 0; x < strlen(dato) && x < 36; x++)
-            menu.b1[pos++] = '\b';
+            b[pos++] = '\b';
+        strcpy(menu.b1, b);
     }
     else if (seleccion == 2)
     {
         strcpy(menu.contrasena, dato);
+        strcpy(menu.b2, "");
         for (int x = 0; x < strlen(dato) && x < 36; x++)
-            menu.b2[pos++] = '\b';
+            b[pos++] = '\b';
+        strcpy(menu.b2, b);
     }
 }
 
