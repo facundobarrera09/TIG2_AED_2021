@@ -1,3 +1,6 @@
+#ifndef H_DATOS
+#define H_DATOS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,3 +27,5 @@ int leer_usuarios(Usuario usuarios[])
 
     return 0;
 }
+
+#endif

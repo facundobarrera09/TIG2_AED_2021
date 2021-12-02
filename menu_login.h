@@ -59,6 +59,8 @@ void actualizar_menu(int seleccion, const char dato[])
 }
 
 /*
+
+    B10   Hex
   : 32  , 20
 ñ : 164 , A4
 » : 175 , AF
