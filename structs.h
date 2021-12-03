@@ -60,4 +60,7 @@ const char PROFESIONALES_DAT[] = "profesionales.dat";
 const char CLIENTES_DAT[] = "clientes.dat";
 const char TURNOS_DAT[] = "turnos.dat";
 
+// Valores maximos
+const char MAX_USUARIOS = 100;
+
 #endif

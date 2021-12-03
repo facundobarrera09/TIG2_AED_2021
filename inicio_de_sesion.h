@@ -5,9 +5,9 @@
 #include "structs.h"
 #include "menu_login.h"
 
-int inicio_de_sesion(Usuario &usuario)
+int inicio_de_sesion(Usuario &usuario, Usuario usuarios[MAX_USUARIOS], int cantidad)
 {
-    char nom_usuario[10], contrasena[32];
+    Usuario usuario_ingresado;
     int seleccion = 1;
 
     bool ejecutar = true;
@@ -28,8 +28,8 @@ int inicio_de_sesion(Usuario &usuario)
         }
         else if (strcmp(opcion, "OK") == 0)
         {
-            strcpy(nom_usuario, menu.usuario);
-            strcpy(contrasena, menu.contrasena);
+            strcpy(usuario_ingresado.usuario, menu.usuario);
+            strcpy(usuario_ingresado.contrasena, menu.contrasena);
             ejecutar = false;
         }
         else
@@ -41,10 +41,13 @@ int inicio_de_sesion(Usuario &usuario)
     }
 
     // Verificar que los datos sean correctos
-    if (strcmp(nom_usuario, "") == 0 || strcmp(contrasena, "") == 0)
+    if (strcmp(usuario_ingresado.usuario, "") == 0 || strcmp(usuario_ingresado.contrasena, "") == 0)
         return 1;
 
     // Verificar que el usuario exista
 
+
     return 0;
 }
+
+bool existe_usuario();
