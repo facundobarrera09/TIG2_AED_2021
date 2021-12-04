@@ -5,6 +5,10 @@
 #include "structs.h"
 #include "menu_login.h"
 
+int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad);
+
+// FUNCION PRINCIPAL
+
 int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad)
 {
     /**
@@ -13,6 +17,7 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
      * 0 - Se inicio sesion correctamente y se devolvió usuario
      * 1 - No existe el usuario
      * 2 - El usuario ingresado no coincide con el tipo
+     * 3 - Usuarios esta vacio
      * 
      */
 
@@ -29,16 +34,16 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
     while (ejecutar)
     {
         system("cls");
-
+    
         mostrar_menu(seleccion);
         scanf("%s", opcion);
 
-        if (strcmp(strupr(opcion), "NX") == 0)
+        if (strcmp(opcion, "NX") == 0)
         {
             if (seleccion == 1) seleccion = 2;
             else seleccion = 1;
         }
-        else if (strcmp(strupr(opcion), "OK") == 0)
+        else if (strcmp(opcion, "OK") == 0)
         {
             strcpy(usuario_ingresado.usuario, menu.usuario);
             strcpy(usuario_ingresado.contrasena, menu.contrasena);
@@ -57,10 +62,19 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
         return 1;
 
     // Verificar que el usuario exista
-    estado_de_usuario;
 
-    return 0;
+    estado_de_usuario = buscar_usuario(usuario_ingresado, usuarios, cantidad);
+    
+    if (estado_de_usuario == 0)
+    {
+        usuario = usuario_ingresado;
+        return 0;
+    }
+    else
+        return estado_de_usuario;
 }
+
+// FUNCIONES SECUNDARIAS
 
 int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad)
 {
@@ -79,7 +93,7 @@ int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad
 
     for (int x = 0; x < cantidad; x++)
     {
-        if (strcmp(usuario.usuario, usuarios[x].usuario) == 0 && strcmp(usuario.contrasena, usuarios[x].contrasena))
+        if (strcmp(usuario.usuario, usuarios[x].usuario) == 0 && strcmp(usuario.contrasena, usuarios[x].contrasena) == 0)
         {
             if (usuario.tipo == usuarios[x].tipo)
                 return 0;
