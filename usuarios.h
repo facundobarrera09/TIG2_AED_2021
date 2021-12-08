@@ -78,6 +78,72 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
         return estado_de_usuario;
 }
 
+int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad)
+{
+    /**
+     * INT DE RETORNO
+     * 
+     * 0 - Usuario creado y almacenado con exito
+     * 1 - Se ingresaron datos invalidos
+     * 
+     */
+
+    Usuario usuario_ingresado;
+    int seleccion = 2;
+
+    bool ejecutar = true;
+    char entrada[36];
+
+    reestablecer_menu();
+    actualizar_menu(0, MENU2);
+    actualizar_menu(1, "Creacion de usuario");
+
+    // Pedir ingreso de datos
+    while (ejecutar)
+    {
+        system("cls");
+    
+        mostrar_menu(seleccion);
+        scanf("%s", entrada);
+
+        if (strcmp(entrada, "NX") == 0)
+        {
+            if (seleccion < 4) seleccion++;
+            else seleccion = 2;
+        }
+        else if (strcmp(entrada, "OK") == 0)
+        {
+            strcpy(usuario_ingresado.usuario, menu.usuario);
+            strcpy(usuario_ingresado.contrasena, menu.contrasena);
+
+            if (strcmp(menu.tipo, "ADMIN") == 0)
+                usuario_ingresado.tipo = 1;
+            else if (strcmp(menu.tipo, "PROF") == 0)
+                usuario_ingresado.tipo = 2;
+            else if (strcmp(menu.tipo, "ASIST") == 0)
+                usuario_ingresado.tipo = 3;
+            else
+                usuario_ingresado.tipo = 0;
+            
+            ejecutar = false;
+        }
+        else
+        {
+            actualizar_menu(seleccion, entrada);
+        }
+
+        system("cls");
+    }
+
+    // Verificar que los datos sean correctos
+    if (strcmp(usuario_ingresado.usuario, "") == 0 || strcmp(usuario_ingresado.contrasena, "") == 0 || usuario_ingresado.tipo == 0)
+        return 1;
+
+        // Verificacion de nombre de usuario
+    if (strlen(usuario_ingresado.usuario) < 6 || strlen(usuario_ingresado.usuario) > 10);
+        
+}
+
 // FUNCIONES SECUNDARIAS
 
 int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad)
