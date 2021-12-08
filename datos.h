@@ -15,6 +15,7 @@ int leer_usuarios(Usuario usuarios[MAX_USUARIOS], int &cantidad)
      *  1 - Lectura incorrecta (no existen usuarios)
      *  2 - Lectura incorrecta (no se pudo abrir el archivo)
      */
+    int estado = -1;
 
     cantidad = 0;
     Usuario usuario;
@@ -32,12 +33,44 @@ int leer_usuarios(Usuario usuarios[MAX_USUARIOS], int &cantidad)
         }
 
         if (cantidad != 0)
-            return 0;
+            estado = 0;
         else
-            return 1;
+            estado = 1;
     }
     else
-        return 2; 
+        estado = 2;
+
+    fclose(archivo);
+
+    return estado; 
+}
+
+int escribir_usuario(Usuario usuario)
+{
+    /**
+     * INT DE RETORNO
+     *  0 - Escritura correcta (se escribio el usuario)
+     *  1 - Escritura incorrecta (no se pudo escribir en el archivo)
+     *  2 - Escritura incorrecta (no se pudo abrir el archivo)
+     */
+
+    int estado = -1;
+
+    FILE *archivo = fopen(USUARIOS_DAT, "ab");
+
+    if (archivo != NULL)
+    {
+        if (fwrite(&usuario, sizeof(Usuario), 1, archivo) != 0)
+            estado = 0;
+        else
+            estado = 1;
+    }
+    else
+        estado = 2;
+
+    fclose(archivo);
+
+    return estado;
 }
 
 #endif
