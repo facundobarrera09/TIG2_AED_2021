@@ -21,13 +21,7 @@ Menu menu; // Variable global de MENU
 
 void reestablecer_menu()
 {
-    strcpy(menu.titulo, "");
-    strcpy(menu.b01, "");
-    strcpy(menu.b02, "");
-    strcpy(menu.usuario, "");
-    strcpy(menu.b1, "");
-    strcpy(menu.contrasena, "");
-    strcpy(menu.b2, "");
+    memset(&menu, '\0', sizeof(Menu));
 }
 
 void mostrar_menu(int seleccion)
