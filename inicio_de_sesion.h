@@ -22,7 +22,7 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
      */
 
     Usuario usuario_ingresado;
-    int seleccion = 1;
+    int seleccion = 2;
     int estado_de_usuario;
 
     bool ejecutar = true;
@@ -31,7 +31,8 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
     usuario_ingresado.tipo = tipo;
     
     reestablecer_menu();
-    actualizar_menu(0, "Inicio de sesion");
+    actualizar_menu(0, MENU1);
+    actualizar_menu(1, "Inicio de sesion");
 
     // Pedir ingreso de datos
     while (ejecutar)
@@ -43,8 +44,8 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
 
         if (strcmp(entrada, "NX") == 0)
         {
-            if (seleccion == 1) seleccion = 2;
-            else seleccion = 1;
+            if (seleccion == 2) seleccion = 3;
+            else seleccion = 2;
         }
         else if (strcmp(entrada, "OK") == 0)
         {
