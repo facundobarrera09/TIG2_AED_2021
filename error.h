@@ -4,61 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-struct Error
-{
-    int codigo = 0;
-    char descripcion[100];
-    Error *sig = NULL;
-};
-
-void insertar_error(Error *&error, int codigo, const char descripcion[])
-{
-    Error *ultimo = error;
-
-    if (error == NULL) 
-    {
-        error = new Error;
-        error->codigo = codigo;
-        strcpy(error->descripcion, descripcion);
-    }
-    else
-    {
-        while (ultimo->sig != NULL) ultimo = ultimo->sig;
-
-        ultimo->sig = new Error;
-        ultimo = ultimo->sig;
-        ultimo->codigo = codigo;
-        strcpy(ultimo->descripcion, descripcion);
-    }
-}
-Error obtener_error(Error *&errores)
-{
-    Error error, *p;
-
-    if (errores != NULL)
-    {
-        error = *errores;
-        error.sig = NULL;
-
-        p = errores->sig;
-        delete(errores);
-        errores = p;
-    }
-
-    return error;
-}
-void eliminar_errores(Error *&error)
-{
-    Error *p;
-
-    while (error != NULL)
-    {
-        p = error->sig;
-        delete(error);
-        error = p;
-    }
-}
-
 // Codigos de error
 
 //      Creacion de usuario
@@ -88,5 +33,100 @@ const char D_CONTRASENA_CARACTERES_INVALIDOS[] = "Debe ser alfanumerica (unicame
 const char D_CONTRASENA_CARACTERES_CONSECUTIVOS[] = "No debe tener 2 letras alfabeticamente consecutivas";
 const char D_CONTRASENA_DIGITOS_CONSECUTIVOS[] = "No debe tener 3 numeros consecutivos";
 const char D_CONTRASENA_TAMANO[] = "Debe tener entre 6 y 32 caracteres";
+
+// Errores
+
+struct Error
+{
+    int codigo = 0;
+    char descripcion[100];
+    Error *sig = NULL;
+};
+
+void obtener_descripcion_de_error(int codigo, char buffer[])
+{
+    switch (codigo)
+    {
+    case 100:
+        strcpy(buffer, D_USUARIO_EXISTENTE);
+        break;
+    case 101:
+        strcpy(buffer, D_USUARIO_NO_MAYUS);
+        break;
+    case 102:
+        strcpy(buffer, D_USUARIO_NO_MINUS);
+        break;
+    case 103:
+        strcpy(buffer, D_USUARIO_EXCESO_DIGITOS);
+        break;
+    case 104:
+        strcpy(buffer, D_USUARIO_TAMANO);
+        break;
+
+    case 200:
+        strcpy(buffer, D_CONTRASENA_FALTAN_CARACTERES);
+        break;
+    case 201:
+        strcpy(buffer, D_CONTRASENA_CARACTERES_INVALIDOS);
+        break;
+    case 202:
+        strcpy(buffer, D_CONTRASENA_CARACTERES_CONSECUTIVOS);
+        break;
+    case 203:
+        strcpy(buffer, D_CONTRASENA_DIGITOS_CONSECUTIVOS);
+        break;
+    case 204:
+        strcpy(buffer, D_CONTRASENA_TAMANO);
+        break;
+    }
+}
+
+void insertar_error(Error *&error, int codigo)
+{
+    Error *ultimo = error;
+
+    if (error == NULL) 
+    {
+        error = new Error;
+        error->codigo = codigo;
+        obtener_descripcion_de_error(codigo, error->descripcion);
+    }
+    else
+    {
+        while (ultimo->sig != NULL) ultimo = ultimo->sig;
+
+        ultimo->sig = new Error;
+        ultimo = ultimo->sig;
+        ultimo->codigo = codigo;
+        obtener_descripcion_de_error(codigo, ultimo->descripcion);
+    }
+}
+Error obtener_error(Error *&errores)
+{
+    Error error, *p;
+
+    if (errores != NULL)
+    {
+        error = *errores;
+        error.sig = NULL;
+
+        p = errores->sig;
+        delete(errores);
+        errores = p;
+    }
+
+    return error;
+}
+void eliminar_errores(Error *&error)
+{
+    Error *p;
+
+    while (error != NULL)
+    {
+        p = error->sig;
+        delete(error);
+        error = p;
+    }
+}
 
 #endif
