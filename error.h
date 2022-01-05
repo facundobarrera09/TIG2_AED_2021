@@ -107,7 +107,8 @@ Error obtener_error(Error *&errores)
 
     if (errores != NULL)
     {
-        error = *errores;
+        error.codigo = errores->codigo;
+        strcpy(error.descripcion, errores->descripcion);
         error.sig = NULL;
 
         p = errores->sig;
