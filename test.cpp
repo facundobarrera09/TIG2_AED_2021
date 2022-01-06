@@ -57,6 +57,8 @@ void test1()
     Usuario usuarios[MAX_USUARIOS];
     int cantidad = 0;
 
+    leer_usuarios(usuarios, cantidad);
+
     int status1 = crear_usuario(usuarios, cantidad, e1);
     int status2 = crear_usuario(usuarios, cantidad, e2);
     int status3 = crear_usuario(usuarios, cantidad, e3);
@@ -64,19 +66,19 @@ void test1()
 /*
 faC12Bar
 NX
-123
+123ab
 NX
 ADMIN
 OK
 Fac123barerr
 NX
-123
+1234.aB
 NX
 PROF
 OK
 lUC1aBarr
 NX
-123
+aM3h2dI
 NX
 ASIST
 OK
