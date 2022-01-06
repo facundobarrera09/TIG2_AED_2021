@@ -55,10 +55,10 @@ struct Sesion
 };
 
 // Direcciones de archivos
-const char USUARIOS_DAT[] = "usuarios.dat";
-const char PROFESIONALES_DAT[] = "profesionales.dat";
-const char CLIENTES_DAT[] = "clientes.dat";
-const char TURNOS_DAT[] = "turnos.dat";
+const char USUARIOS_DAT[] = "./binarios/usuarios.dat";
+const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
+const char CLIENTES_DAT[] = "./binarios/clientes.dat";
+const char TURNOS_DAT[] = "./binarios/turnos.dat";
 
 // Valores maximos
 const char MAX_USUARIOS = 100;
