@@ -32,6 +32,5 @@
 *.app
 
 # Specific files
-test.cpp
 terminal.bat
 .vscode
