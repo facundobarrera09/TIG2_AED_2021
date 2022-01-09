@@ -61,6 +61,6 @@ const char CLIENTES_DAT[] = "./binarios/clientes.dat";
 const char TURNOS_DAT[] = "./binarios/turnos.dat";
 
 // Valores maximos
-const char MAX_USUARIOS = 100;
+const int MAX_USUARIOS = 100;
 
 #endif
