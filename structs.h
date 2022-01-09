@@ -60,6 +60,11 @@ const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
 const char CLIENTES_DAT[] = "./binarios/clientes.dat";
 const char TURNOS_DAT[] = "./binarios/turnos.dat";
 
+// Codigos de tipo de usuario
+const int COD_ADMIN = 1;
+const int COD_PROF = 2;
+const int COD_ASIST = 3;
+
 // Valores maximos
 const int MAX_USUARIOS = 100;
 

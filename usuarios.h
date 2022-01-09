@@ -130,11 +130,11 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores
             strcpy(usuario_ingresado.contrasena, menu.contrasena);
 
             if (strcmp(menu.tipo, "ADMIN") == 0)
-                usuario_ingresado.tipo = 1;
+                usuario_ingresado.tipo = COD_ADMIN;
             else if (strcmp(menu.tipo, "PROF") == 0)
-                usuario_ingresado.tipo = 2;
+                usuario_ingresado.tipo = COD_PROF;
             else if (strcmp(menu.tipo, "ASIST") == 0)
-                usuario_ingresado.tipo = 3;
+                usuario_ingresado.tipo = COD_ASIST;
             else
                 usuario_ingresado.tipo = 0;
             
