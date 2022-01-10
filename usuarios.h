@@ -151,7 +151,10 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores
     // Verificar que los datos sean correctos
         // Verificar que los datos no esten vacios
     if (strcmp(usuario_ingresado.usuario, "") == 0 || strcmp(usuario_ingresado.contrasena, "") == 0 || usuario_ingresado.tipo == 0)
+    {
+        insertar_error(errores, C_CREACION_VACIO);
         return 1;
+    }
 
         // Verificar de nombre de usuario
     if (strlen(usuario_ingresado.usuario) < 6 || strlen(usuario_ingresado.usuario) > 10)
@@ -242,7 +245,7 @@ int cantidad_mayusculas(const char cadena[])
     int cantidad = 0;
 
     for (int x = 0; x < strlen(cadena); x++)
-        if (cadena[x] > 65 && cadena[x] < 90)
+        if (cadena[x] >= 65 && cadena[x] <= 90)
             cantidad++;
 
     return cantidad;
