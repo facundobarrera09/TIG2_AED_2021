@@ -7,12 +7,13 @@
 // Codigos de error
 
 //      Creacion de usuario
+const int C_CREACION_VACIO = 100;
 //          Nombre
-const int C_USUARIO_EXISTENTE = 100;
-const int C_USUARIO_NO_MAYUS = 101;
-const int C_USUARIO_NO_MINUS = 102;
-const int C_USUARIO_EXCESO_DIGITOS = 103;
-const int C_USUARIO_TAMANO = 104;
+const int C_USUARIO_EXISTENTE = 101;
+const int C_USUARIO_NO_MAYUS = 102;
+const int C_USUARIO_NO_MINUS = 103;
+const int C_USUARIO_EXCESO_DIGITOS = 104;
+const int C_USUARIO_TAMANO = 105;
 //          Contraseña
 const int C_CONTRASENA_FALTAN_CARACTERES = 200;
 const int C_CONTRASENA_CARACTERES_INVALIDOS = 201;
@@ -21,10 +22,12 @@ const int C_CONTRASENA_DIGITOS_CONSECUTIVOS = 203;
 const int C_CONTRASENA_TAMANO = 204;
 //      Inicio de sesion
 const int C_INICIO_NO_ARCHIVO = 300;
+const int C_INICIO_NO_USUARIOS = 301;
 
 // Descripción de error
 
 //      Creacion de usuario
+const char D_CREACION_VACIO[] = "El usuario no puede contener campos vacios";
 //          Nombre
 const char D_USUARIO_EXISTENTE[] = "Ya existe un usuario con ese nombre";
 const char D_USUARIO_NO_MAYUS[] = "Debe tener al menos letras 2 mayusculas";
@@ -39,6 +42,7 @@ const char D_CONTRASENA_DIGITOS_CONSECUTIVOS[] = "No debe tener 3 numeros consec
 const char D_CONTRASENA_TAMANO[] = "Debe tener entre 6 y 32 caracteres";
 //      Inicio de sesion
 const char D_INICIO_NO_ARCHIVO[] = "No se pudo abrir el archivo \"usuarios.dat\"";
+const char D_INICIO_NO_USUARIOS[] = "No existen usuarios";
 
 // Errores
 
@@ -54,18 +58,22 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
     switch (codigo)
     {
     case 100:
+        strcpy(buffer, D_CREACION_VACIO);
+        break;
+
+    case 101:
         strcpy(buffer, D_USUARIO_EXISTENTE);
         break;
-    case 101:
+    case 102:
         strcpy(buffer, D_USUARIO_NO_MAYUS);
         break;
-    case 102:
+    case 103:
         strcpy(buffer, D_USUARIO_NO_MINUS);
         break;
-    case 103:
+    case 104:
         strcpy(buffer, D_USUARIO_EXCESO_DIGITOS);
         break;
-    case 104:
+    case 105:
         strcpy(buffer, D_USUARIO_TAMANO);
         break;
 
@@ -87,6 +95,9 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
 
     case 300:
         strcpy(buffer, D_INICIO_NO_ARCHIVO);
+        break;
+    case 301:
+        strcpy(buffer, D_INICIO_NO_USUARIOS);
         break;
     }
 }
@@ -137,6 +148,21 @@ void eliminar_errores(Error *&error)
         p = error->sig;
         delete(error);
         error = p;
+    }
+}
+
+void mostrar_errores(Error *&errores)
+{
+    Error e;
+
+    if (errores != NULL)
+    {
+        e = obtener_error(errores);
+        while (e.codigo != 0)
+        {
+            printf("ERROR %d: %s\n", e.codigo, e.descripcion);
+            e = obtener_error(errores);
+        }
     }
 }
 
