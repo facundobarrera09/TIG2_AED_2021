@@ -19,8 +19,12 @@ const int C_CONTRASENA_CARACTERES_INVALIDOS = 201;
 const int C_CONTRASENA_CARACTERES_CONSECUTIVOS = 202;
 const int C_CONTRASENA_DIGITOS_CONSECUTIVOS = 203;
 const int C_CONTRASENA_TAMANO = 204;
+//      Inicio de sesion
+const int C_INICIO_NO_ARCHIVO = 300;
 
 // Descripción de error
+
+//      Creacion de usuario
 //          Nombre
 const char D_USUARIO_EXISTENTE[] = "Ya existe un usuario con ese nombre";
 const char D_USUARIO_NO_MAYUS[] = "Debe tener al menos letras 2 mayusculas";
@@ -33,6 +37,8 @@ const char D_CONTRASENA_CARACTERES_INVALIDOS[] = "Debe ser alfanumerica (unicame
 const char D_CONTRASENA_CARACTERES_CONSECUTIVOS[] = "No debe tener 2 letras alfabeticamente consecutivas";
 const char D_CONTRASENA_DIGITOS_CONSECUTIVOS[] = "No debe tener 3 numeros consecutivos";
 const char D_CONTRASENA_TAMANO[] = "Debe tener entre 6 y 32 caracteres";
+//      Inicio de sesion
+const char D_INICIO_NO_ARCHIVO[] = "No se pudo abrir el archivo \"usuarios.dat\"";
 
 // Errores
 
@@ -77,6 +83,10 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
         break;
     case 204:
         strcpy(buffer, D_CONTRASENA_TAMANO);
+        break;
+
+    case 300:
+        strcpy(buffer, D_INICIO_NO_ARCHIVO);
         break;
     }
 }
