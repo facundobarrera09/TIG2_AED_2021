@@ -17,7 +17,7 @@ int caracteres_consecutivos(const char cadena[]);
 
 // FUNCION PRINCIPAL
 
-int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad)
+int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad, Error *&errores)
 {
     /**
      * INT DE RETORNO:
@@ -32,12 +32,13 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
     Usuario usuario_ingresado;
     int seleccion = 2;
     int estado_de_usuario;
+    errores = NULL;
 
     bool ejecutar = true;
     char entrada[36];
     
     usuario_ingresado.tipo = tipo;
-    
+
     reestablecer_menu();
     actualizar_menu(0, MENU1);
     actualizar_menu(1, "Inicio de sesion");
@@ -71,22 +72,33 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
 
     // Verificar que los datos sean correctos
     if (strcmp(usuario_ingresado.usuario, "") == 0 || strcmp(usuario_ingresado.contrasena, "") == 0)
+    {
+        insertar_error(errores, C_USUARIO_VACIO);    
         return 1;
+    }
 
     // Verificar que el usuario exista
 
     estado_de_usuario = buscar_usuario(usuario_ingresado, usuarios, cantidad);
     
-    if (estado_de_usuario == 0)
+    switch (estado_de_usuario)
     {
+    case 0:
         usuario = usuario_ingresado;
         return 0;
+    case 1:
+        insertar_error(errores, C_INICIO_NO_EXISTE_USUARIO);
+        break;
+    case 2:
+        insertar_error(errores, C_INICIO_NO_COINCIDE_TIPO);
+        break;
+    case 3:
+        insertar_error(errores, C_INICIO_NO_USUARIOS);
+        break;
     }
-    else
-        return estado_de_usuario;
 }
 
-int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores)
+int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error *&errores)
 {
     /**
      * INT DE RETORNO
@@ -111,6 +123,17 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores
     actualizar_menu(0, MENU2);
     actualizar_menu(1, "Creacion de usuario");
 
+    if (tipo != 0)
+    {
+        usuario_ingresado.tipo = tipo;
+        if (tipo == COD_ADMIN)
+            actualizar_menu(4, "ADMIN");
+        if (tipo == COD_PROF)
+            actualizar_menu(4, "PROF");
+        if (tipo == COD_ASIST)
+            actualizar_menu(4, "ASIST");
+    }
+
     // Pedir ingreso de datos
     while (ejecutar)
     {
@@ -121,8 +144,16 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores
 
         if (strcmp(entrada, "NX") == 0)
         {
-            if (seleccion < 4) seleccion++;
-            else seleccion = 2;
+            if (tipo == 0)
+            {
+                if (seleccion < 4) seleccion++;
+                else seleccion = 2;
+            }
+            else
+            {
+                if (seleccion < 3) seleccion++;
+                else seleccion = 2;
+            }
         }
         else if (strcmp(entrada, "OK") == 0)
         {
@@ -152,7 +183,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores
         // Verificar que los datos no esten vacios
     if (strcmp(usuario_ingresado.usuario, "") == 0 || strcmp(usuario_ingresado.contrasena, "") == 0 || usuario_ingresado.tipo == 0)
     {
-        insertar_error(errores, C_CREACION_VACIO);
+        insertar_error(errores, C_USUARIO_VACIO);
         return 1;
     }
 
@@ -207,6 +238,11 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores
     }
 
     return 0;
+}
+
+int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores)
+{
+    crear_usuario(usuarios, cantidad, 0, errores);
 }
 
 // FUNCIONES SECUNDARIAS

@@ -7,7 +7,7 @@
 // Codigos de error
 
 //      Creacion de usuario
-const int C_CREACION_VACIO = 100;
+const int C_USUARIO_VACIO = 100;
 //          Nombre
 const int C_USUARIO_EXISTENTE = 101;
 const int C_USUARIO_NO_MAYUS = 102;
@@ -23,6 +23,8 @@ const int C_CONTRASENA_TAMANO = 204;
 //      Inicio de sesion
 const int C_INICIO_NO_ARCHIVO = 300;
 const int C_INICIO_NO_USUARIOS = 301;
+const int C_INICIO_NO_EXISTE_USUARIO = 302;
+const int C_INICIO_NO_COINCIDE_TIPO = 303;
 
 // Descripción de error
 
@@ -43,6 +45,8 @@ const char D_CONTRASENA_TAMANO[] = "Debe tener entre 6 y 32 caracteres";
 //      Inicio de sesion
 const char D_INICIO_NO_ARCHIVO[] = "No se pudo abrir el archivo \"usuarios.dat\"";
 const char D_INICIO_NO_USUARIOS[] = "No existen usuarios";
+const char D_INICIO_NO_EXISTE_USUARIO[] = "No se encontro el usuario";
+const char D_INICIO_NO_COINCIDE_TIPO[] = "El usuario ingresado no coincide con el tipo";
 
 // Errores
 
@@ -98,6 +102,12 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
         break;
     case 301:
         strcpy(buffer, D_INICIO_NO_USUARIOS);
+        break;
+    case 302:
+        strcpy(buffer, D_INICIO_NO_EXISTE_USUARIO);
+        break;
+    case 303:
+        strcpy(buffer, D_INICIO_NO_COINCIDE_TIPO);
         break;
     }
 }
