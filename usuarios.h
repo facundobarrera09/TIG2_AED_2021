@@ -32,7 +32,7 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
     Usuario usuario_ingresado;
     int seleccion = 2;
     int estado_de_usuario;
-    errores = NULL;
+    eliminar_errores(errores);
 
     bool ejecutar = true;
     char entrada[36];
@@ -73,7 +73,7 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
     // Verificar que los datos sean correctos
     if (strcmp(usuario_ingresado.usuario, "") == 0 || strcmp(usuario_ingresado.contrasena, "") == 0)
     {
-        insertar_error(errores, C_USUARIO_VACIO);    
+        insertar_error(errores, C_CREACION_VACIO);    
         return 1;
     }
 
@@ -87,12 +87,15 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
         usuario = usuario_ingresado;
         return 0;
     case 1:
-        insertar_error(errores, C_INICIO_NO_EXISTE_USUARIO);
-        break;
+        insertar_error(errores, C_INICIO_NO_COINCIDE_CONTRASENA);
+        return 0;
     case 2:
         insertar_error(errores, C_INICIO_NO_COINCIDE_TIPO);
         break;
     case 3:
+        insertar_error(errores, C_INICIO_NO_EXISTE_USUARIO);
+        break;
+    case 4:
         insertar_error(errores, C_INICIO_NO_USUARIOS);
         break;
     }
@@ -114,7 +117,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
     int seleccion = 2;
 
     //Error *errores = NULL;
-    errores = NULL;
+    eliminar_errores(errores);
 
     bool ejecutar = true;
     char entrada[36];
@@ -183,7 +186,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         // Verificar que los datos no esten vacios
     if (strcmp(usuario_ingresado.usuario, "") == 0 || strcmp(usuario_ingresado.contrasena, "") == 0 || usuario_ingresado.tipo == 0)
     {
-        insertar_error(errores, C_USUARIO_VACIO);
+        insertar_error(errores, C_CREACION_VACIO);
         return 1;
     }
 
@@ -199,7 +202,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
 
         // Verificar si el nombre de usuario existe
     int estado = buscar_usuario(usuario_ingresado, usuarios, cantidad);
-    if (estado == 0 || estado == 2)
+    if (estado == 0 || estado == 1 || estado == 2)
         insertar_error(errores, C_USUARIO_EXISTENTE);
 
         // Verificar contraseña
@@ -253,27 +256,29 @@ int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad
      * INT DE RETORNO:
      * 
      * 0 - Se encontro el usuario
-     * 1 - No se encontro el usuario
-     * 2 - Se encontro el usuario pero coincide el tipo
-     * 3 - Usuarios está vacio
+     * 1 - Se encontro el usuario, no coincide la contraseña
+     * 2 - Se encontro el usuario, no coincide el tipo
+     * 3 - No se encontro el usuario
+     * 4 - Usuarios está vacio
      * 
      */
 
     if (cantidad == 0)
-        return 3;
+        return 4;
 
     for (int x = 0; x < cantidad; x++)
     {
-        if (strcmp(usuario.usuario, usuarios[x].usuario) == 0 && strcmp(usuario.contrasena, usuarios[x].contrasena) == 0)
-        {
+        if (strcmp(usuario.usuario, usuarios[x].usuario) == 0)
             if (usuario.tipo == usuarios[x].tipo)
-                return 0;
+                if (strcmp(usuario.contrasena, usuarios[x].contrasena) == 0)
+                    return 0;
+                else
+                    return 1;
             else
                 return 2;
-        }
     }
 
-    return -1;
+    return 3;
 }
 
 int cantidad_mayusculas(const char cadena[])
