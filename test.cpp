@@ -4,10 +4,13 @@
 #include "structs.h"
 #include "usuarios.h"
 #include "error.h"
+#include "menu.h"
 
 void test0(); // inicio de sesion
 void test1(); // creacion de usuario
 void test2(); // errores
+void test3(); // memcpy tests
+void test4(); // menu
 
 int main()
 {
@@ -28,12 +31,21 @@ int main()
     case 2:
         test2();
         break;
+
+    case 3:
+        test3();
+        break;
+
+    case 4:
+        test4();
+        break;
     }
 }
 
 void test0()
 {
     Usuario usuarios[MAX_USUARIOS], usuario;
+    Error *errores;
     int cantidad = 3, tipo = 1;
 
     strcpy(usuarios[0].usuario, "facundo");
@@ -48,7 +60,7 @@ void test0()
     usuarios[1].tipo = 1;
     usuarios[2].tipo = 2;
 
-    inicio_de_sesion(usuario, tipo, usuarios, cantidad);
+    inicio_de_sesion(usuario, tipo, usuarios, cantidad, errores);
 }
 
 void test1()
@@ -151,5 +163,23 @@ void test2()
     }
 }
 
+void test3()
+{
+    char cad1[11] = "Hola mundo", cad2[10] = "Facundo";
 
+    printf("%s\n", cad1);
 
+    memcpy(&cad1[5], cad2, sizeof(cad1));
+
+    printf("%s\n", cad1);
+    printf("%s\n", cad2);
+}
+
+void test4()
+{
+    modificar_dato("largo", "20");
+    modificar_dato("ancho", "71");
+    modificar_dato("titulo", "Creacion de usuario");
+
+    mostrar_menu();
+}

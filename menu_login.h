@@ -8,7 +8,7 @@
 const char MENU1[] = "\xC9\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBB\n\xBA                         %s%s                         %s\xBA\n\xBA                                                  \xBA\n\xBA   %s Usuario: %s                                    %s\xBA\n\xBA   %s Contrase\xA4 \ba: %s                                 %s\xBA\n\xBA                               NX para siguiente  \xBA\n\xBA                               OK para terminar   \xBA\n\xC8\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBC\n\n> ";
 const char MENU2[] = "\xC9\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBB\n\xBA                         %s%s                         %s\xBA\n\xBA                                                  \xBA\n\xBA   %s Usuario: %s                                    %s\xBA\n\xBA   %s Contrase\xA4 \ba: %s                                 %s\xBA\n\xBA   %s Tipo (ADMIN, PROF, ASIST): %s                  %s\xBA\n\xBA                               NX para siguiente  \xBA\n\xBA                               OK para terminar   \xBA\n\xC8\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBC\n\n> ";
 
-struct Menu
+struct MenuLogin
 {
     char formato[1000];
     char titulo[20] = "",       b01[18] = "", b02[18] = "";
@@ -17,14 +17,14 @@ struct Menu
     char tipo[10] = "",         b3[10] = "";
 };
 
-Menu menu; // Variable global de MENU
+MenuLogin menu_login; // Variable global de MENU
 
 void reestablecer_menu()
 {
-    memset(&menu, '\0', sizeof(Menu));
+    memset(&menu_login, '\0', sizeof(MenuLogin));
 }
 
-void mostrar_menu(int seleccion)
+void n_mostrar_menu(int seleccion)
 {
     /**
      * Muestra el menu de inicio de sesion
@@ -36,13 +36,13 @@ void mostrar_menu(int seleccion)
      *                              texto de usuario
      */
     char m_inicio[1000];
-    strcpy(m_inicio, menu.formato);
+    strcpy(m_inicio, menu_login.formato);
     if (seleccion == 2)
-        printf(m_inicio, menu.b01, menu.titulo, menu.b02, "\xAF", menu.usuario, menu.b1, "\x20", menu.contrasena, menu.b2, "\x20", menu.tipo, menu.b3);
+        printf(m_inicio, menu_login.b01, menu_login.titulo, menu_login.b02, "\xAF", menu_login.usuario, menu_login.b1, "\x20", menu_login.contrasena, menu_login.b2, "\x20", menu_login.tipo, menu_login.b3);
     else if (seleccion == 3)
-        printf(m_inicio, menu.b01, menu.titulo, menu.b02, "\x20", menu.usuario, menu.b1, "\xAF", menu.contrasena, menu.b2, "\x20", menu.tipo, menu.b3);
+        printf(m_inicio, menu_login.b01, menu_login.titulo, menu_login.b02, "\x20", menu_login.usuario, menu_login.b1, "\xAF", menu_login.contrasena, menu_login.b2, "\x20", menu_login.tipo, menu_login.b3);
     else if (seleccion == 4)
-        printf(m_inicio, menu.b01, menu.titulo, menu.b02, "\x20", menu.usuario, menu.b1, "\x20", menu.contrasena, menu.b2, "\xAF", menu.tipo, menu.b3);
+        printf(m_inicio, menu_login.b01, menu_login.titulo, menu_login.b02, "\x20", menu_login.usuario, menu_login.b1, "\x20", menu_login.contrasena, menu_login.b2, "\xAF", menu_login.tipo, menu_login.b3);
     
 }
 
@@ -60,41 +60,41 @@ void actualizar_menu(int seleccion, const char dato[])
 
     if (seleccion == 0)
     {
-        strcpy(menu.formato, dato);
+        strcpy(menu_login.formato, dato);
     }
     else if (seleccion == 1)
     {
-        strcpy(menu.titulo, dato);
+        strcpy(menu_login.titulo, dato);
         for (int x = 0; x < ((strlen(dato)/2)+(strlen(dato)%2)) && x < 18; x++)
         {
-            menu.b01[pos] = '\b';
-            menu.b02[pos++] = '\b';
+            menu_login.b01[pos] = '\b';
+            menu_login.b02[pos++] = '\b';
             if (x == (strlen(dato)/2)+(strlen(dato)%2)-1 && strlen(dato)%2 != 0)
-                menu.b02[pos-1] = '\0';
+                menu_login.b02[pos-1] = '\0';
         }
     }
     else if (seleccion == 2)
     {
-        strcpy(menu.usuario, dato);
+        strcpy(menu_login.usuario, dato);
         for (int x = 0; x < strlen(dato) && x < 36; x++)
             b[pos++] = '\b';
-        strcpy(menu.b1, b);
+        strcpy(menu_login.b1, b);
     }
     else if (seleccion == 3)
     {
-        strcpy(menu.contrasena, dato);
-        strcpy(menu.b2, "");
+        strcpy(menu_login.contrasena, dato);
+        strcpy(menu_login.b2, "");
         for (int x = 0; x < strlen(dato) && x < 36; x++)
             b[pos++] = '\b';
-        strcpy(menu.b2, b);
+        strcpy(menu_login.b2, b);
     }
     else if (seleccion == 4)
     {
-        strcpy(menu.tipo, dato);
-        strcpy(menu.b3, "");
+        strcpy(menu_login.tipo, dato);
+        strcpy(menu_login.b3, "");
         for (int x = 0; x < strlen(dato) && x < 10; x++)
             b[pos++] = '\b';
-        strcpy(menu.b3, b);
+        strcpy(menu_login.b3, b);
     }
 }
 

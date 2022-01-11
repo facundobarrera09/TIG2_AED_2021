@@ -49,7 +49,7 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
     {
         system("cls");
     
-        mostrar_menu(seleccion);
+        n_mostrar_menu(seleccion);
         scanf("%s", entrada);
 
         if (strcmp(entrada, "NX") == 0)
@@ -59,8 +59,8 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
         }
         else if (strcmp(entrada, "OK") == 0)
         {
-            strcpy(usuario_ingresado.usuario, menu.usuario);
-            strcpy(usuario_ingresado.contrasena, menu.contrasena);
+            strcpy(usuario_ingresado.usuario, menu_login.usuario);
+            strcpy(usuario_ingresado.contrasena, menu_login.contrasena);
             ejecutar = false;
         }
         else
@@ -100,6 +100,8 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
         insertar_error(errores, C_INICIO_NO_USUARIOS);
         return 4;
     }
+
+    return -1;
 }
 
 int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error *&errores)
@@ -143,7 +145,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
     {
         system("cls");
     
-        mostrar_menu(seleccion);
+        n_mostrar_menu(seleccion);
         scanf("%s", entrada);
 
         if (strcmp(entrada, "NX") == 0)
@@ -161,14 +163,14 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         }
         else if (strcmp(entrada, "OK") == 0)
         {
-            strcpy(usuario_ingresado.usuario, menu.usuario);
-            strcpy(usuario_ingresado.contrasena, menu.contrasena);
+            strcpy(usuario_ingresado.usuario, menu_login.usuario);
+            strcpy(usuario_ingresado.contrasena, menu_login.contrasena);
 
-            if (strcmp(menu.tipo, "ADMIN") == 0)
+            if (strcmp(menu_login.tipo, "ADMIN") == 0)
                 usuario_ingresado.tipo = COD_ADMIN;
-            else if (strcmp(menu.tipo, "PROF") == 0)
+            else if (strcmp(menu_login.tipo, "PROF") == 0)
                 usuario_ingresado.tipo = COD_PROF;
-            else if (strcmp(menu.tipo, "ASIST") == 0)
+            else if (strcmp(menu_login.tipo, "ASIST") == 0)
                 usuario_ingresado.tipo = COD_ASIST;
             else
                 usuario_ingresado.tipo = 0;
@@ -246,7 +248,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
 
 int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores)
 {
-    crear_usuario(usuarios, cantidad, 0, errores);
+    return crear_usuario(usuarios, cantidad, 0, errores);
 }
 
 // FUNCIONES SECUNDARIAS
