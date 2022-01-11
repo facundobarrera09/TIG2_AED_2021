@@ -25,7 +25,8 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
      * 0 - Se inicio sesion correctamente y se devolvió usuario
      * 1 - No existe el usuario
      * 2 - El usuario ingresado no coincide con el tipo
-     * 3 - Usuarios esta vacio
+     * 3 - No coincide la contraseña
+     * 4 - Usuarios esta vacio
      * 
      */
 
@@ -88,16 +89,16 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
         return 0;
     case 1:
         insertar_error(errores, C_INICIO_NO_COINCIDE_CONTRASENA);
-        return 0;
+        return 3;
     case 2:
         insertar_error(errores, C_INICIO_NO_COINCIDE_TIPO);
-        break;
+        return 2;
     case 3:
         insertar_error(errores, C_INICIO_NO_EXISTE_USUARIO);
-        break;
+        return 1;
     case 4:
         insertar_error(errores, C_INICIO_NO_USUARIOS);
-        break;
+        return 4;
     }
 }
 
