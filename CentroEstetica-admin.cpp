@@ -9,8 +9,11 @@ void centro_estetica_admin(Error *&errores);
 int main()
 {
     Error *errores, error;
+
+    // Funcion principal
     centro_estetica_admin(errores);
 
+    // Mostrar errores en pantalla
     if (errores != NULL)
     {
         system("cls");
@@ -30,6 +33,13 @@ int main()
 
 void centro_estetica_admin(Error *&errores)
 {
+    /**
+     * Funcion principal del programa CentroEstetica-admin.cpp
+     * Se encarga de todo lo relacionado a esta sección del programa y retorna una pila de errores fatales
+     * de los cuales el programa no se puede recuperar por si solo.
+     * 
+     */
+
     Sesion sesion;
     Usuario usuarios[MAX_USUARIOS];
     int cantidad;
@@ -59,7 +69,7 @@ void centro_estetica_admin(Error *&errores)
                 {
                     for (int x = 0; x < 3; x++)
                     {
-                        estado = crear_usuario(usuarios, cantidad, errores_creacion);
+                        estado = crear_usuario(usuarios, cantidad, COD_ADMIN, errores_creacion);
                         if (estado != 0)
                         {
                             printf("Error durante la creacion de usuario. ESTADO=%d\n", estado);
@@ -97,6 +107,15 @@ void centro_estetica_admin(Error *&errores)
     // Iniciar sesion
     while (true)
     {
-        estado = inicio_de_sesion(sesion.usuario, COD_ADMIN, usuarios, cantidad);
+        estado = inicio_de_sesion(sesion.usuario, COD_ADMIN, usuarios, cantidad, errores);
+
+        if (estado != 0)
+        {
+            printf("INICIO DE SESION:\n");
+            mostrar_errores(errores);
+            system("pause");
+        }
+        else
+            break;
     }
 }
