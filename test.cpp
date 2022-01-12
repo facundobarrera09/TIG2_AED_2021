@@ -181,5 +181,12 @@ void test4()
     modificar_dato("ancho", "71");
     modificar_dato("titulo", "Creacion de usuario");
 
+    modificar_dato("opcion", "1-ola");
+    modificar_dato("opcion", "2-chaoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    modificar_dato("opcion", "3-Buenas tardes");
+    modificar_dato("seleccion", "1");
+
+    //modificar_dato("margen", "2");
+
     mostrar_menu();
 }

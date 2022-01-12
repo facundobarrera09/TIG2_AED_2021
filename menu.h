@@ -22,7 +22,7 @@ void modificar_dato(const char dato[], const char valor[])
      * 
     */
 
-    char temp[2];
+    char temp[2] = "";
 
     if (strcmp(dato, "largo") == 0) menu.largo = atoi(valor);
     if (strcmp(dato, "ancho") == 0) menu.ancho = atoi(valor);
@@ -31,8 +31,11 @@ void modificar_dato(const char dato[], const char valor[])
     if (strcmp(dato, "titulo") == 0) strcpy(menu.titulo, valor);
     if (strcmp(dato, "opcion") == 0)
     {
-        memcpy(temp, valor, 1);
-        memcpy(menu.opciones[atoi(temp)], &valor[3], sizeof(menu.opciones[0]));
+        memcpy(temp, &valor[0], 1);
+        memcpy(menu.opciones[atoi(temp)], &valor[2], sizeof(menu.opciones[0]));
+
+        //printf("Se ha ingresado el valor \'%s\' a la posicion \'%d\'\n", menu.opciones[atoi(temp)], atoi(temp));
+        //system("pause");
     }
 }
 
@@ -40,11 +43,12 @@ void mostrar_menu()
 {
     system("cls");
 
-    int imprimir = 1, ultimo_imprimir = 0, pos = 0; // Define que parametro se va a imprimir
+    int imprimir = 0, ultimo_imprimir = 0, pos = 0; // Define que parametro se va a imprimir
 
     // Valores por defecto ante entradas no validas o nulas
     if (menu.largo < 2) menu.largo = 20;
     if (menu.ancho < 2) menu.ancho = 70;
+    if (menu.margen < 0) menu.margen = 0;
 
     // Borde superior
     printf("\xC9");
@@ -61,34 +65,46 @@ void mostrar_menu()
         for (int y = 0; y < menu.ancho-2; y++)
         {
             // Titulo
-            if (x == 1 && y >= (menu.ancho/2) && imprimir == 1)
+            if (x == 1 && y >= (menu.ancho/2) && imprimir == 0)
             {
                 for (int z = 0; z < ((strlen(menu.titulo)/2) + (strlen(menu.titulo)%2) + ((menu.ancho/2)%2)); z++) printf("\b");
                 printf("%s", menu.titulo);
 
                 y += ((strlen(menu.titulo)/2) - ((menu.ancho/2)%2));
 
+                ultimo_imprimir = imprimir;
                 imprimir++;
             }
 
             // Opciones
-            if (x > 2 && (y > menu.margen && y < menu.ancho-menu.margen) && imprimir == 2)
+            if (x > 2 && (y > menu.margen && y < menu.ancho-menu.margen))
             {
-                if (ultimo_imprimir != imprimir)
+                if (strcmp(menu.opciones[pos], "") != 0 && ultimo_imprimir != imprimir)
                 {
-                    char selec[2];
+                    char selec[4] = "";
                     if (menu.seleccion == pos) strcpy(selec, "\xAF");
+                    else strcpy(selec, " ");
 
-                    printf("%s %s", selec, menu.opciones[pos++]);
+                    printf("%s %s", selec, menu.opciones[pos]);
 
+                    y += strlen(menu.opciones[pos]) + 2;
+
+                    pos++;
                     ultimo_imprimir = imprimir;
-                    imprimir++;
+                }
+                else if (imprimir != ultimo_imprimir)
+                {
+                    pos++;
+                    ultimo_imprimir = imprimir;
                 }
             }
 
             // Espacios en blanco
             printf(" ");
         }
+        
+        if (imprimir > 0)
+            imprimir++;
 
         // Lateral derecho
         printf("\xBA\n");
