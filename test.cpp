@@ -11,6 +11,7 @@ void test1(); // creacion de usuario
 void test2(); // errores
 void test3(); // memcpy tests
 void test4(); // menu
+void test5(); // lista_cadenas
 
 int main()
 {
@@ -38,6 +39,10 @@ int main()
 
     case 4:
         test4();
+        break;
+
+    case 5:
+        test5();
         break;
     }
 }
@@ -177,16 +182,67 @@ void test3()
 
 void test4()
 {
-    modificar_dato("largo", "20");
+    modificar_dato("largo", "11");
     modificar_dato("ancho", "71");
+    modificar_dato("margen", "2");
     modificar_dato("titulo", "Creacion de usuario");
 
-    modificar_dato("opcion", "1-ola");
-    modificar_dato("opcion", "2-chaoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    modificar_dato("opcion", "3-Buenas tardes");
-    modificar_dato("seleccion", "1");
+    modificar_dato("opcion", "ola");
+    modificar_dato("opcion", "chaoooooooooooooooooooooooooooo");
+    modificar_dato("opcion", "Buenas tardes");
+    modificar_dato("seleccion", "0");
 
-    //modificar_dato("margen", "2");
+    modificar_dato("control", "NX para siguiente");
+    modificar_dato("control", "OK para terminar ");
+
+    modificar_dato("margen", "2");
 
     mostrar_menu();
+}
+
+void test5()
+{
+    ListaCadenas *lista = NULL, *p;
+    char buffer[100] = "";
+
+    insertar_cadena(lista, "hola");
+    insertar_cadena(lista, "chau");
+    insertar_cadena(lista, "buenas tardes");
+
+    while (lista != NULL)
+    {
+        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
+
+        lista = lista->sig;
+    }
+    printf("\n");
+
+    insertar_cadena(lista, "intermedio", 1);
+
+    while (lista != NULL)
+    {
+        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
+
+        lista = lista->sig;
+    }
+    printf("\n");
+
+    insertar_cadena(lista, "comienzo", 0);
+
+    while (lista != NULL)
+    {
+        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
+
+        lista = lista->sig;
+    }
+    printf("\n");
+
+    insertar_cadena(lista, "excedido", 11);
+
+    while (lista != NULL)
+    {
+        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
+
+        lista = lista->sig;
+    }
 }
