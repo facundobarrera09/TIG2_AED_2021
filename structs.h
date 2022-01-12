@@ -54,6 +54,118 @@ struct Sesion
     Usuario usuario;
 };
 
+// Listas
+struct ListaCadenas
+{
+    int id;
+    char cadena[100];
+    ListaCadenas *ant, *sig;
+};
+
+int tamano_cadenas(ListaCadenas *lista)
+{
+    int tam = 0;
+    while (lista != NULL) 
+    {
+        tam++;
+        lista = lista->sig;
+    }
+    return tam;
+}
+void insertar_cadena(ListaCadenas *&lista, const char cadena[], int pos)
+{
+    printf("Insertando elemento en la posicion %d\n", pos);
+
+    ListaCadenas *n, *p, *s, *a;
+    n = new ListaCadenas;
+
+    n->id = pos;
+    strcpy(n->cadena, cadena);
+    n->sig = NULL;
+    n->ant = NULL;
+
+    if (lista == NULL)
+    {
+        lista = n;
+    }
+    else
+    {
+        // Buscando elemento a reemplazar (p sera NULL si es el ultimo elemento)
+        p = lista;
+        while (p != NULL)
+        {
+            if (pos > p->id)
+            {
+                a = p;
+                p = p->sig;
+            }
+            else
+                break;  
+        }
+    
+        // Reemplazar elemento
+        if (p != NULL)
+        {
+            a = p->ant;
+
+            if (a != NULL) a->sig = n; 
+            else lista = n;             // Si es el primero, modificar la variable lista
+            n->ant = a;
+            n->sig = p;
+            p->ant = n;
+
+            while (p != NULL)
+            {
+                p->id++;
+                p = p->sig;
+            }
+        }
+        // Colocar elemento al final
+        else
+        {
+            a->sig = n;
+            n->ant = a;
+        }
+    }
+}
+void insertar_cadena(ListaCadenas *&lista, const char cadena[])
+{
+    insertar_cadena(lista, cadena, tamano_cadenas(lista));
+}
+int obtener_cadena(ListaCadenas *lista, int pos, char buffer[])
+{
+    /*
+    * 0 - Se encontro
+    * 1 - No se encontro
+    */
+
+    strcpy(buffer, "");
+
+    while (lista != NULL)
+    {
+        if (lista->id == pos)
+        {
+            strcpy(buffer, lista->cadena);
+            return 0;
+        }
+        else
+            lista = lista->sig;
+    }
+
+    return 1;
+}
+void eliminar_cadenas(ListaCadenas *&lista)
+{
+    ListaCadenas *n, *p = lista;
+    
+    while (p != NULL)
+    {
+        n = p->sig;
+        delete p;
+        p = n;
+    }
+}
+
 // Direcciones de archivos
 const char USUARIOS_DAT[] = "./binarios/usuarios.dat";
 const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
