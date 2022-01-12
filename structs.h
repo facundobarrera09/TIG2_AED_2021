@@ -138,7 +138,6 @@ int obtener_cadena(ListaCadenas *lista, int pos, char buffer[])
     * 0 - Se encontro
     * 1 - No se encontro
     */
-
     strcpy(buffer, "");
 
     while (lista != NULL)
@@ -163,6 +162,15 @@ void eliminar_cadenas(ListaCadenas *&lista)
         n = p->sig;
         delete p;
         p = n;
+    }
+}
+void mostrar_cadenas (ListaCadenas *lista)
+{
+    while (lista != NULL)
+    {
+        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
+
+        lista = lista->sig;
     }
 }
 
