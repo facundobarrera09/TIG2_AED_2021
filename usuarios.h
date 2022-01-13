@@ -30,8 +30,9 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
      * 
      */
 
+    Menu menu;
     Usuario usuario_ingresado;
-    int seleccion = 2;
+    int seleccion = 0;
     int estado_de_usuario;
     eliminar_errores(errores);
 
@@ -40,16 +41,27 @@ int inicio_de_sesion(Usuario &usuario, int tipo, Usuario usuarios[MAX_USUARIOS],
     
     usuario_ingresado.tipo = tipo;
 
-    reestablecer_menu();
-    actualizar_menu(0, MENU1);
-    actualizar_menu(1, "Inicio de sesion");
+    modificar_dato(menu, "largo", "9");
+    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "titulo", "Inicio de sesion");
+
+    modificar_dato(menu, "opcion", "0-Usuario");
+    modificar_dato(menu, "opcion", "1-Contrasena");
+    modificar_dato(menu, "valor", "0- ");
+    modificar_dato(menu, "valor", "1- ");
+
+    modificar_dato(menu, "seleccion", "0");
+
+    modificar_dato(menu, "control", "NX para siguiente");
+    modificar_dato(menu, "control", "OK para terminar ");
 
     // Pedir ingreso de datos
     while (ejecutar)
     {
         system("cls");
     
-        n_mostrar_menu(seleccion);
+        mostrar_menu(menu);
+        printf("\n> ");
         scanf("%s", entrada);
 
         if (strcmp(entrada, "NX") == 0)
