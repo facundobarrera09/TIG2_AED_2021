@@ -9,8 +9,8 @@ struct Menu
 {
     int largo = 0, ancho = 0;
     int margen = 0;
-    char titulo[100];
     int seleccion = -1;
+    ListaCadenas *titulo = NULL;
     ListaCadenas *opciones = NULL;
     ListaCadenas *valores = NULL;
     ListaCadenas *controles = NULL;
@@ -28,7 +28,7 @@ void modificar_dato(Menu &menu, const char dato[], const char valor[])
     if (strcmp(dato, "ancho") == 0) menu.ancho = atoi(valor);
     if (strcmp(dato, "margen") == 0) menu.margen = atoi(valor);
     if (strcmp(dato, "seleccion") == 0) menu.seleccion = atoi(valor);
-    if (strcmp(dato, "titulo") == 0) strcpy(menu.titulo, valor);
+    if (strcmp(dato, "titulo") == 0) insertar_cadena(menu.titulo, valor);
     if (strcmp(dato, "control") == 0) insertar_cadena(menu.controles, valor);
     if (strcmp(dato, "opcion") == 0)
     {
@@ -48,10 +48,12 @@ void mostrar_menu(Menu menu)
 {
     system("cls");
 
-    int imprimir = 0, ultimo_imprimir = 0, pos_opcion = 0, pos = 0; // Define que parametro se va a imprimir
-    int linea_control = 2;                                          // En que linea se imprimen los controles
+    int imprimir = 0, ultimo_imprimir = -1, pos_opcion = 0, pos = 0; // Define que parametro se va a imprimir
+    int linea_opcion = 1, linea_control = 2;                                          // En que linea se imprimen los controles
     
-    ListaCadenas *aux_opciones = menu.opciones, *aux_controles = menu.controles;
+    ListaCadenas *aux_titulos = menu.titulo;
+    ListaCadenas *aux_opciones = menu.opciones;
+    ListaCadenas *aux_controles = menu.controles;
     char buffer[100] = "";
 
     // Valores por defecto ante entradas no validas o nulas
@@ -74,19 +76,24 @@ void mostrar_menu(Menu menu)
         for (int y = 0; y < menu.ancho-2; y++)
         {
             // Titulo
-            if (x == 0 && y >= (menu.ancho/2) && imprimir == 0)
+            if (x >= 0 && y >= (menu.ancho/2))
             {
-                for (int z = 0; z < ((strlen(menu.titulo)/2) + (strlen(menu.titulo)%2) + ((menu.ancho/2)%2)); z++) printf("\b");
-                printf("%s", menu.titulo);
+                if (aux_titulos != NULL && ultimo_imprimir != imprimir)
+                {
+                    for (int z = 0; z < ((strlen(aux_titulos->cadena)/2) + (strlen(aux_titulos->cadena)%2) + ((menu.ancho/2)%2)); z++) printf("\b");
+                    printf("%s", aux_titulos->cadena);
 
-                y += ((strlen(menu.titulo)/2) - ((menu.ancho/2)%2));
+                    y += ((strlen(aux_titulos->cadena)/2) - ((menu.ancho/2)%2));
 
-                ultimo_imprimir = imprimir;
-                imprimir++;
+                    aux_titulos = aux_titulos->sig;
+                    ultimo_imprimir = imprimir;
+                    linea_opcion++;
+                    linea_control++;
+                }
             }
 
             // Opciones
-            if (x > 1 && (y >= menu.margen && y < menu.ancho-menu.margen))
+            if (x > linea_opcion && (y >= menu.margen && y < menu.ancho-menu.margen))
             {
                 if (aux_opciones != NULL && ultimo_imprimir != imprimir)
                 {
@@ -128,8 +135,7 @@ void mostrar_menu(Menu menu)
             printf(" ");
         }
         
-        if (imprimir > 0)
-            imprimir++;
+        imprimir++;
 
         // Lateral derecho
         printf("\xBA\n");
