@@ -33,12 +33,14 @@ void modificar_dato(Menu &menu, const char dato[], const char valor[])
     if (strcmp(dato, "opcion") == 0)
     {
         memcpy(temp, valor, 1);
-        insertar_cadena(menu.opciones, &valor[2], atoi(temp));
+        if (modificar_cadena(menu.opciones, &valor[2], atoi(temp)) == 1)
+            insertar_cadena(menu.opciones, &valor[2], atoi(temp));
     }
     if (strcmp(dato, "valor") == 0)
     {
         memcpy(temp, valor, 1);
-        insertar_cadena(menu.valores, &valor[2], atoi(temp));
+        if (modificar_cadena(menu.valores, &valor[2], atoi(temp)) == 1)
+            insertar_cadena(menu.valores, &valor[2], atoi(temp));
     }
 }
 
