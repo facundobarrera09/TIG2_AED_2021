@@ -49,8 +49,7 @@ void mostrar_menu(Menu menu)
     int imprimir = 0, ultimo_imprimir = 0, pos_opcion = 0, pos = 0; // Define que parametro se va a imprimir
     int linea_control = 2;                                          // En que linea se imprimen los controles
     
-    printf("menu.opciones=%d\n", menu.opciones);
-    ListaCadenas *aux_opciones = menu.opciones;
+    ListaCadenas *aux_opciones = menu.opciones, *aux_controles = menu.controles;
     char buffer[100] = "";
 
     // Valores por defecto ante entradas no validas o nulas
@@ -112,13 +111,13 @@ void mostrar_menu(Menu menu)
             // Controles
             if (x >= linea_control && y >= menu.ancho-menu.margen-2)
             {
-                if (obtener_cadena(menu.controles, pos, buffer) == 0 && ultimo_imprimir != imprimir)
+                if (aux_controles != NULL && ultimo_imprimir != imprimir)
                 {
-                    for (int borrar = 0; borrar < strlen(buffer); borrar++) printf("\b");
+                    for (int borrar = 0; borrar < strlen(aux_controles->cadena); borrar++) printf("\b");
 
-                    printf("%s", buffer);
+                    printf("%s", aux_controles->cadena);
 
-                    pos++;
+                    aux_controles = aux_controles->sig;
                     ultimo_imprimir = imprimir;
                 }
             }
@@ -140,7 +139,7 @@ void mostrar_menu(Menu menu)
     printf("\xBC\n");
 
     // DEBUG
-    printf("  imprimir=%d, ultimo_imprimir=%d, pos_opcion=%d, pos_control=%d\n\n", imprimir, ultimo_imprimir, pos_opcion, pos);
+    //printf("  imprimir=%d, ultimo_imprimir=%d, pos_opcion=%d, pos_control=%d\n\n", imprimir, ultimo_imprimir, pos_opcion, pos);
 }
 
 #endif
