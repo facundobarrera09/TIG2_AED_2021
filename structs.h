@@ -130,6 +130,24 @@ void insertar_cadena(ListaCadenas *&lista, const char cadena[])
 {
     insertar_cadena(lista, cadena, tamano_cadenas(lista));
 }
+int modificar_cadena(ListaCadenas *lista, int pos, const char cadena[])
+{
+    /*
+    * 0 - Se encontro
+    * 1 - No se encontro
+    */
+
+    while (lista != NULL)
+    {
+        if (lista->id == pos)
+        {
+            strcpy(lista->cadena, cadena);
+            return 0;
+        }
+    }
+
+    return 1;
+}
 int obtener_cadena(ListaCadenas *lista, int pos, char buffer[])
 {
     /*
