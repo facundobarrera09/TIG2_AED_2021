@@ -74,8 +74,6 @@ int tamano_cadenas(ListaCadenas *lista)
 }
 void insertar_cadena(ListaCadenas *&lista, const char cadena[], int pos)
 {
-    printf("Insertando elemento en la posicion %d\n", pos);
-
     ListaCadenas *n, *p, *s, *a;
     n = new ListaCadenas;
 
