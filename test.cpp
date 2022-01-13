@@ -51,7 +51,7 @@ void test0()
 {
     Usuario usuarios[MAX_USUARIOS], usuario;
     Error *errores;
-    int cantidad = 3, tipo = 1;
+    int cantidad = 3, tipo = 1, estado;
 
     strcpy(usuarios[0].usuario, "facundo");
     strcpy(usuarios[1].usuario, "lucia");
@@ -65,7 +65,10 @@ void test0()
     usuarios[1].tipo = 1;
     usuarios[2].tipo = 2;
 
-    inicio_de_sesion(usuario, tipo, usuarios, cantidad, errores);
+    estado = inicio_de_sesion(usuario, tipo, usuarios, cantidad, errores);
+
+    printf("estado=%d\n", estado);
+    mostrar_errores(errores);
 }
 
 void test1()
@@ -78,7 +81,7 @@ void test1()
 
     int status1 = crear_usuario(usuarios, cantidad, e1);
     int status2 = crear_usuario(usuarios, cantidad, e2);
-    int status3 = crear_usuario(usuarios, cantidad, e3);
+    int status3 = crear_usuario(usuarios, cantidad, COD_ASIST, e3);
 
 /*
 faC12Bar
@@ -97,7 +100,6 @@ lUC1aBarr
 NX
 aM3h2dI
 NX
-ASIST
 OK
 
 */
