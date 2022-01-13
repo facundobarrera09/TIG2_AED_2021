@@ -32,11 +32,15 @@ void modificar_dato(const char dato[], const char valor[])
     if (strcmp(dato, "seleccion") == 0) menu.seleccion = atoi(valor);
     if (strcmp(dato, "titulo") == 0) strcpy(menu.titulo, valor);
     if (strcmp(dato, "control") == 0) insertar_cadena(menu.controles, valor);
-    if (strcmp(dato, "opcion") == 0) insertar_cadena(menu.opciones, valor);
+    if (strcmp(dato, "opcion") == 0)
+    {
+        memcpy(temp, valor, 1);
+        insertar_cadena(menu.opciones, &valor[2], atoi(temp));
+    }
     if (strcmp(dato, "valor") == 0)
     {
         memcpy(temp, valor, 1);
-        insertar_cadena(menu.valores, valor);
+        insertar_cadena(menu.valores, &valor[2], atoi(temp));
     }
 }
 
@@ -47,7 +51,8 @@ void mostrar_menu()
     int imprimir = 0, ultimo_imprimir = 0, pos_opcion = 0, pos = 0; // Define que parametro se va a imprimir
     int linea_control = 2;                                          // En que linea se imprimen los controles
     
-    ListaCadenas *aux;
+    printf("menu.opciones=%d\n", menu.opciones);
+    ListaCadenas *aux_opciones = menu.opciones;
     char buffer[100] = "";
 
     // Valores por defecto ante entradas no validas o nulas
@@ -84,17 +89,23 @@ void mostrar_menu()
             // Opciones
             if (x > 1 && (y >= menu.margen && y < menu.ancho-menu.margen))
             {
-                if (obtener_cadena(menu.opciones, pos_opcion, buffer) == 0 && ultimo_imprimir != imprimir)
+                if (aux_opciones != NULL && ultimo_imprimir != imprimir)
                 {
                     char selec[4] = "";
-                    if (menu.seleccion == pos_opcion) strcpy(selec, "\xAF");
+                    if (menu.seleccion == aux_opciones->id) strcpy(selec, "\xAF");
                     else strcpy(selec, " ");
 
-                    printf("%s %s", selec, buffer);
+                    printf("%s %s", selec, aux_opciones->cadena);
+                
+                    if (obtener_cadena(menu.valores, aux_opciones->id, buffer) == 0)
+                    {
+                        printf(": %s", buffer);
+                        y += 2 + strlen(buffer);
+                    }
 
-                    y += strlen(buffer) + 2;
+                    y += strlen(aux_opciones->cadena) + 2;
 
-                    pos_opcion++;
+                    aux_opciones = aux_opciones->sig;
                     ultimo_imprimir = imprimir;
                     linea_control++;
                 }

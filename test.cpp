@@ -182,67 +182,74 @@ void test3()
 
 void test4()
 {
+    // Aspecto fisico
     modificar_dato("largo", "11");
     modificar_dato("ancho", "71");
     modificar_dato("margen", "2");
+
+    // Titulo
     modificar_dato("titulo", "Creacion de usuario");
 
-    modificar_dato("opcion", "ola");
-    modificar_dato("opcion", "chaoooooooooooooooooooooooooooo");
-    modificar_dato("opcion", "Buenas tardes");
+    // Opciones y valores
+    modificar_dato("opcion", "0-Nombre");
+    modificar_dato("opcion", "1-Contrasena");
+    modificar_dato("opcion", "2-Tipo");
+    modificar_dato("opcion", "3-Salir");
+
+    modificar_dato("valor", "0-Facundo");
+    modificar_dato("valor", "1-bArr3ra");
+    modificar_dato("valor", "2-ADMIN");
+
     modificar_dato("seleccion", "0");
 
+    // Control del usuario
     modificar_dato("control", "NX para siguiente");
     modificar_dato("control", "OK para terminar ");
-
-    modificar_dato("margen", "2");
 
     mostrar_menu();
 }
 
 void test5()
 {
-    ListaCadenas *lista = NULL, *p;
+    ListaCadenas *lista = NULL, *p,*lista2 = NULL;
     char buffer[100] = "";
 
+    // insercion
     insertar_cadena(lista, "hola");
     insertar_cadena(lista, "chau");
     insertar_cadena(lista, "buenas tardes");
 
-    while (lista != NULL)
-    {
-        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
-
-        lista = lista->sig;
-    }
+    mostrar_cadenas(lista);
     printf("\n");
 
     insertar_cadena(lista, "intermedio", 1);
 
-    while (lista != NULL)
-    {
-        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
-
-        lista = lista->sig;
-    }
+    mostrar_cadenas(lista);
     printf("\n");
 
     insertar_cadena(lista, "comienzo", 0);
 
-    while (lista != NULL)
-    {
-        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
-
-        lista = lista->sig;
-    }
+    mostrar_cadenas(lista);
     printf("\n");
 
     insertar_cadena(lista, "excedido", 11);
 
-    while (lista != NULL)
-    {
-        printf("%d - %d - %s - %d - %d\n", lista->id, lista, lista->cadena, lista->ant, lista->sig);
+    mostrar_cadenas(lista);
+    printf("\n\n");
 
-        lista = lista->sig;
+    // insersion a posicion en lista vacia
+    insertar_cadena(lista2, "hola en 3", 3);
+    insertar_cadena(lista2, "chau en 0", 0);
+
+    mostrar_cadenas(lista2);
+    printf("\n\n");
+
+    // busqueda
+    for (int x = 0; x < 13; x++)
+    {
+        if (obtener_cadena(lista, x, buffer) == 0)
+            printf("Se encontro la cadena en la pos %d: %s\n", x, buffer);
+        else
+            printf("No se encontro la cadena en la pos %d\n", x);
     }
 }
