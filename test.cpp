@@ -182,31 +182,33 @@ void test3()
 
 void test4()
 {
+    Menu menu;
+
     // Aspecto fisico
-    modificar_dato("largo", "11");
-    modificar_dato("ancho", "71");
-    modificar_dato("margen", "2");
+    modificar_dato(menu, "largo", "11");
+    modificar_dato(menu, "ancho", "71");
+    modificar_dato(menu, "margen", "2");
 
     // Titulo
-    modificar_dato("titulo", "Creacion de usuario");
+    modificar_dato(menu, "titulo", "Creacion de usuario");
 
     // Opciones y valores
-    modificar_dato("opcion", "0-Nombre");
-    modificar_dato("opcion", "1-Contrasena");
-    modificar_dato("opcion", "2-Tipo");
-    modificar_dato("opcion", "3-Salir");
+    modificar_dato(menu, "opcion", "0-Nombre");
+    modificar_dato(menu, "opcion", "1-Contrasena");
+    modificar_dato(menu, "opcion", "2-Tipo");
+    modificar_dato(menu, "opcion", "3-Salir");
 
-    modificar_dato("valor", "0-Facundo");
-    modificar_dato("valor", "1-bArr3ra");
-    modificar_dato("valor", "2-ADMIN");
+    modificar_dato(menu, "valor", "0-Facundo");
+    modificar_dato(menu, "valor", "1-bArr3ra");
+    modificar_dato(menu, "valor", "2-ADMIN");
 
-    modificar_dato("seleccion", "0");
+    modificar_dato(menu, "seleccion", "0");
 
     // Control del usuario
-    modificar_dato("control", "NX para siguiente");
-    modificar_dato("control", "OK para terminar ");
+    modificar_dato(menu, "control", "NX para siguiente");
+    modificar_dato(menu, "control", "OK para terminar ");
 
-    mostrar_menu();
+    mostrar_menu(menu);
 }
 
 void test5()

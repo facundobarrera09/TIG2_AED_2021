@@ -16,9 +16,7 @@ struct Menu
     ListaCadenas *controles = NULL;
 };
 
-Menu menu;
-
-void modificar_dato(const char dato[], const char valor[])
+void modificar_dato(Menu &menu, const char dato[], const char valor[])
 {
     /**
      * 
@@ -44,7 +42,7 @@ void modificar_dato(const char dato[], const char valor[])
     }
 }
 
-void mostrar_menu()
+void mostrar_menu(Menu menu)
 {
     system("cls");
 
