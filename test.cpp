@@ -193,7 +193,7 @@ void test4()
 
     // Titulo
     modificar_dato(menu, "titulo", "Centro de Estetica");
-    modificar_dato(menu, "titulo", "Creacion de usuario");
+    modificar_dato(menu, "titulo", "Creacion de usuarios");
 
     // Opciones y valores
     modificar_dato(menu, "opcion", "0-Nombre");

@@ -49,7 +49,7 @@ void mostrar_menu(Menu menu)
     system("cls");
 
     int imprimir = 0, ultimo_imprimir = -1, pos_opcion = 0, pos = 0; // Define que parametro se va a imprimir
-    int linea_opcion = 1, linea_control = 2;                                          // En que linea se imprimen los controles
+    int linea_opcion = 1, linea_control = 1;                                          // En que linea se imprimen los controles
     
     ListaCadenas *aux_titulos = menu.titulo;
     ListaCadenas *aux_opciones = menu.opciones;
@@ -93,7 +93,7 @@ void mostrar_menu(Menu menu)
             }
 
             // Opciones
-            if (x > linea_opcion && (y >= menu.margen && y < menu.ancho-menu.margen))
+            if (x >= linea_opcion && (y >= menu.margen && y < menu.ancho-menu.margen))
             {
                 if (aux_opciones != NULL && ultimo_imprimir != imprimir)
                 {
