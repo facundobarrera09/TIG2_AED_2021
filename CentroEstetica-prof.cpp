@@ -5,6 +5,9 @@
 #include <string.h>
 #include <iostream>
 
+#include "structs.h"
+#include "menu.h"
+
 typedef struct {
     char nombre[40];
     char direccion[40];
@@ -22,7 +25,7 @@ void continuar()
 void crear()
 {
     FILE *arch;
-    arch=fopen("pacientes.dat","wb");
+    arch=fopen(CLIENTES_DAT,"wb");
     if (arch==NULL)
         exit(1);
     fclose(arch);
@@ -33,7 +36,7 @@ void crear()
 void cargar()
 {
     FILE *arch;
-    arch=fopen("pacientes.dat","ab");
+    arch=fopen(CLIENTES_DAT,"ab");
     if (arch==NULL)
         exit(1);
     tpaciente paciente;
@@ -61,7 +64,7 @@ void listado()
 	FILE *arch;
 	int i,n,b;
 	
-	arch=fopen("pacientes.dat","rb");
+	arch=fopen(CLIENTES_DAT,"rb");
         if (arch==NULL)
         exit(1);
    
@@ -120,7 +123,7 @@ void consulta()
 	char histclinic [1000];
 	int ag;
     FILE *arch;
-    arch=fopen("pacientes.dat","r+b");
+    arch=fopen(CLIENTES_DAT,"r+b");
     if (arch==NULL)
         exit(1);
     printf("Ingrese el documento a consultar:");
@@ -169,7 +172,7 @@ void modificacionhistoriaclinica()
 {
 	char histclinic [1000];
     FILE *arch;
-    arch=fopen("pacientes.dat","r+b");
+    arch=fopen(CLIENTES_DAT,"r+b");
     if (arch==NULL)
         exit(1);
     printf("Ingrese el documento a modificar:");
@@ -208,7 +211,7 @@ void modificacionDireccion()
 {
     FILE *arch;
     
-    arch=fopen("pacientes.dat","r+b");
+    arch=fopen(CLIENTES_DAT,"r+b");
     
     if (arch==NULL)
         exit(1);
@@ -247,7 +250,7 @@ void borrapaciente()
 	FILE *arch;
 	FILE *aux;// archivo para guardar datos sin el paciente a borrar
     
-	arch=fopen("pacientes.dat","r+b");
+	arch=fopen(CLIENTES_DAT,"r+b");
     aux=fopen("auxiliar.dat","w+b");
    // if (arch==NULL)
      //   exit(1);
@@ -288,16 +291,18 @@ int main()
 {
     int opcion;
     do {
-        printf("1 - Crear un archivo  \"pacientes.dat\"\n");
-        printf("2 - Carga de paciente\n");
+        printf("1 - Crear un archivo  \"pacientes.dat\"\n");    // ELIMINAR
+        printf("2 - Carga de paciente\n");                      // ELIMINAR
         printf("3 - Listado completo.\n");
         printf("4 - Consulta por su doc.\n");
-        printf("5 - Modificacion de direccion. \n");
+        printf("5 - Modificacion de direccion. \n");            //ELIMINAR
         printf("6 - Modificacion Historia clinica. \n");
         printf("7 - Borrar paciente.\n");
         printf("8 - Finalizar\n\n");
         printf("Ingrese su opcion:");
+
         scanf("%i",&opcion);
+
         switch (opcion) {
             case 1:crear();
                    break;
