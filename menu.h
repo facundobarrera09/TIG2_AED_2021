@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "structs.h"
+
 struct Menu
 {
     int largo = 0, ancho = 0;
@@ -59,7 +61,7 @@ void mostrar_menu(Menu menu)
     // Valores por defecto ante entradas no validas o nulas
     if (menu.largo < 2) menu.largo = 20;
     if (menu.ancho < 2) menu.ancho = 70;
-    if (menu.margen < 0) menu.margen = 0;
+    if (menu.margen < 1) menu.margen = 1;
 
     // Borde superior
     printf("\xC9");
