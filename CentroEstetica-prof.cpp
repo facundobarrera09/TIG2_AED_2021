@@ -319,19 +319,42 @@ int main()
 			break;
 		}
 	}
-    int opcion;
+	
+	 int opcion;
     do {
-        printf("1 - Crear un archivo  \"pacientes.dat\"\n");    // ELIMINAR
-        printf("2 - Carga de paciente\n");                      // ELIMINAR
-        printf("3 - Listado completo.\n");
-        printf("4 - Consulta por su doc.\n");
-        printf("5 - Modificacion de direccion. \n");            //ELIMINAR
-        printf("6 - Modificacion Historia clinica. \n");
-        printf("7 - Borrar paciente.\n");
-        printf("8 - Finalizar\n\n");
-        printf("Ingrese su opcion:");
+	
+    Menu menu;
 
-        scanf("%i",&opcion);
+   
+    modificar_dato(menu, "largo", "12");
+    modificar_dato(menu, "ancho", "71");
+    modificar_dato(menu, "margen", "2");
+
+    // Titulo
+    modificar_dato(menu, "titulo", "Centro de Estetica");
+    modificar_dato(menu, "titulo", "Menu de Profesionales");
+
+    // Opciones y valores
+    modificar_dato(menu, "opcion", "0-1-Crear archivo");
+    modificar_dato(menu, "opcion", "1-2-Cargar cliente");
+    modificar_dato(menu, "opcion", "2-3-listar clientes");
+    modificar_dato(menu, "opcion", "3-4-Consultar cliente por DNI");
+    modificar_dato(menu, "opcion", "4-5-Modificar direccion");
+    modificar_dato(menu, "opcion", "5-6-Agregar informe");
+    modificar_dato(menu, "opcion", "6-7-borrar cliente");
+    modificar_dato(menu, "opcion", "7-8-Salir");
+    
+
+    
+    modificar_dato(menu, "control", "NX para siguiente");
+    modificar_dato(menu, "control", "OK para terminar ");
+
+    mostrar_menu(menu);
+	
+	
+   
+
+        scanf("%d",&opcion);
 
         switch (opcion) {
             case 1:crear();
