@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <iostream>
-
 #include "structs.h"
 #include "menu.h"
+#include "error.h"
+#include "usuarios.h"
 
 typedef struct {
     char nombre[40];
@@ -289,6 +289,36 @@ void borrapaciente()
 
 int main()
 {
+	
+	Sesion sesion;
+	Usuario usuarios[MAX_USUARIOS];
+	int cantidad;
+	int estado;
+	Error *error_inicio;
+	
+	estado=leer_usuarios(usuarios,cantidad);
+	
+	if(estado!=0)
+	{
+		printf("Error-no se encontraron usuarios");
+		return 1;
+	}
+	else
+	{
+		while(true)
+		{
+			estado=inicio_de_sesion(sesion.usuario,COD_PROF,usuarios,cantidad,error_inicio);
+			if (estado!=0)
+			{
+				mostrar_errores(error_inicio);
+			
+				continue;
+				
+			}
+			else
+			break;
+		}
+	}
     int opcion;
     do {
         printf("1 - Crear un archivo  \"pacientes.dat\"\n");    // ELIMINAR
