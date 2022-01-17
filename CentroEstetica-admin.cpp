@@ -45,6 +45,7 @@ void centro_estetica_admin(Error *&errores)
 
     Menu menu;
     Sesion sesion;
+    Fecha hoy = obtener_fecha_actual();
 
     Usuario usuarios[MAX_USUARIOS];
     Profesional profesionales[MAX_PROF];
@@ -57,15 +58,6 @@ void centro_estetica_admin(Error *&errores)
     Error *errores_creacion;
     bool ejecutar = true;
     int estado, opcion;
-    char buffer[100];
-    
-    Fecha hoy;
-    time_t t;
-    struct tm *tm;
-    t = time(NULL);
-    tm = localtime(&t);
-    strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm);
-    hoy = obtener_fecha(buffer);
 
     // Verificar si existen usuarios
     while (true)
@@ -139,15 +131,18 @@ void centro_estetica_admin(Error *&errores)
     }
 
     // Mostrar menu
-    modificar_dato(menu, "largo", "12");
-    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "largo", "11");
+    modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "2");
 
-    modificar_dato(menu, "opcion", "1-1-Crear usuario");
-    modificar_dato(menu, "opcion", "2-2-Visualizar atenciones por profesional");
-    modificar_dato(menu, "opcion", "3-3-Visualizar ranking de profesionales");
+    modificar_dato(menu, "titulo", "Centro de Estetica");
+    modificar_dato(menu, "titulo", "Administracion");
+
+    modificar_dato(menu, "opcion", "1-1 - Crear usuario");
+    modificar_dato(menu, "opcion", "2-2 - Visualizar atenciones por profesional");
+    modificar_dato(menu, "opcion", "3-3 - Visualizar ranking de profesionales");
     modificar_dato(menu, "opcion", "4-");
-    modificar_dato(menu, "opcion", "5-0-Salir");
+    modificar_dato(menu, "opcion", "5-0 - Salir");
 
     modificar_dato(menu, "seleccion", "0");
 
@@ -191,11 +186,13 @@ void centro_estetica_admin(Error *&errores)
                     {
                         contador = 0;
                         for (int y = 0; y < cant_informes; y++)
-                            if (informes[y].id_profesional == profesionales[x].id_profesional && informes[y].fecha.mes == )
+                            if (informes[y].id_profesional == profesionales[x].id_profesional && informes[y].fecha.mes == hoy.mes);
                                 contador++;
                         printf("%d - %d\n", profesionales[x].id_profesional, contador);
                     }
                 }
+                else
+                    printf("ERROR - No se encontraron informes\n");
             }
             else
                 printf("ERROR - No se encontraron profesionales registrados\n");
@@ -205,7 +202,7 @@ void centro_estetica_admin(Error *&errores)
             break;
 
         case 0:
-            printf("Terminando el programa\n");
+            printf("Programa terminado\n");
             ejecutar = false;
             break;
         
