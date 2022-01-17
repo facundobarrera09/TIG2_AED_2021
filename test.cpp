@@ -12,6 +12,7 @@ void test2(); // errores
 void test3(); // memcpy tests
 void test4(); // menu
 void test5(); // lista_cadenas
+void test6(); // crear cliente
 
 int main()
 {
@@ -42,6 +43,10 @@ int main()
         break;
 
     case 5:
+        test5();
+        break;
+    
+    case 6:
         test5();
         break;
     }
@@ -257,4 +262,9 @@ void test5()
         else
             printf("No se encontro la cadena en la pos %d\n", x);
     }
+}
+
+void test6()
+{
+    escribir_cliente(crear_cliente());
 }
