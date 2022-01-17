@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "structs.h"
 #include "funciones_structs.h"
@@ -14,6 +15,7 @@ void test3(); // memcpy tests
 void test4(); // menu
 void test5(); // lista_cadenas
 void test6(); // crear cliente
+void test7(); // fecha actual
 
 int main()
 {
@@ -49,6 +51,10 @@ int main()
     
     case 6:
         test6();
+        break;
+    
+    case 7:
+        test7();
         break;
     }
 }
@@ -268,4 +274,20 @@ void test5()
 void test6()
 {
     escribir_cliente(crear_cliente());
+}
+
+void test7()
+{
+    char buffer[100];
+    Fecha hoy;
+    time_t t;
+    struct tm *tm;
+
+    t = time(NULL);
+    tm = localtime(&t);
+
+    strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm);
+    hoy = obtener_fecha(buffer);
+
+    printf("fecha actual=%s\n", buffer);
 }
