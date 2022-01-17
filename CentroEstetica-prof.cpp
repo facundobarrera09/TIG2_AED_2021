@@ -168,7 +168,7 @@ void consulta()
 
 
 
-void modificacionhistoriaclinica()
+void modificacionInforme()
 {
 	char histclinic [1000];
     FILE *arch;
@@ -326,7 +326,7 @@ int main()
     Menu menu;
 
    
-    modificar_dato(menu, "largo", "12");
+    modificar_dato(menu, "largo", "14");
     modificar_dato(menu, "ancho", "71");
     modificar_dato(menu, "margen", "2");
 
@@ -342,12 +342,9 @@ int main()
     modificar_dato(menu, "opcion", "4-5-Modificar direccion");
     modificar_dato(menu, "opcion", "5-6-Agregar informe");
     modificar_dato(menu, "opcion", "6-7-borrar cliente");
-    modificar_dato(menu, "opcion", "7-8-Salir");
+    modificar_dato(menu, "opcion", "7- ");
+    modificar_dato(menu, "opcion", "8-8-Salir");
     
-
-    
-    modificar_dato(menu, "control", "NX para siguiente");
-    modificar_dato(menu, "control", "OK para terminar ");
 
     mostrar_menu(menu);
 	
@@ -367,7 +364,7 @@ int main()
                    break;
             case 5:modificacionDireccion();
                    break;
-            case 6:modificacionhistoriaclinica();
+            case 6:modificacionInforme();
             		break;
             case 7:borrapaciente();
             		break;
