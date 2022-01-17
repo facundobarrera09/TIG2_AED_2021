@@ -95,11 +95,17 @@ Cliente crear_cliente()
         else
         {
             strcpy(buffer, "");
-            itoa(seleccion, buffer, sizeof(seleccion));
+            itoa(seleccion, buffer, sizeof(buffer));
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
+
+            printf("cadena=%s\n", buffer);
         }
+
+        printf("seleccion=%d\n", seleccion);
+
+        system("pause");
     }
 }
 
