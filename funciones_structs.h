@@ -19,6 +19,19 @@ Fecha obtener_fecha(const char cadena[])
 
     return fecha;
 }
+Fecha obtener_fecha_actual()
+{
+    char buffer[100];
+    Fecha hoy;
+    time_t t;
+    struct tm *tm;
+    t = time(NULL);
+    tm = localtime(&t);
+    strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm);
+    hoy = obtener_fecha(buffer);
+
+    return hoy;
+}
 Cliente crear_cliente()
 {
     Menu menu;
