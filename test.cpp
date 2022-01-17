@@ -299,5 +299,5 @@ void test7()
 
 void test8()
 {
-    
+    escribir_profesional(crear_profesional());
 }
