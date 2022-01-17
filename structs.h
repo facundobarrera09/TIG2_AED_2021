@@ -192,6 +192,35 @@ void mostrar_cadenas (ListaCadenas *lista)
     }
 }
 
+// Funciones de Fecha
+Fecha obtener_fecha(const char cadena[])
+{
+    Fecha fecha;
+    char buffer[10] = "";
+
+    memcpy(buffer, cadena, 2);
+    fecha.dia = atoi(buffer);
+    memcpy(buffer, &cadena[3], 2);
+    fecha.mes = atoi(buffer);
+    memcpy(buffer, &cadena[6], 4);
+    fecha.anio = atoi(buffer);
+
+    return fecha;
+}
+Fecha obtener_fecha_actual()
+{
+    char buffer[100];
+    Fecha hoy;
+    time_t t;
+    struct tm *tm;
+    t = time(NULL);
+    tm = localtime(&t);
+    strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm);
+    hoy = obtener_fecha(buffer);
+
+    return hoy;
+}
+
 // Direcciones de archivos
 const char USUARIOS_DAT[] = "./binarios/usuarios.dat";
 const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
