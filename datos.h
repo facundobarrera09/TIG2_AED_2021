@@ -89,13 +89,15 @@ int leer_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad)
 
     if (archivo != NULL)
     {
-        for (int x = 0; x < MAX_INFORMES; x++)
+        for (int x = 0; x < MAX_CLIENTES; x++)
         {
             if (fread(&cliente, sizeof(Cliente), 1, archivo) != 0)
             {
                 clientes[x] = cliente;
                 cantidad++;
             }
+            else
+            	break;
         }
 
         if (cantidad != 0)

@@ -16,6 +16,7 @@ void test4(); // menu
 void test5(); // lista_cadenas
 void test6(); // crear cliente
 void test7(); // fecha actual
+void test8(); // crear profesional
 
 int main()
 {
@@ -55,6 +56,10 @@ int main()
     
     case 7:
         test7();
+        break;
+
+    case 8:
+        test8();
         break;
     }
 }
@@ -290,4 +295,9 @@ void test7()
     hoy = obtener_fecha(buffer);
 
     printf("fecha actual=%s\n", buffer);
+}
+
+void test8()
+{
+    
 }
