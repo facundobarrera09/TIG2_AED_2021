@@ -290,6 +290,7 @@ void borrapaciente()
 int main()
 {
 	
+    Menu menu;
 	Sesion sesion;
 	Usuario usuarios[MAX_USUARIOS];
 	int cantidad;
@@ -320,12 +321,9 @@ int main()
 		}
 	}
 	
-	 int opcion;
-    do {
+	int opcion;
+     
 	
-    Menu menu;
-
-   
     modificar_dato(menu, "largo", "14");
     modificar_dato(menu, "ancho", "71");
     modificar_dato(menu, "margen", "2");
@@ -345,11 +343,9 @@ int main()
     modificar_dato(menu, "opcion", "7- ");
     modificar_dato(menu, "opcion", "8-8-Salir");
     
+    do {
 
     mostrar_menu(menu);
-	
-	
-   
 
         scanf("%d",&opcion);
 
