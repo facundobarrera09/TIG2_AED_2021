@@ -33,29 +33,88 @@ void crear()
 }
 
 
-void cargar()
+Cliente crear_cliente()
 {
-    FILE *arch;
-    arch=fopen(CLIENTES_DAT,"ab");
-    if (arch==NULL)
-        exit(1);
-    tpaciente paciente;
-    fflush(stdin);
-    printf("Ingrese Apellido y Nombre:");
-   gets(paciente.nombre);
-   strupr(paciente.nombre);//pone todo el nombre en mayuscula
-    fflush(stdin);
-    printf("Ingrese direccion:");
-    gets(paciente.direccion);
-    printf("Ingrese documento:");
-    scanf("%d",&paciente.doc);
-    fflush(stdin);
-	printf("Ingrese historia clinica:");
-    gets(paciente.historia);
+    Menu menu;
+    Cliente cliente;
+    int seleccion = 0;
+
+    bool ejecutar = true;
+    char entrada[36], buffer[100];
+
+    // Establecer configuracion de la ventana
+    modificar_dato(menu, "largo", "12");
+    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "titulo", "Centro de Estetica");
+    modificar_dato(menu, "titulo", "Cargar datos del cliente");
+
+    modificar_dato(menu, "opcion", "0-DNI");
+    modificar_dato(menu, "opcion", "1-Nombre completo");
+    modificar_dato(menu, "opcion", "2-Domicilio");
+    modificar_dato(menu, "opcion", "3-Localidad");
+    modificar_dato(menu, "opcion", "4-Fecha de nacimiento");
+    modificar_dato(menu, "opcion", "5-Peso");
+    modificar_dato(menu, "opcion", "6-Telefono");
+    modificar_dato(menu, "valor", "0-");
+    modificar_dato(menu, "valor", "1-");
+    modificar_dato(menu, "valor", "2-");
+    modificar_dato(menu, "valor", "3-");
+    modificar_dato(menu, "valor", "4-");
+    modificar_dato(menu, "valor", "5-");
+    modificar_dato(menu, "valor", "6-");
+
+    modificar_dato(menu, "seleccion", "0");
+
+    modificar_dato(menu, "control", "NX para siguiente");
+    modificar_dato(menu, "control", "OK para terminar ");
+
+    // Pedir ingreso de datos
+    while (ejecutar)
+    {
+        system("cls");
     
-    fwrite(&paciente, sizeof(tpaciente), 1, arch);
-    fclose(arch);
-   printf("\n\n");
+        mostrar_menu(menu);
+        printf("\n> ");
+        _flushall();
+        gets(entrada);
+
+        if (strcmp(entrada, "NX") == 0)         // Siguiente opcion
+        {
+            if (seleccion == 6) seleccion = 0;
+            else seleccion++;
+
+            itoa(seleccion, buffer, sizeof(buffer));
+            modificar_dato(menu, "seleccion", buffer);
+        }
+        else if (strcmp(entrada, "OK") == 0)    // Confirmar y terminar
+        {
+            obtener_cadena(menu.valores, 0, buffer);
+            cliente.dni = atoi(buffer);
+            obtener_cadena(menu.valores, 1, buffer);
+            strcpy(cliente.nombre, buffer);
+            obtener_cadena(menu.valores, 2, buffer);
+            strcpy(cliente.domicilio, buffer);
+            obtener_cadena(menu.valores, 3, buffer);
+            strcpy(cliente.localidad, buffer);
+            obtener_cadena(menu.valores, 4, buffer);
+            cliente.fecha_nacimiento = obtener_fecha(buffer);
+            obtener_cadena(menu.valores, 5, buffer);
+            cliente.peso = atof(buffer);
+            obtener_cadena(menu.valores, 6, buffer);
+            strcpy(cliente.telefono, buffer);
+
+            ejecutar = false;
+        }
+        else
+        {
+            strcpy(buffer, "");
+            itoa(seleccion, buffer, sizeof(seleccion));
+            strcat(buffer, "-");
+            strcat(buffer, entrada);
+            modificar_dato(menu, "valor", buffer);
+        }
+    }
 }
 
 void listado()
@@ -344,15 +403,16 @@ int main()
     modificar_dato(menu, "opcion", "8-8-Salir");
     
     do {
-
     mostrar_menu(menu);
 
         scanf("%d",&opcion);
 
         switch (opcion) {
-            case 1:crear();
+            case 1:
+                    crear();
                    break;
-            case 2:cargar();
+            case 2:
+                    escribir_cliente(crear_cliente());
                    break;
             case 3:listado();
                    break;

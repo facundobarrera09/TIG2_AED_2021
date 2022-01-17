@@ -54,6 +54,22 @@ struct Sesion
     Usuario usuario;
 };
 
+// Funciones de fecha
+Fecha obtener_fecha(const char cadena[])
+{
+    Fecha fecha;
+    char buffer[10] = "";
+
+    memcpy(buffer, cadena, 2);
+    fecha.dia = atoi(buffer);
+    memcpy(buffer, &cadena[3], 2);
+    fecha.mes = atoi(buffer);
+    memcpy(buffer, &cadena[6], 4);
+    fecha.anio = atoi(buffer);
+
+    return fecha;
+}
+
 // Listas
 struct ListaCadenas
 {
