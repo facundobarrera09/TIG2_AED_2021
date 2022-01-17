@@ -205,5 +205,6 @@ const int COD_ASIST = 3;
 
 // Valores maximos
 const int MAX_USUARIOS = 100;
+const int MAX_PROF = 100;
 
 #endif
