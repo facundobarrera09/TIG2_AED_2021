@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "structs.h"
+#include "funciones_structs.h"
 #include "usuarios.h"
 #include "error.h"
 #include "menu.h"
