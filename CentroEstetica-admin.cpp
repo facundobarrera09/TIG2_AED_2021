@@ -4,7 +4,6 @@
 #include <time.h>
 
 #include "structs.h"
-#include "funciones_structs.h"
 #include "usuarios.h"
 
 void centro_estetica_admin(Error *&errores);
