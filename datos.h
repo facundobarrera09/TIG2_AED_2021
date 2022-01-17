@@ -128,7 +128,45 @@ int leer_profesionales(Profesional profesionales[MAX_PROF], int &cantidad)
 
     fclose(archivo);
 
-    return estado; 
+    return estado;
+}
+
+int leer_informes(Informe informes[MAX_INFORMES], int &cantidad)
+{
+    /**
+     * INT DE RETORNO
+     *  0 - Lectura correcta (existen informes)
+     *  1 - Lectura incorrecta (no existen informes)
+     *  2 - Lectura incorrecta (no se pudo abrir el archivo)
+     */
+    int estado = -1;
+
+    cantidad = 0;
+    Informe informe;
+    FILE *archivo = fopen(INFORMES_DAT, "rb");
+
+    if (archivo != NULL)
+    {
+        for (int x = 0; x < MAX_INFORMES; x++)
+        {
+            if (fread(&informe, sizeof(Informe), 1, archivo) != 0)
+            {
+                informes[x] = informe;
+                cantidad++;
+            }
+        }
+
+        if (cantidad != 0)
+            estado = 0;
+        else
+            estado = 1;
+    }
+    else
+        estado = 2;
+
+    fclose(archivo);
+
+    return estado;
 }
 
 #endif
