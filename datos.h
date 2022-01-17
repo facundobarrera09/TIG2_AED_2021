@@ -169,4 +169,42 @@ int leer_informes(Informe informes[MAX_INFORMES], int &cantidad)
     return estado;
 }
 
+int leer_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad)
+{
+    /**
+     * INT DE RETORNO
+     *  0 - Lectura correcta (existen clientes)
+     *  1 - Lectura incorrecta (no existen clientes)
+     *  2 - Lectura incorrecta (no se pudo abrir el archivo)
+     */
+    int estado = -1;
+
+    cantidad = 0;
+    Cliente cliente;
+    FILE *archivo = fopen(CLIENTES_DAT, "rb");
+
+    if (archivo != NULL)
+    {
+        for (int x = 0; x < MAX_INFORMES; x++)
+        {
+            if (fread(&cliente, sizeof(Cliente), 1, archivo) != 0)
+            {
+                clientes[x] = cliente;
+                cantidad++;
+            }
+        }
+
+        if (cantidad != 0)
+            estado = 0;
+        else
+            estado = 1;
+    }
+    else
+        estado = 2;
+
+    fclose(archivo);
+
+    return estado;
+}
+
 #endif

@@ -21,7 +21,7 @@ struct Usuario
     int tipo;
 };
 
-struct Informes
+struct Profesional
 {
     char usuario[10];
     char nombre[60];
@@ -196,7 +196,7 @@ void mostrar_cadenas (ListaCadenas *lista)
 const char USUARIOS_DAT[] = "./binarios/usuarios.dat";
 const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
 const char CLIENTES_DAT[] = "./binarios/clientes.dat";
-const char INFORMES_DAT[] = "./binarios/turnos.dat";
+const char INFORMES_DAT[] = "./binarios/informes.dat";
 
 // Codigos de tipo de usuario
 const int COD_ADMIN = 1;
@@ -207,5 +207,6 @@ const int COD_ASIST = 3;
 const int MAX_USUARIOS = 100;
 const int MAX_PROF = 100;
 const int MAX_INFORMES = 100;
+const int MAX_CLIENTES = 100;
 
 #endif
