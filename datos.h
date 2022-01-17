@@ -192,6 +192,8 @@ int leer_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad)
                 clientes[x] = cliente;
                 cantidad++;
             }
+            else
+            	break;
         }
 
         if (cantidad != 0)
