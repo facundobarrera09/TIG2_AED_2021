@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "structs.h"
+#include "funciones_structs.h"
 #include "usuarios.h"
 
 void centro_estetica_admin(Error *&errores);
@@ -41,19 +43,35 @@ void centro_estetica_admin(Error *&errores)
      * 
      */
 
+    Menu menu;
     Sesion sesion;
-    Usuario usuarios[MAX_USUARIOS];
-    int cantidad;
 
-    int estado, opcion;
+    Usuario usuarios[MAX_USUARIOS];
+    Profesional profesionales[MAX_PROF];
+    Informe informes[MAX_INFORMES];
+    int cant_usuarios, cant_profesionales, cant_informes;
+
+    int contador = 0;
+
     errores = NULL;
-    Error *errores_creacion, error;
+    Error *errores_creacion;
+    bool ejecutar = true;
+    int estado, opcion;
+    char buffer[100];
+    
+    Fecha hoy;
+    time_t t;
+    struct tm *tm;
+    t = time(NULL);
+    tm = localtime(&t);
+    strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm);
+    hoy = obtener_fecha(buffer);
 
     // Verificar si existen usuarios
     while (true)
     {
         // Leer usuarios de usuarios.dat
-        estado = leer_usuarios(usuarios, cantidad);
+        estado = leer_usuarios(usuarios, cant_usuarios);
 
         if (estado != 0)
         {
@@ -70,7 +88,7 @@ void centro_estetica_admin(Error *&errores)
                 {
                     for (int x = 0; x < 3; x++)
                     {
-                        estado = crear_usuario(usuarios, cantidad, COD_ADMIN, errores_creacion);
+                        estado = crear_usuario(usuarios, cant_usuarios, COD_ADMIN, errores_creacion);
                         if (estado != 0)
                         {
                             printf("Error durante la creacion de usuario. ESTADO=%d\n", estado);
@@ -108,7 +126,7 @@ void centro_estetica_admin(Error *&errores)
     // Iniciar sesion
     while (true)
     {
-        estado = inicio_de_sesion(sesion.usuario, COD_ADMIN, usuarios, cantidad, errores);
+        estado = inicio_de_sesion(sesion.usuario, COD_ADMIN, usuarios, cant_usuarios, errores);
 
         if (estado != 0)
         {
@@ -120,5 +138,82 @@ void centro_estetica_admin(Error *&errores)
             break;
     }
 
-    
+    // Mostrar menu
+    modificar_dato(menu, "largo", "12");
+    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "margen", "2");
+
+    modificar_dato(menu, "opcion", "1-1-Crear usuario");
+    modificar_dato(menu, "opcion", "2-2-Visualizar atenciones por profesional");
+    modificar_dato(menu, "opcion", "3-3-Visualizar ranking de profesionales");
+    modificar_dato(menu, "opcion", "4-");
+    modificar_dato(menu, "opcion", "5-0-Salir");
+
+    modificar_dato(menu, "seleccion", "0");
+
+    modificar_dato(menu, "control", "Seleccione un numero");
+
+    while (ejecutar)
+    {
+        mostrar_menu(menu);
+        printf("\n\n> ");
+        scanf("%d", &opcion);
+
+        printf("\n");
+
+        switch (opcion)
+        {
+        case 1: // Crear usuario
+            while (true)
+            {
+                if (errores_creacion != NULL) eliminar_errores(errores_creacion);
+                estado = crear_usuario(usuarios, cant_usuarios, errores_creacion);
+
+                if (estado != 0)
+                {
+                    mostrar_errores(errores_creacion);
+                    system("pause");
+                }
+                else
+                    break;
+                
+                mostrar_menu(menu);
+                printf("\nUsuario creado con exito\n");
+            }
+            break;
+
+        case 2: // Visualizar atenciones por profesional
+            if (leer_profesionales(profesionales, cant_profesionales) == 0)
+            {
+                if (leer_informes(informes, cant_informes) == 0)
+                {
+                    for (int x = 0; x < cant_profesionales; x++)
+                    {
+                        contador = 0;
+                        for (int y = 0; y < cant_informes; y++)
+                            if (informes[y].id_profesional == profesionales[x].id_profesional && informes[y].fecha.mes == )
+                                contador++;
+                        printf("%d - %d\n", profesionales[x].id_profesional, contador);
+                    }
+                }
+            }
+            else
+                printf("ERROR - No se encontraron profesionales registrados\n");
+            break;
+
+        case 3: // Visualizar ranking
+            break;
+
+        case 0:
+            printf("Terminando el programa\n");
+            ejecutar = false;
+            break;
+        
+        default:
+            break;
+        }
+
+        printf("\n");
+        system("pause");
+    }
 }
