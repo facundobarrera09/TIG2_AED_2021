@@ -8,6 +8,8 @@
 #ifndef H_STRUCTS
 #define H_STRUCTS
 
+#include <time.h>
+
 // Estructuras comunes
 struct Fecha
 {
