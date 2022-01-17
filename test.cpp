@@ -48,7 +48,7 @@ int main()
         break;
     
     case 6:
-        test5();
+        test6();
         break;
     }
 }
