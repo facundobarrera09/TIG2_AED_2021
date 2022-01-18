@@ -23,7 +23,7 @@ bool es_id_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int id);
 bool es_usuario_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, const char *usuario);
 
 // FUNCIONES PRINCIPALES
-int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *errores)
+int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores)
 {
     /**
      * INT DE RETORNO
@@ -147,7 +147,7 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *errores)
     return 0;
 }
 
-int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error *errores)
+int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error *&errores)
 {
     /**
      * INT DE RETORNO
