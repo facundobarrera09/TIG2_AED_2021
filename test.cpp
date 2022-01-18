@@ -1,9 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
 #include "structs.h"
-#include "funciones_structs.h"
 #include "usuarios.h"
 #include "error.h"
 #include "menu.h"
@@ -17,6 +17,7 @@ void test5(); // lista_cadenas
 void test6(); // crear cliente
 void test7(); // fecha actual
 void test8(); // crear profesional
+void test9(); // atoi
 
 int main()
 {
@@ -60,6 +61,10 @@ int main()
 
     case 8:
         test8();
+        break;
+
+    case 9:
+        test9();
         break;
     }
 }
@@ -278,7 +283,7 @@ void test5()
 
 void test6()
 {
-    escribir_cliente(crear_cliente());
+    //escribir_cliente(crear_cliente());
 }
 
 void test7()
@@ -300,4 +305,14 @@ void test7()
 void test8()
 {
     escribir_profesional(crear_profesional());
+}
+
+void test9()
+{
+    char cadena[] = "";
+    int numero = -1;
+
+    numero = atoi(cadena);
+
+    printf("%d", numero);
 }
