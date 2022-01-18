@@ -14,13 +14,25 @@ bool contiene_caracteres_necesarios(const char cadena[]);
 bool contiene_caracteres_invalidos(const char cadena[]);
 int digitos_consecutivos(const char cadena[]);
 int caracteres_consecutivos(const char cadena[]);
+bool es_dni_unico(Cliente clientes[MAX_CLIENTES], int cantidad, int dni);
 
 // FUNCIONES PRINCIPALES
-Cliente crear_cliente()
+int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *errores)
 {
+    /**
+     * INT DE RETORNO
+     * 
+     * 0 - Cliente creado y almacenado con exito
+     * 1 - Se ingresaron datos invalidos
+     * 2 - No hay mas espacio
+     * 3 - Error al escribir el cliente
+     * 
+     */
+
     Menu menu;
     Cliente cliente;
     int seleccion = 0;
+    errores = NULL;
 
     bool ejecutar = true;
     char entrada[36], buffer[100];
@@ -98,13 +110,43 @@ Cliente crear_cliente()
             modificar_dato(menu, "valor", buffer);
         }
     }
+
+    // Validar los datos
+    if (cliente.dni == 0)
+        insertar_error(errores, C_CLIENTE_DNI_VACIO);
+    if (strcmp(cliente.nombre, "") == 0)
+        insertar_error(errores, C_CLIENTE_NOMBRE_VACIO);
+    if (!es_dni_unico(clientes, cantidad, cliente.dni))
+        insertar_error(errores, C_CLIENTE_EXISTE);
+    
+    if (errores != NULL)
+        return 1;
+
+    // Añadir cliente a arreglo
+        // Verificar si hay espacio
+    if (cantidad+1 == MAX_CLIENTES)
+        return 2;
+
+        // Añadir cliente a arreglo
+    cantidad++;
+    clientes[cantidad] = cliente;
+    
+        // Escribir usuario en archivo
+    if (escribir_cliente(cliente) != 0)
+    {
+        memset(&clientes[cantidad--], '\0', sizeof(Cliente));
+        return 3;
+    }
+
+    return 0;
 }
 
-Profesional crear_profesional()
+int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error *errores)
 {
     Menu menu;
     Profesional prof;
     int seleccion = 0;
+    errores = NULL;
 
     bool ejecutar = true;
     char entrada[36], buffer[100];
@@ -174,6 +216,7 @@ Profesional crear_profesional()
             modificar_dato(menu, "valor", buffer);
         }
     }
+
 }
 
 int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad, Error *&errores)
@@ -607,3 +650,16 @@ int caracteres_consecutivos(const char cadena[])
     return consecutivos_final;
 }
 
+bool es_dni_unico(Cliente clientes[MAX_CLIENTES], int cantidad, int dni)
+{
+    bool encontrado = false;
+
+    for (int x = 0; x < cantidad; x++)
+        if (clientes[x].dni == dni)
+        {
+            encontrado = true;
+            break;
+        }
+
+    return encontrado;
+}

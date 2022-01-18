@@ -27,8 +27,9 @@ const int C_INICIO_NO_EXISTE_USUARIO = 302;
 const int C_INICIO_NO_COINCIDE_TIPO = 303;
 const int C_INICIO_NO_COINCIDE_CONTRASENA = 304;
 //      Creacion de cliente
-const int C_CLIENTE_VACIO = 400;
-const int C_CLIENTE_EXISTE = 401;
+const int C_CLIENTE_DNI_VACIO = 400;
+const int C_CLIENTE_NOMBRE_VACIO = 401;
+const int C_CLIENTE_EXISTE = 402;
 
 // Descripción de error
 
@@ -53,7 +54,8 @@ const char D_INICIO_NO_EXISTE_USUARIO[] = "No se encontro el usuario";
 const char D_INICIO_NO_COINCIDE_TIPO[] = "El usuario ingresado no coincide con el tipo";
 const char D_INICIO_NO_COINCIDE_CONTRASENA[] = "La contraseña ingresada es incorrecta";
 //      Creacion de cliente
-const char D_CLIENTE_VACIO[] = "El numero de DNI no puede ser nulo";
+const char D_CLIENTE_DNI_VACIO[] = "El numero de DNI no puede ser nulo";
+const char D_CLIENTE_NOMBRE_VACIO[] = "El nombre no puede ser nulo";
 const char D_CLIENTE_EXISTE[] = "El DNI pertenece a un usuario que ya esta registrado";
 
 // Errores
@@ -121,8 +123,11 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
         strcpy(buffer, D_INICIO_NO_COINCIDE_CONTRASENA);
         break;
 
-    case C_CLIENTE_VACIO:
-        strcpy(buffer, D_CLIENTE_VACIO);
+    case C_CLIENTE_DNI_VACIO:
+        strcpy(buffer, D_CLIENTE_DNI_VACIO);
+        break;
+    case C_CLIENTE_NOMBRE_VACIO:
+        strcpy(buffer, D_CLIENTE_NOMBRE_VACIO);
         break;
     case C_CLIENTE_EXISTE:
         strcpy(buffer, D_CLIENTE_EXISTE);
