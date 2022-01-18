@@ -30,6 +30,11 @@ const int C_INICIO_NO_COINCIDE_CONTRASENA = 304;
 const int C_CLIENTE_DNI_VACIO = 400;
 const int C_CLIENTE_NOMBRE_VACIO = 401;
 const int C_CLIENTE_EXISTE = 402;
+//      Creacion de profesional
+const int C_PROF_VACIO = 450;
+const int C_PROF_USUARIO_EXISTE = 451;
+const int C_PROF_DNI_EXISTE = 452;
+const int C_PROF_ID_EXISTE = 453;
 
 // Descripción de error
 
@@ -56,7 +61,12 @@ const char D_INICIO_NO_COINCIDE_CONTRASENA[] = "La contraseña ingresada es inco
 //      Creacion de cliente
 const char D_CLIENTE_DNI_VACIO[] = "El numero de DNI no puede ser nulo";
 const char D_CLIENTE_NOMBRE_VACIO[] = "El nombre no puede ser nulo";
-const char D_CLIENTE_EXISTE[] = "El DNI pertenece a un usuario que ya esta registrado";
+const char D_CLIENTE_EXISTE[] = "El DNI ingresado le pertenece a otro cliente";
+//      Creacion de profesional
+const char D_PROF_VACIO[] = "El nombre, DNI, id, y usuario no pueden estar vacios";
+const char D_PROF_USUARIO_EXISTE[] = "El usuario ingresado ya esta asociado a otro profesional";
+const char D_PROF_DNI_EXISTE[] = "El DNI ingresado le pertenece a otro profesional";
+const char D_PROF_ID_EXISTE[] = "El ID ingresado le pertenece a otro profesional";
 
 // Errores
 
@@ -132,6 +142,20 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
     case C_CLIENTE_EXISTE:
         strcpy(buffer, D_CLIENTE_EXISTE);
         break;
+    
+    case C_PROF_DNI_EXISTE:
+        strcpy(buffer, D_PROF_DNI_EXISTE);
+        break;
+    case C_PROF_ID_EXISTE:
+        strcpy(buffer, D_PROF_ID_EXISTE);
+        break;
+    case C_PROF_VACIO:
+        strcpy(buffer, D_PROF_VACIO);
+        break;
+    case C_PROF_USUARIO_EXISTE:
+        strcpy(buffer, D_PROF_USUARIO_EXISTE);
+        break;
+
     }
 }
 

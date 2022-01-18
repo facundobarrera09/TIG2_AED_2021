@@ -73,7 +73,7 @@ int escribir_usuario(Usuario usuario)
     return estado;
 }
 
-int leer_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad)
+int leer_clientes(Cliente clientes[MAX_CLIENTES], int &cantidad)
 {
     /**
      * INT DE RETORNO

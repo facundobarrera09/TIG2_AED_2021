@@ -7,6 +7,7 @@
 #include "menu.h"
 #include "error.h"
 
+// Usuarios
 int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad);
 int cantidad_mayusculas(const char cadena[]);
 int cantidad_digitos(const char cadena[]);
@@ -14,7 +15,12 @@ bool contiene_caracteres_necesarios(const char cadena[]);
 bool contiene_caracteres_invalidos(const char cadena[]);
 int digitos_consecutivos(const char cadena[]);
 int caracteres_consecutivos(const char cadena[]);
+
+// Clientes y profesionales
 bool es_dni_unico(Cliente clientes[MAX_CLIENTES], int cantidad, int dni);
+bool es_dni_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int dni);
+bool es_id_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int id);
+bool es_usuario_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, const char *usuario);
 
 // FUNCIONES PRINCIPALES
 int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *errores)
@@ -143,6 +149,16 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *errores)
 
 int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error *errores)
 {
+    /**
+     * INT DE RETORNO
+     * 
+     * 0 - Profesional creado y almacenado con exito
+     * 1 - Se ingresaron datos invalidos
+     * 2 - No hay mas espacio
+     * 3 - Error al escribir el profesional
+     * 
+     */
+
     Menu menu;
     Profesional prof;
     int seleccion = 0;
@@ -217,6 +233,36 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
         }
     }
 
+    // Validar los datos ingresados
+    if (prof.dni == 0 || prof.id_profesional == 0 || strcmp(prof.usuario, "") == 0 || strcmp(prof.nombre, "") == 0)
+        insertar_error(errores, C_PROF_VACIO);
+    if (!es_dni_unico(profesionales, cantidad, prof.dni))
+        insertar_error(errores, C_PROF_DNI_EXISTE);
+    if (!es_id_unico(profesionales, cantidad, prof.id_profesional))
+        insertar_error(errores, C_PROF_ID_EXISTE);
+    if (!es_usuario_unico(profesionales, cantidad, prof.usuario))
+        insertar_error(errores, C_PROF_USUARIO_EXISTE);
+
+    if (errores != NULL)
+        return 1;
+
+    // Añadir profesional a arreglo
+        // Verificar si hay espacio
+    if (cantidad+1 == MAX_PROF)
+        return 2;
+
+        // Añadir cliente a arreglo
+    cantidad++;
+    profesionales[cantidad] = prof;
+    
+        // Escribir usuario en archivo
+    if (escribir_profesional(prof) != 0)
+    {
+        memset(&profesionales[cantidad--], '\0', sizeof(Profesional));
+        return 3;
+    }
+
+    return 0;
 }
 
 int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad, Error *&errores)
@@ -652,14 +698,56 @@ int caracteres_consecutivos(const char cadena[])
 
 bool es_dni_unico(Cliente clientes[MAX_CLIENTES], int cantidad, int dni)
 {
-    bool encontrado = false;
+    bool unico = true;
 
     for (int x = 0; x < cantidad; x++)
         if (clientes[x].dni == dni)
         {
-            encontrado = true;
+            unico = false;
             break;
         }
 
-    return encontrado;
+    return unico;
+}
+
+bool es_dni_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int dni)
+{
+    bool unico = true;
+
+    for (int x = 0; x < cantidad; x++)
+        if (profesionales[x].dni == dni)
+        {
+            unico = false;
+            break;
+        }
+
+    return unico;
+}
+
+bool es_id_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int id)
+{
+    bool unico = true;
+
+    for (int x = 0; x < cantidad; x++)
+        if (profesionales[x].id_profesional == id)
+        {
+            unico = false;
+            break;
+        }
+
+    return unico;
+}
+
+bool es_usuario_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, const char usuario[])
+{
+    bool unico = true;
+
+    for (int x = 0; x < cantidad; x++)
+        if (strcmp(profesionales[x].usuario, usuario) == 0)
+        {
+            unico = false;
+            break;
+        }
+
+    return unico;
 }
