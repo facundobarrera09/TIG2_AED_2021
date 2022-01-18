@@ -134,8 +134,8 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
         return 2;
 
         // Añadir cliente a arreglo
-    cantidad++;
     clientes[cantidad] = cliente;
+    cantidad++;
     
         // Escribir usuario en archivo
     if (escribir_cliente(cliente) != 0)
@@ -252,8 +252,8 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
         return 2;
 
         // Añadir cliente a arreglo
-    cantidad++;
     profesionales[cantidad] = prof;
+    cantidad++;
     
         // Escribir usuario en archivo
     if (escribir_profesional(prof) != 0)
@@ -527,8 +527,8 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         return 2;
 
         // Añadir usuario a arreglo
-    cantidad++;
     usuarios[cantidad] = usuario;
+    cantidad++;
     
         // Escribir usuario en archivo
     if (escribir_usuario(usuario) != 0)

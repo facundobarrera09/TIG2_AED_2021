@@ -116,21 +116,29 @@ int leer_clientes(Cliente clientes[MAX_CLIENTES], int &cantidad)
 int escribir_cliente(Cliente cliente)
 {
     /**
-     * 0 - Se escribio correctamente
-     * 1 - No se pudo abrir el archivo
+     * INT DE RETORNO
+     *  0 - Escritura correcta (se escribio el cliente)
+     *  1 - Escritura incorrecta (no se pudo escribir en el archivo)
+     *  2 - Escritura incorrecta (no se pudo abrir el archivo)
      */
     
+    int estado = -1;
+
     FILE *arch = fopen(CLIENTES_DAT,"ab");
 
     if (arch!=NULL)
     {   
-        fwrite(&cliente, sizeof(Cliente), 1, arch);
-        fclose(arch);
+        if (fwrite(&cliente, sizeof(Cliente), 1, arch) != 0)
+            estado = 0;
+        else
+            estado = 1;
     }
     else
-        return 1;
+        estado = 2;
 
-    return 0;
+    fclose(arch);
+
+    return estado;
 }
 
 int leer_profesionales(Profesional profesionales[MAX_PROF], int &cantidad)
