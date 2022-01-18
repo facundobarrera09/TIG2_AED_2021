@@ -283,7 +283,35 @@ void test5()
 
 void test6()
 {
-    //escribir_cliente(crear_cliente());
+    Error *errores;
+    Cliente clientes[MAX_CLIENTES];
+    int cantidad, estado;
+
+    if (leer_clientes(clientes, cantidad) != 2)
+    {
+        estado = crear_cliente(clientes, cantidad, errores);
+        printf("\nestado=%d\n\n", estado);
+
+        if (estado != 0)
+        {
+            mostrar_errores(errores);
+            printf("\n");
+        }
+    }
+    else
+        printf("Error al leer archivo\n");
+
+    for (int x = 0; x < cantidad; x++)
+    {
+        printf("Cliente %d:\n", x);
+        printf(" - DNI: %d\n", clientes[x].dni);
+        printf(" - Nombre: %s\n", clientes[x].nombre);
+        printf(" - Domicilio: %s\n", clientes[x].domicilio);
+        printf(" - Localidad: %s\n", clientes[x].localidad);
+        printf(" - Nacimiento: %d/%d/%d\n", clientes[x].fecha_nacimiento.dia, clientes[x].fecha_nacimiento.mes, clientes[x].fecha_nacimiento.anio);
+        printf(" - Peso: %.2f\n", clientes[x].peso);
+        printf(" - Telefono: %s\n", clientes[x].telefono);
+    }
 }
 
 void test7()
@@ -304,7 +332,33 @@ void test7()
 
 void test8()
 {
-    escribir_profesional(crear_profesional());
+    Error *errores;
+    Profesional profesionales[MAX_PROF];
+    int cantidad, estado;
+
+    if (leer_profesionales(profesionales, cantidad) != 2)
+    {
+        estado = crear_profesional(profesionales, cantidad, errores);
+        printf("\nestado=%d\n\n", estado);
+
+        if (estado != 0)
+        {
+            mostrar_errores(errores);
+            printf("\n");
+        }
+    }
+    else
+        printf("Error al leer archivo\n");
+
+    for (int x = 0; x < cantidad; x++)
+    {
+        printf("Profesional %d:\n", x);
+        printf(" - ID: %d\n", profesionales[x].id_profesional);
+        printf(" - DNI: %d\n", profesionales[x].dni);
+        printf(" - Nombre: %s\n", profesionales[x].nombre);
+        printf(" - Usuario: %s\n", profesionales[x].usuario);
+        printf(" - Telefono: %s\n", profesionales[x].telefono);
+    }
 }
 
 void test9()
