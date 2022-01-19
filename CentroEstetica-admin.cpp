@@ -7,6 +7,7 @@
 #include "usuarios.h"
 
 void centro_estetica_admin(Error *&errores);
+void listar_atenciones();
 
 int main()
 {
@@ -33,6 +34,7 @@ int main()
     return 0;
 }
 
+// FUNCION PRINCIPAL
 void centro_estetica_admin(Error *&errores)
 {
     /**
@@ -47,9 +49,7 @@ void centro_estetica_admin(Error *&errores)
     Fecha hoy = obtener_fecha_actual();
 
     Usuario usuarios[MAX_USUARIOS];
-    Profesional profesionales[MAX_PROF];
-    Informe informes[MAX_INFORMES];
-    int cant_usuarios, cant_profesionales, cant_informes;
+    int cant_usuarios;
 
     int contador = 0;
 
@@ -177,24 +177,7 @@ void centro_estetica_admin(Error *&errores)
             break;
 
         case 2: // Visualizar atenciones por profesional
-            if (leer_profesionales(profesionales, cant_profesionales) == 0)
-            {
-                if (leer_informes(informes, cant_informes) == 0)
-                {
-                    for (int x = 0; x < cant_profesionales; x++)
-                    {
-                        contador = 0;
-                        for (int y = 0; y < cant_informes; y++)
-                            if (informes[y].id_profesional == profesionales[x].id_profesional && informes[y].fecha.mes == hoy.mes);
-                                contador++;
-                        printf("%d - %d\n", profesionales[x].id_profesional, contador);
-                    }
-                }
-                else
-                    printf("ERROR - No se encontraron informes\n");
-            }
-            else
-                printf("ERROR - No se encontraron profesionales registrados\n");
+            listar_atenciones();
             break;
 
         case 3: // Visualizar ranking
@@ -212,4 +195,59 @@ void centro_estetica_admin(Error *&errores)
         printf("\n");
         system("pause");
     }
+}
+
+// Funciones de menu
+void listar_atenciones()
+{
+    Profesional profesionales[MAX_PROF];
+    Informe informes[MAX_INFORMES];
+    int cant_prof, cant_informes, contador;
+
+    Menu menu;
+    Fecha hoy = obtener_fecha_actual();
+    char buffer[100];
+
+    modificar_dato(menu, "largo", "10");
+    modificar_dato(menu, "ancho", "65");
+    modificar_dato(menu, "margen", "2");
+    
+    modificar_dato(menu, "titulo", "Listado de atenciones de profesionales");
+
+    if (leer_profesionales(profesionales, cant_prof) == 0)
+    {
+        if (leer_informes(informes, cant_informes) == 0)
+        {
+            for (int x = 0; x < cant_prof; x++)
+            {
+                contador = 0;
+                for (int y = 0; y < cant_informes; y++)
+                {
+                    if (informes[y].id_profesional == profesionales[x].id_profesional)
+                        if (informes[y].fecha.mes == hoy.mes && informes[y].fecha.anio == hoy.anio)
+                            contador++;
+                }
+
+                itoa(x, buffer, sizeof(buffer));
+                strcat(buffer, "-");
+                strcat(buffer, profesionales[x].nombre);
+                modificar_dato(menu, "opcion", buffer);
+
+                strcpy(buffer, "");
+                itoa(x, buffer, sizeof(buffer));
+                strcat(buffer, "-");
+                if (x < 10)
+                    itoa(contador, &buffer[2], sizeof(buffer-2));
+                else
+                    itoa(contador, &buffer[3], sizeof(buffer-2));
+                modificar_dato(menu, "valor", buffer);
+            }
+        }
+        else
+            modificar_dato(menu, "opcion", "0-No se encontraron informes registrados");
+    }
+    else
+        modificar_dato(menu, "opcion", "0-No se encontraron profesionales registrados");
+
+    mostrar_menu(menu);
 }
