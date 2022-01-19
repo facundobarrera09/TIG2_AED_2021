@@ -35,6 +35,11 @@ const int C_PROF_VACIO = 450;
 const int C_PROF_USUARIO_EXISTE = 451;
 const int C_PROF_DNI_EXISTE = 452;
 const int C_PROF_ID_EXISTE = 453;
+//      Creacion de informe
+const int C_INFORME_CLI_PROF_VACIO = 500;
+const int C_INFORME_VACIO = 501;
+const int C_INFORME_CLIENTE_NO_EXISTE = 502;
+const int C_INFORME_PROF_NO_EXISTE = 503;
 
 // Descripción de error
 
@@ -67,6 +72,11 @@ const char D_PROF_VACIO[] = "El nombre, DNI, id, y usuario no pueden estar vacio
 const char D_PROF_USUARIO_EXISTE[] = "El usuario ingresado ya esta asociado a otro profesional";
 const char D_PROF_DNI_EXISTE[] = "El DNI ingresado le pertenece a otro profesional";
 const char D_PROF_ID_EXISTE[] = "El ID ingresado le pertenece a otro profesional";
+//      Creacion de informe
+const char D_INFORME_CLI_PROF_VACIO[] = "No existen clientes o profesionales registrados";
+const char D_INFORME_VACIO[] = "El ID del profesional, DNI del cliente, y el informe, no pueden ser nulos";
+const char D_INFORME_CLIENTE_NO_EXISTE[] = "El DNI del cliente no se encuentra registrado";
+const char D_INFORME_PROF_NO_EXISTE[] = "El ID del profesional no se encuentra registrado";
 
 // Errores
 
@@ -155,7 +165,19 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
     case C_PROF_USUARIO_EXISTE:
         strcpy(buffer, D_PROF_USUARIO_EXISTE);
         break;
-
+    
+    case C_INFORME_CLI_PROF_VACIO:
+        strcpy(buffer, D_INFORME_CLI_PROF_VACIO);
+        break;
+    case C_INFORME_CLIENTE_NO_EXISTE:
+        strcpy(buffer, D_INFORME_CLIENTE_NO_EXISTE);
+        break;
+    case C_INFORME_PROF_NO_EXISTE:
+        strcpy(buffer, D_INFORME_PROF_NO_EXISTE);
+        break;
+    case C_INFORME_VACIO:
+        strcpy(buffer, D_INFORME_VACIO);
+        break;
     }
 }
 

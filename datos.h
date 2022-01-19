@@ -245,4 +245,32 @@ int leer_informes(Informe informes[MAX_INFORMES], int &cantidad)
     return estado;
 }
 
+int escribir_informe(Informe informe)
+{
+    /**
+     * INT DE RETORNO
+     *  0 - Escritura correcta (se escribio el informe)
+     *  1 - Escritura incorrecta (no se pudo escribir en el archivo)
+     *  2 - Escritura incorrecta (no se pudo abrir el archivo)
+     */
+    
+    int estado = -1;
+
+    FILE *arch = fopen(INFORMES_DAT,"ab");
+
+    if (arch!=NULL)
+    {   
+        if (fwrite(&informe, sizeof(Informe), 1, arch) != 0)
+            estado = 0;
+        else
+            estado = 1;
+    }
+    else
+        estado = 2;
+
+    fclose(arch);
+
+    return estado;
+}
+
 #endif

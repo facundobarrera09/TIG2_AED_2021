@@ -23,6 +23,134 @@ bool es_id_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int id);
 bool es_usuario_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, const char *usuario);
 
 // FUNCIONES PRINCIPALES
+int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores)
+{
+    /**
+     * INT DE RETORNO
+     * 
+     * 0 - Informe creado y almacenado con exito
+     * 1 - Se ingresaron datos invalidos
+     * 2 - No hay mas espacio
+     * 3 - Error al escribir el informe
+     * 
+     */
+
+    Menu menu;
+    Informe informe;
+    int seleccion = 0;
+    errores = NULL;
+
+    Cliente clientes[MAX_CLIENTES];
+    Profesional profesionales[MAX_PROF];
+    int cant_clientes, cant_prof;
+
+    if (leer_clientes(clientes, cant_clientes) != 0 || leer_profesionales(profesionales, cant_prof) != 0)
+    {
+        insertar_error(errores, C_INFORME_CLI_PROF_VACIO);
+        return 3;
+    }
+
+    bool ejecutar = true;
+    char entrada[36], buffer[100];
+
+    // Establecer configuracion de la ventana
+    modificar_dato(menu, "largo", "12");
+    modificar_dato(menu, "ancho", "65");
+    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "titulo", "Centro de Estetica");
+    modificar_dato(menu, "titulo", "Cargar datos del informe");
+
+    modificar_dato(menu, "opcion", "0-ID del profesional");
+    modificar_dato(menu, "opcion", "1-DNI del cliente");
+    modificar_dato(menu, "opcion", "2-Fecha");
+    modificar_dato(menu, "opcion", "3-Informe");
+    modificar_dato(menu, "valor", "0-");
+    modificar_dato(menu, "valor", "1-");
+    modificar_dato(menu, "valor", "2-");
+    modificar_dato(menu, "valor", "3-");
+
+    modificar_dato(menu, "seleccion", "0");
+
+    modificar_dato(menu, "control", "AN para anterior");
+    modificar_dato(menu, "control", "OK para terminar");
+
+    // Pedir ingreso de datos
+    while (ejecutar)
+    {
+        system("cls");
+    
+        mostrar_menu(menu);
+        printf("\n> ");
+        _flushall();
+        gets(entrada);
+
+        if (strcmp(entrada, "AN") == 0)         // Opcion anterior
+        {
+            if (seleccion == 0) seleccion = 3;
+            else seleccion--;
+
+            itoa(seleccion, buffer, sizeof(buffer));
+            modificar_dato(menu, "seleccion", buffer);
+        }
+        else if (strcmp(entrada, "OK") == 0)    // Confirmar y terminar
+        {
+            obtener_cadena(menu.valores, 0, buffer);
+            informe.id_profesional = atoi(buffer);
+            obtener_cadena(menu.valores, 1, buffer);
+            informe.dni_cliente = atoi(buffer);
+            obtener_cadena(menu.valores, 2, buffer);
+            informe.fecha = obtener_fecha(buffer);
+            obtener_cadena(menu.valores, 3, buffer);
+            strcpy(informe.informe, buffer);
+
+            ejecutar = false;
+        }
+        else
+        {
+            strcpy(buffer, "");
+            itoa(seleccion, buffer, sizeof(buffer));
+            strcat(buffer, "-");
+            strcat(buffer, entrada);
+            modificar_dato(menu, "valor", buffer);
+            
+            if (seleccion == 6) seleccion = 0;
+            else seleccion++;
+
+            itoa(seleccion, buffer, sizeof(buffer));
+            modificar_dato(menu, "seleccion", buffer);
+        }
+    }
+
+    // Validar los datos
+    if (informe.id_profesional == 0 || informe.dni_cliente == 0 || strcmp(informe.informe, "") == 0)
+        insertar_error(errores, C_INFORME_VACIO);
+    if (es_dni_unico(clientes, cant_clientes, informe.dni_cliente))
+        insertar_error(errores, C_INFORME_CLIENTE_NO_EXISTE);
+    if (es_id_unico(profesionales, cant_prof, informe.id_profesional))
+        insertar_error(errores, C_INFORME_PROF_NO_EXISTE);
+    
+    if (errores != NULL)
+        return 1;
+
+    // Añadir cliente a arreglo
+        // Verificar si hay espacio
+    if (cantidad+1 == MAX_INFORMES)
+        return 2;
+
+        // Añadir cliente a arreglo
+    informes[cantidad] = informe;
+    cantidad++;
+    
+        // Escribir usuario en archivo
+    if (escribir_informe(informe) != 0)
+    {
+        memset(&informes[cantidad--], '\0', sizeof(Informe));
+        return 3;
+    }
+
+    return 0;
+}
+
 int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores)
 {
     /**
@@ -178,7 +306,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
     modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "2");
     modificar_dato(menu, "titulo", "Centro de Estetica");
-    modificar_dato(menu, "titulo", "Cargar datos del cliente");
+    modificar_dato(menu, "titulo", "Cargar datos del profesional");
 
     modificar_dato(menu, "opcion", "0-Usuario");
     modificar_dato(menu, "opcion", "1-Nombre completo");
