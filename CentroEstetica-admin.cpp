@@ -132,7 +132,7 @@ void centro_estetica_admin(Error *&errores)
     // Mostrar menu
     modificar_dato(menu, "largo", "11");
     modificar_dato(menu, "ancho", "65");
-    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "margen", "4");
 
     modificar_dato(menu, "titulo", "Centro de Estetica");
     modificar_dato(menu, "titulo", "Administracion");
@@ -206,9 +206,9 @@ void listar_atenciones()
 
     Menu menu;
     Fecha hoy = obtener_fecha_actual();
-    char buffer[100];
+    char buffer[100] = "";
+    int largo = 4;
 
-    modificar_dato(menu, "largo", "10");
     modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "2");
     
@@ -218,6 +218,16 @@ void listar_atenciones()
     {
         if (leer_informes(informes, cant_informes) == 0)
         {
+            if (largo+cant_prof > 10) largo += cant_prof;
+            else largo = 10;
+
+            itoa(largo, buffer, sizeof(buffer));
+
+            printf("largo=%d, buffer=%s\n", largo, buffer); // AQUI ESTA EL ERROR ?????
+
+            modificar_dato(menu, "largo", buffer);
+            system("pause");
+
             for (int x = 0; x < cant_prof; x++)
             {
                 contador = 0;
@@ -228,8 +238,9 @@ void listar_atenciones()
                             contador++;
                 }
 
+                strcpy(buffer, "");
                 itoa(x, buffer, sizeof(buffer));
-                strcat(buffer, "-");
+                strcat(buffer, "-- ");
                 strcat(buffer, profesionales[x].nombre);
                 modificar_dato(menu, "opcion", buffer);
 
