@@ -239,5 +239,6 @@ const int MAX_USUARIOS = 100;
 const int MAX_PROF = 100;
 const int MAX_INFORMES = 100;
 const int MAX_CLIENTES = 100;
+const int MAX_LONG_INFORME = 380;
 
 #endif

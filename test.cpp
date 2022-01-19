@@ -8,16 +8,17 @@
 #include "error.h"
 #include "menu.h"
 
-void test0(); // inicio de sesion
-void test1(); // creacion de usuario
-void test2(); // errores
-void test3(); // memcpy tests
-void test4(); // menu
-void test5(); // lista_cadenas
-void test6(); // crear cliente
-void test7(); // fecha actual
-void test8(); // crear profesional
-void test9(); // atoi
+void test0();   // inicio de sesion
+void test1();   // creacion de usuario
+void test2();   // errores
+void test3();   // memcpy tests
+void test4();   // menu
+void test5();   // lista_cadenas
+void test6();   // crear cliente
+void test7();   // fecha actual
+void test8();   // crear profesional
+void test9();   // atoi
+void test10();  // crear informe
 
 int main()
 {
@@ -65,6 +66,10 @@ int main()
 
     case 9:
         test9();
+        break;
+
+    case 10:
+        test10();
         break;
     }
 }
@@ -184,7 +189,7 @@ void test4()
     modificar_dato(menu, "opcion", "0-Nombre");
     modificar_dato(menu, "opcion", "1-Contrasena");
     modificar_dato(menu, "opcion", "2-Tipo");
-    modificar_dato(menu, "opcion", "3-Salir");
+    modificar_dato(menu, "opcion", "13-Salir");
 
     modificar_dato(menu, "valor", "0-Facundo");
     modificar_dato(menu, "valor", "1-bArr3ra");
@@ -332,4 +337,34 @@ void test9()
     numero = atoi(cadena);
 
     printf("%d", numero);
+}
+
+void test10()
+{
+    Error *errores;
+    Informe informes[MAX_INFORMES];
+    int cantidad, estado;
+
+    if (leer_informes(informes, cantidad) != 2)
+    {
+        estado = crear_informe(informes, cantidad, errores);
+        printf("\nestado=%d\n\n", estado);
+
+        if (estado != 0)
+        {
+            mostrar_errores(errores);
+            printf("\n");
+        }
+    }
+    else
+        printf("Error al leer archivo\n");
+
+    for (int x = 0; x < cantidad; x++)
+    {
+        printf("Profesional %d:\n", x);
+        printf(" - ID del profesional: %d\n", informes[x].id_profesional);
+        printf(" - DNI del cliente: %d\n", informes[x].dni_cliente);
+        printf(" - Fecha: %d/%d/%d\n", informes[x].fecha.dia, informes[x].fecha.mes, informes[x].fecha.anio);
+        printf(" - Informe: %s\n", informes[x].informe);
+    }
 }

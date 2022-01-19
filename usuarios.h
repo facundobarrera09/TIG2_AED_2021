@@ -51,7 +51,7 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
     }
 
     bool ejecutar = true;
-    char entrada[36], buffer[100];
+    char entrada[MAX_LONG_INFORME], buffer[100];
 
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "12");
