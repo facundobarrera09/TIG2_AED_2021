@@ -45,7 +45,7 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
 
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "12");
-    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "2");
     modificar_dato(menu, "titulo", "Centro de Estetica");
     modificar_dato(menu, "titulo", "Cargar datos del cliente");
@@ -67,8 +67,8 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
 
     modificar_dato(menu, "seleccion", "0");
 
-    modificar_dato(menu, "control", "NX para siguiente");
-    modificar_dato(menu, "control", "OK para terminar ");
+    modificar_dato(menu, "control", "AN para anterior");
+    modificar_dato(menu, "control", "OK para terminar");
 
     // Pedir ingreso de datos
     while (ejecutar)
@@ -80,10 +80,10 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
         _flushall();
         gets(entrada);
 
-        if (strcmp(entrada, "NX") == 0)         // Siguiente opcion
+        if (strcmp(entrada, "AN") == 0)         // Opcion anterior
         {
-            if (seleccion == 6) seleccion = 0;
-            else seleccion++;
+            if (seleccion == 0) seleccion = 6;
+            else seleccion--;
 
             itoa(seleccion, buffer, sizeof(buffer));
             modificar_dato(menu, "seleccion", buffer);
@@ -114,6 +114,12 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
+            
+            if (seleccion == 6) seleccion = 0;
+            else seleccion++;
+
+            itoa(seleccion, buffer, sizeof(buffer));
+            modificar_dato(menu, "seleccion", buffer);
         }
     }
 
@@ -169,7 +175,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
 
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "12");
-    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "2");
     modificar_dato(menu, "titulo", "Centro de Estetica");
     modificar_dato(menu, "titulo", "Cargar datos del cliente");
@@ -187,8 +193,8 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
 
     modificar_dato(menu, "seleccion", "0");
 
-    modificar_dato(menu, "control", "NX para siguiente");
-    modificar_dato(menu, "control", "OK para terminar ");
+    modificar_dato(menu, "control", "AN para anterior");
+    modificar_dato(menu, "control", "OK para terminar");
 
     // Pedir ingreso de datos
     while (ejecutar)
@@ -200,10 +206,10 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
         _flushall();
         gets(entrada);
 
-        if (strcmp(entrada, "NX") == 0)         // Siguiente opcion
+        if (strcmp(entrada, "AN") == 0)         // Siguiente opcion
         {
-            if (seleccion == 4) seleccion = 0;
-            else seleccion++;
+            if (seleccion == 0) seleccion = 4;
+            else seleccion--;
 
             itoa(seleccion, buffer, sizeof(buffer));
             modificar_dato(menu, "seleccion", buffer);
@@ -230,6 +236,12 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
+
+            if (seleccion == 4) seleccion = 0;
+            else seleccion++;
+
+            itoa(seleccion, buffer, sizeof(buffer));
+            modificar_dato(menu, "seleccion", buffer);
         }
     }
 
@@ -290,7 +302,7 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
 
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "8");
-    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "2");
     modificar_dato(menu, "titulo", "Inicio de sesion");
 
@@ -301,8 +313,8 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
 
     modificar_dato(menu, "seleccion", "0");
 
-    modificar_dato(menu, "control", "NX para siguiente");
-    modificar_dato(menu, "control", "OK para terminar ");
+    modificar_dato(menu, "control", "AN para anterior");
+    modificar_dato(menu, "control", "OK para terminar");
 
     // Pedir ingreso de datos
     while (ejecutar)
@@ -313,7 +325,7 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
         printf("\n> ");
         scanf("%s", entrada);
 
-        if (strcmp(entrada, "NX") == 0)         // Siguiente opcion
+        if (strcmp(entrada, "AN") == 0)         // Siguiente opcion
         {
             if (seleccion == 0) seleccion = 1;
             else seleccion = 0;
@@ -337,6 +349,12 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
+            
+            if (seleccion == 0) seleccion = 1;
+            else seleccion = 0;
+
+            itoa(seleccion, buffer, sizeof(buffer));
+            modificar_dato(menu, "seleccion", buffer);
         }
     }
 
@@ -395,7 +413,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
 
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "9");
-    modificar_dato(menu, "ancho", "52");
+    modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "2");
     modificar_dato(menu, "titulo", "Creacion de usuario");
 
@@ -408,8 +426,8 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
 
     modificar_dato(menu, "seleccion", "0");
 
-    modificar_dato(menu, "control", "NX para siguiente");
-    modificar_dato(menu, "control", "OK para terminar ");
+    modificar_dato(menu, "control", "AN para anterior");
+    modificar_dato(menu, "control", "OK para terminar");
 
     if (tipo != 0)
     {
@@ -431,16 +449,16 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         printf("\n> ");
         scanf("%s", entrada);
 
-        if (strcmp(entrada, "NX") == 0)
+        if (strcmp(entrada, "AN") == 0)
         {
             if (tipo == 0)
             {
-                if (seleccion < 2) seleccion++;
-                else seleccion = 0;
+                if (seleccion == 0) seleccion = 2;
+                else seleccion--;
             }
             else
             {
-                if (seleccion < 1) seleccion++;
+                if (seleccion == 0) seleccion = 1;
                 else seleccion = 0;
             }
 
@@ -474,6 +492,20 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
+
+            if (tipo == 0)
+            {
+                if (seleccion < 2) seleccion++;
+                else seleccion = 0;
+            }
+            else
+            {
+                if (seleccion < 1) seleccion++;
+                else seleccion = 0;
+            }
+
+            itoa(seleccion, buffer, sizeof(buffer));
+            modificar_dato(menu, "seleccion", buffer);
         }
 
         system("cls");
