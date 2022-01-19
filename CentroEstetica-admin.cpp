@@ -220,11 +220,8 @@ void listar_atenciones()
         {
             if (largo+cant_prof > 10) largo += cant_prof;
             else largo = 10;
-
-            itoa(largo, buffer, sizeof(buffer));
-
-            printf("largo=%d, buffer=%s\n", largo, buffer); // AQUI ESTA EL ERROR ?????
-
+        
+            itoa(largo, buffer, 10);
             modificar_dato(menu, "largo", buffer);
             system("pause");
 
@@ -239,18 +236,18 @@ void listar_atenciones()
                 }
 
                 strcpy(buffer, "");
-                itoa(x, buffer, sizeof(buffer));
+                itoa(x, buffer, 10);
                 strcat(buffer, "-- ");
                 strcat(buffer, profesionales[x].nombre);
                 modificar_dato(menu, "opcion", buffer);
 
                 strcpy(buffer, "");
-                itoa(x, buffer, sizeof(buffer));
+                itoa(x, buffer, 10);
                 strcat(buffer, "-");
                 if (x < 10)
-                    itoa(contador, &buffer[2], sizeof(buffer-2));
+                    itoa(contador, &buffer[2], 10);
                 else
-                    itoa(contador, &buffer[3], sizeof(buffer-2));
+                    itoa(contador, &buffer[3], 10);
                 modificar_dato(menu, "valor", buffer);
             }
         }

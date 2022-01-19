@@ -89,7 +89,7 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
             if (seleccion == 0) seleccion = 3;
             else seleccion--;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
         else if (strcmp(entrada, "OK") == 0)    // Confirmar y terminar
@@ -108,7 +108,7 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
         else
         {
             strcpy(buffer, "");
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
@@ -116,7 +116,7 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
             if (seleccion == 6) seleccion = 0;
             else seleccion++;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
     }
@@ -213,7 +213,7 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
             if (seleccion == 0) seleccion = 6;
             else seleccion--;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
         else if (strcmp(entrada, "OK") == 0)    // Confirmar y terminar
@@ -238,7 +238,7 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
         else
         {
             strcpy(buffer, "");
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
@@ -246,7 +246,7 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
             if (seleccion == 6) seleccion = 0;
             else seleccion++;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
     }
@@ -339,7 +339,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
             if (seleccion == 0) seleccion = 4;
             else seleccion--;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
         else if (strcmp(entrada, "OK") == 0)    // Confirmar y terminar
@@ -360,7 +360,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
         else
         {
             strcpy(buffer, "");
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
@@ -368,7 +368,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
             if (seleccion == 4) seleccion = 0;
             else seleccion++;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
     }
@@ -458,7 +458,7 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
             if (seleccion == 0) seleccion = 1;
             else seleccion = 0;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
         else if (strcmp(entrada, "OK") == 0)    // Confirmar y terminar
@@ -473,7 +473,7 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
         else
         {
             strcpy(buffer, "");
-            itoa(seleccion, buffer, sizeof(seleccion));
+            itoa(seleccion, buffer, 10);
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
@@ -481,7 +481,7 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
             if (seleccion == 0) seleccion = 1;
             else seleccion = 0;
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
     }
@@ -590,7 +590,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
                 else seleccion = 0;
             }
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
         else if (strcmp(entrada, "OK") == 0)
@@ -616,7 +616,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         else
         {
             strcpy(buffer, "");
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             strcat(buffer, "-");
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
@@ -632,7 +632,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
                 else seleccion = 0;
             }
 
-            itoa(seleccion, buffer, sizeof(buffer));
+            itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
 

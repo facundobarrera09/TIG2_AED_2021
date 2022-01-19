@@ -101,32 +101,22 @@ void test1()
     {
         int status1 = crear_usuario(usuarios, cantidad, errores);
 
-    /*
-    faC12Bar
-    NX
-    123ab
-    NX
-    ADMIN
-    OK
-    Fac123barerr
-    NX
-    1234.aB
-    NX
-    PROF
-    OK
-    lUC1aBarr
-    NX
-    aM3h2dI
-    NX
-    OK
+        printf("ESTADOS:\n\tstatus1=%d\n\n", status1);
 
-    */
+        if (errores != NULL) mostrar_errores(errores);
+    }
 
-        printf("ESTADOS:\n\tstatus1=%d\n", status1);
+    printf("\n");
 
-        printf("\nUsuario 1:\n");
-        if (errores != NULL)
-            mostrar_errores(errores);
+    for (int x = 0; x < cantidad; x++)
+    {
+        printf("Usuario %d:\n", x);
+        printf(" - Usuario: %s\n", usuarios[x].usuario);
+        printf(" - Contrasena: %s\n", usuarios[x].contrasena);
+        printf(" - Tipo: ");
+        if (usuarios[x].tipo == COD_ADMIN) printf("ADMIN\n");
+        if (usuarios[x].tipo == COD_PROF) printf("PROF\n");
+        if (usuarios[x].tipo == COD_ASIST) printf("ASIST\n");
     }
 }
 
