@@ -24,7 +24,8 @@ void modificar_dato(Menu &menu, const char dato[], const char valor[])
      * 
     */
 
-    char temp[2] = "";
+    int aux = 0;
+    char temp[5] = "";
 
     if (strcmp(dato, "largo") == 0) menu.largo = atoi(valor);
     if (strcmp(dato, "ancho") == 0) menu.ancho = atoi(valor);
@@ -34,15 +35,27 @@ void modificar_dato(Menu &menu, const char dato[], const char valor[])
     if (strcmp(dato, "control") == 0) insertar_cadena(menu.controles, valor);
     if (strcmp(dato, "opcion") == 0)
     {
-        memcpy(temp, valor, 1);
-        if (modificar_cadena(menu.opciones, &valor[2], atoi(temp)) == 1)
-            insertar_cadena(menu.opciones, &valor[2], atoi(temp));
+        if (valor[1] == '-')
+            aux = 1;
+        else if (valor[2] == '-')
+            aux = 2;
+
+        memcpy(temp, valor, aux);
+
+        if (modificar_cadena(menu.opciones, &valor[aux+1], atoi(temp)) == 1)
+            insertar_cadena(menu.opciones, &valor[aux+1], atoi(temp));
     }
     if (strcmp(dato, "valor") == 0)
     {
-        memcpy(temp, valor, 1);
-        if (modificar_cadena(menu.valores, &valor[2], atoi(temp)) == 1)
-            insertar_cadena(menu.valores, &valor[2], atoi(temp));
+        if (valor[1] == '-')
+            aux = 1;
+        else if (valor[2] == '-')
+            aux = 2;
+
+        memcpy(temp, valor, aux);
+
+        if (modificar_cadena(menu.valores, &valor[aux+1], atoi(temp)) == 1)
+            insertar_cadena(menu.valores, &valor[aux+1], atoi(temp));
     }
 }
 
