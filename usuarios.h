@@ -56,7 +56,7 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "12");
     modificar_dato(menu, "ancho", "65");
-    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "margen", "4");
     modificar_dato(menu, "titulo", "Centro de Estetica");
     modificar_dato(menu, "titulo", "Cargar datos del informe");
 
@@ -172,9 +172,9 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
     char entrada[36], buffer[100];
 
     // Establecer configuracion de la ventana
-    modificar_dato(menu, "largo", "12");
+    modificar_dato(menu, "largo", "14");
     modificar_dato(menu, "ancho", "65");
-    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "margen", "4");
     modificar_dato(menu, "titulo", "Centro de Estetica");
     modificar_dato(menu, "titulo", "Cargar datos del cliente");
 
@@ -304,7 +304,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "12");
     modificar_dato(menu, "ancho", "65");
-    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "margen", "4");
     modificar_dato(menu, "titulo", "Centro de Estetica");
     modificar_dato(menu, "titulo", "Cargar datos del profesional");
 
@@ -431,7 +431,7 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "8");
     modificar_dato(menu, "ancho", "65");
-    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "margen", "4");
     modificar_dato(menu, "titulo", "Inicio de sesion");
 
     modificar_dato(menu, "opcion", "0-Usuario");
@@ -542,7 +542,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
     // Establecer configuracion de la ventana
     modificar_dato(menu, "largo", "9");
     modificar_dato(menu, "ancho", "65");
-    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "margen", "4");
     modificar_dato(menu, "titulo", "Creacion de usuario");
 
     modificar_dato(menu, "opcion", "0-Usuario");

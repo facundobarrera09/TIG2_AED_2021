@@ -116,7 +116,7 @@ void mostrar_menu(Menu menu)
                     if (menu.seleccion == aux_opciones->id) strcpy(selec, "\xAF");
                     else strcpy(selec, " ");
 
-                    printf("%s %s", selec, aux_opciones->cadena);
+                    printf("\b\b%s %s", selec, aux_opciones->cadena);
                 
                     if (obtener_cadena(menu.valores, aux_opciones->id, buffer) == 0)
                     {
@@ -124,7 +124,7 @@ void mostrar_menu(Menu menu)
                         y += 2 + strlen(buffer);
                     }
 
-                    y += strlen(aux_opciones->cadena) + 2;
+                    y += strlen(aux_opciones->cadena);
 
                     aux_opciones = aux_opciones->sig;
                     ultimo_imprimir = imprimir;
@@ -133,7 +133,7 @@ void mostrar_menu(Menu menu)
             }
 
             // Controles
-            if (x >= linea_control && y >= menu.ancho-menu.margen-2)
+            if (x >= linea_control && y >= menu.ancho-4)
             {
                 if (aux_controles != NULL && ultimo_imprimir != imprimir)
                 {

@@ -179,7 +179,7 @@ void test4()
     // Aspecto fisico
     modificar_dato(menu, "largo", "12");
     modificar_dato(menu, "ancho", "71");
-    modificar_dato(menu, "margen", "2");
+    modificar_dato(menu, "margen", "4");
 
     // Titulo
     modificar_dato(menu, "titulo", "Centro de Estetica");
