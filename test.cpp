@@ -19,6 +19,7 @@ void test7();   // fecha actual
 void test8();   // crear profesional
 void test9();   // atoi
 void test10();  // crear informe
+void test11();  // cadena mas grande
 
 int main()
 {
@@ -70,6 +71,10 @@ int main()
 
     case 10:
         test10();
+        break;
+
+    case 11:
+        test11();
         break;
     }
 }
@@ -357,4 +362,36 @@ void test10()
         printf(" - Fecha: %d/%d/%d\n", informes[x].fecha.dia, informes[x].fecha.mes, informes[x].fecha.anio);
         printf(" - Informe: %s\n", informes[x].informe);
     }
+}
+
+void test11()
+{
+    const char cad1[] = "10", cad2[] = "11", cad3[] = "09";
+
+    if (cad1 < cad2)
+        printf("10 < 11\n");
+    else
+        printf("11 < 10\n"); // este
+        
+    if (cad2 < cad3)
+        printf("11 < 9\n");
+    else
+        printf("9 < 11\n");  // este
+        
+    if (cad1 < cad3)
+        printf("10 < 9\n");
+    else
+        printf("9 < 10\n");  // este
+
+    if ('0' < '1')
+        printf("0 < 1\n");   // este
+    else
+        printf("0 > 1\n");
+
+    printf("%d\n", strcmp(cad1, cad2)); // -1
+    printf("%d\n", strcmp(cad2, cad3)); //  1
+    printf("%d\n", strcmp(cad1, cad3)); //  1
+    printf("%d\n", strcmp(cad2, cad1)); //  1
+    printf("%d\n", strcmp(cad3, cad2)); // -1
+    printf("%d\n", strcmp(cad3, cad1)); // -1
 }
