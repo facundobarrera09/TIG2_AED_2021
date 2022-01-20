@@ -47,22 +47,22 @@ const int C_INFORME_PROF_NO_EXISTE = 503;
 const char D_CREACION_VACIO[] = "El usuario no puede contener campos vacios";
 //          Nombre
 const char D_USUARIO_EXISTENTE[] = "Ya existe un usuario con ese nombre";
-const char D_USUARIO_NO_MAYUS[] = "Debe tener al menos letras 2 mayusculas";
-const char D_USUARIO_NO_MINUS[] = "Debe comenzar con una letra minuscula";
-const char D_USUARIO_EXCESO_DIGITOS[] = "No debe tener mas de 3 digitos";
-const char D_USUARIO_TAMANO[] = "Debe tener entre 6 y 10 caracteres";
+const char D_USUARIO_NO_MAYUS[] = "El usuario debe tener al menos letras 2 mayusculas";
+const char D_USUARIO_NO_MINUS[] = "El usuario debe comenzar con una letra minuscula";
+const char D_USUARIO_EXCESO_DIGITOS[] = "El usuario no debe tener mas de 3 digitos";
+const char D_USUARIO_TAMANO[] = "El usuario debe tener entre 6 y 10 caracteres";
 //          Contraseña
-const char D_CONTRASENA_FALTAN_CARACTERES[] = "Debe contener una letra mayuscula, una minuscula, y un digito";
-const char D_CONTRASENA_CARACTERES_INVALIDOS[] = "Debe ser alfanumerica (unicamente letras y numeros)";
-const char D_CONTRASENA_CARACTERES_CONSECUTIVOS[] = "No debe tener 2 letras alfabeticamente consecutivas";
-const char D_CONTRASENA_DIGITOS_CONSECUTIVOS[] = "No debe tener 3 numeros consecutivos";
-const char D_CONTRASENA_TAMANO[] = "Debe tener entre 6 y 32 caracteres";
+const char D_CONTRASENA_FALTAN_CARACTERES[] = "La contrase\xA4 \ba debe contener una letra mayuscula, una minuscula, y un digito";
+const char D_CONTRASENA_CARACTERES_INVALIDOS[] = "La contrase\xA4 \ba debe ser alfanumerica (unicamente letras y numeros)";
+const char D_CONTRASENA_CARACTERES_CONSECUTIVOS[] = "La contrase\xA4 \ba no debe tener 2 letras alfabeticamente consecutivas";
+const char D_CONTRASENA_DIGITOS_CONSECUTIVOS[] = "La contrase\xA4 \ba no debe tener 3 numeros consecutivos";
+const char D_CONTRASENA_TAMANO[] = "La contrase\xA4 \ba debe tener entre 6 y 32 caracteres";
 //      Inicio de sesion
 const char D_INICIO_NO_ARCHIVO[] = "No se pudo abrir el archivo \"usuarios.dat\"";
 const char D_INICIO_NO_USUARIOS[] = "No existen usuarios";
 const char D_INICIO_NO_EXISTE_USUARIO[] = "No se encontro el usuario";
 const char D_INICIO_NO_COINCIDE_TIPO[] = "El usuario ingresado no coincide con el tipo";
-const char D_INICIO_NO_COINCIDE_CONTRASENA[] = "La contraseña ingresada es incorrecta";
+const char D_INICIO_NO_COINCIDE_CONTRASENA[] = "La contrase\xA4 \ba ingresada es incorrecta";
 //      Creacion de cliente
 const char D_CLIENTE_DNI_VACIO[] = "El numero de DNI no puede ser nulo";
 const char D_CLIENTE_NOMBRE_VACIO[] = "El nombre no puede ser nulo";

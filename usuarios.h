@@ -635,8 +635,6 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
             itoa(seleccion, buffer, 10);
             modificar_dato(menu, "seleccion", buffer);
         }
-
-        system("cls");
     }
 
     // Verificar que los datos sean correctos

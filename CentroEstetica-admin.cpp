@@ -55,7 +55,7 @@ void centro_estetica_admin(Error *&errores)
     int contador = 0;
 
     errores = NULL;
-    Error *errores_creacion;
+    Error *errores_creacion = NULL;
     bool ejecutar = true;
     int estado, opcion;
 
@@ -83,7 +83,7 @@ void centro_estetica_admin(Error *&errores)
                         estado = crear_usuario(usuarios, cant_usuarios, COD_ADMIN, errores_creacion);
                         if (estado != 0)
                         {
-                            printf("Error durante la creacion de usuario. ESTADO=%d\n", estado);
+                            printf("\nError durante la creacion de usuario. ESTADO=%d\n\n", estado);
                             if (estado == 1)
                             {
                                 mostrar_errores(errores_creacion);
@@ -93,7 +93,7 @@ void centro_estetica_admin(Error *&errores)
                         }
                         else
                         {
-                            printf("Usuario creado con exito\n");
+                            printf("\nUsuario creado con exito\n\n");
                             system("pause");
                             break;
                         }
@@ -122,8 +122,9 @@ void centro_estetica_admin(Error *&errores)
 
         if (estado != 0)
         {
-            printf("INICIO DE SESION:\n");
+            printf("\nError durante el inicio de sesion:\n");
             mostrar_errores(errores);
+            printf("\n");
             system("pause");
         }
         else
@@ -161,12 +162,14 @@ void centro_estetica_admin(Error *&errores)
         case 1: // Crear usuario
             while (true)
             {
-                if (errores_creacion != NULL) eliminar_errores(errores_creacion);
                 estado = crear_usuario(usuarios, cant_usuarios, errores_creacion);
 
                 if (estado != 0)
                 {
-                    mostrar_errores(errores_creacion);
+                    printf("\nError durante la creacion de usuario:\n");
+                    if (estado == 1)
+                        mostrar_errores(errores_creacion);
+                    printf("\n");
                     system("pause");
                 }
                 else
@@ -225,7 +228,6 @@ void listar_atenciones()
         
             itoa(largo, buffer, 10);
             modificar_dato(menu, "largo", buffer);
-            system("pause");
 
             for (int x = 0; x < cant_prof; x++)
             {
