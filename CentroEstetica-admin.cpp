@@ -8,6 +8,7 @@
 
 void centro_estetica_admin(Error *&errores);
 void listar_atenciones();
+void listar_ranking();
 
 int main()
 {
@@ -181,6 +182,7 @@ void centro_estetica_admin(Error *&errores)
             break;
 
         case 3: // Visualizar ranking
+            listar_ranking();
             break;
 
         case 0:
@@ -249,6 +251,93 @@ void listar_atenciones()
                 else
                     itoa(contador, &buffer[3], 10);
                 modificar_dato(menu, "valor", buffer);
+            }
+        }
+        else
+            modificar_dato(menu, "opcion", "0-No se encontraron informes registrados");
+    }
+    else
+        modificar_dato(menu, "opcion", "0-No se encontraron profesionales registrados");
+
+    mostrar_menu(menu);
+}
+
+void listar_ranking()
+{
+    ListaCadenas *ranking_nom = NULL, *aux_nom;
+    ListaCadenas *ranking_inf = NULL, *aux_inf;
+    int tamano;
+
+    Profesional profesionales[MAX_PROF];
+    Informe informes[MAX_INFORMES];
+    int cant_prof, cant_informes, contador;
+
+    Menu menu;
+    Fecha hoy = obtener_fecha_actual();
+    char buffer[100] = "";
+    int largo = 4, len = 0;
+
+    modificar_dato(menu, "ancho", "65");
+    modificar_dato(menu, "margen", "2");
+    
+    modificar_dato(menu, "titulo", "Ranking de atenciones de profesionales");
+
+    if (leer_profesionales(profesionales, cant_prof) == 0)
+    {
+        if (leer_informes(informes, cant_informes) == 0)
+        {
+            if (largo+cant_prof > 10) largo += cant_prof;
+            else largo = 10;
+        
+            itoa(largo, buffer, 10);
+            modificar_dato(menu, "largo", buffer);
+
+            // Contar informes de cada profesional
+            for (int x = 0; x < cant_prof; x++)
+            {
+                contador = 0;
+                for (int y = 0; y < cant_informes; y++)
+                {
+                    if (informes[y].id_profesional == profesionales[x].id_profesional)
+                        if (informes[y].fecha.mes == hoy.mes && informes[y].fecha.anio == hoy.anio)
+                            contador++;
+                }
+
+                insertar_cadena(ranking_nom, profesionales[x].nombre, contador);
+
+                strcpy(buffer, "");
+                itoa(contador, buffer, 10);
+                insertar_cadena(ranking_inf, buffer, contador);
+            }
+        
+            // Añadir ranking a la pantalla
+            tamano = tamano_cadenas(ranking_nom);
+            aux_nom = ranking_nom;
+            aux_inf = ranking_inf;
+
+            contador = 1;
+            while (aux_nom != NULL)
+            {
+                strcpy(buffer, "");
+                itoa(tamano, buffer, 10);
+                len = strlen(buffer);
+
+                strcpy(buffer, "");
+                itoa(tamano, buffer, 10);
+                strcat(buffer, "-");
+                itoa(tamano, &buffer[len+1], 10);
+                strcat(buffer, " - ");
+                strcat(buffer, aux_nom->cadena);
+                modificar_dato(menu, "opcion", buffer);
+
+                strcpy(buffer, "");
+                itoa(tamano--, buffer, 10);
+                strcat(buffer, "-");
+                strcat(buffer, aux_inf->cadena);
+                modificar_dato(menu, "valor", buffer);
+
+                aux_nom = aux_nom->sig;
+                aux_inf = aux_inf->sig;
             }
         }
         else
