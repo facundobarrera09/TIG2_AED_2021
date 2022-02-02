@@ -703,6 +703,84 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, Error *&errores
     return crear_usuario(usuarios, cantidad, 0, errores);
 }
 
+int registrar_turno(Cliente clientes[MAX_CLIENTES], int cantidad, Error *&errores)
+{
+    /**
+     * INT DE RETORNO
+     * 
+     * 0 - Turno creado y registrado con exito
+     * 1 - Se ingresaron datos invalidos
+     * 2 - No hay mas espacio
+     * 3 - Error al escribir el turno
+     * 
+     */
+
+    Menu menu;
+    Cliente cliente;
+    int seleccion = 0;
+    errores = NULL;
+
+    bool ejecutar = true;
+    char entrada[36], buffer[100];
+
+    // Establecer configuracion de la ventana
+    modificar_dato(menu, "largo", "9");
+    modificar_dato(menu, "ancho", "65");
+    modificar_dato(menu, "margen", "4");
+    modificar_dato(menu, "titulo", "Registro de turnos");
+
+    modificar_dato(menu, "opcion", "0-DNI del cliente");
+    modificar_dato(menu, "valor", "0- ");
+
+    modificar_dato(menu, "seleccion", "0");
+
+    modificar_dato(menu, "control", "Enter para buscar");
+
+    // Pedir ingreso de datos
+    while (ejecutar)
+    {
+        system("cls");
+    
+        mostrar_menu(menu);
+        printf("\n> ");
+        scanf("%s", entrada);
+
+        strcpy(buffer, "");
+        itoa(seleccion, buffer, 10);
+        strcat(buffer, "-");
+        strcat(buffer, entrada);
+        modificar_dato(menu, "valor", buffer);
+
+        ejecutar = false;
+    }
+
+    // Verificar que los datos sean correctos
+        // Verificar que los datos no esten vacios
+    if (strcmp(buffer, "") == 0)
+    {
+        insertar_error(errores, C_CLIENTE_DNI_VACIO);
+        return 1;
+    }
+
+        // Verificar que cliente exista
+    if (buscar_cliente(cliente, clientes, cantidad, atoi(buffer)) != 0)
+        insertar_error(errores, C_INFORME_CLIENTE_NO_EXISTE);
+
+    // Si hay errores, retornar
+    if (errores != NULL)
+    {
+        return 1;
+    }
+    
+    // Registrar turno al archivo
+    if (escribir_turno(cliente) != 0)
+    {
+        return 3;
+    }
+
+    return 0;
+}
+
 // FUNCIONES SECUNDARIAS
 
 int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad)
@@ -734,6 +812,32 @@ int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad
     }
 
     return 3;
+}
+
+int buscar_cliente(Cliente &cliente, Cliente clientes[MAX_CLIENTES], int cantidad, int dni)
+{
+    /**
+     * INT DE RETORNO:
+     * 
+     * 0 - Se encontro el cliente
+     * 1 - No se encontro el usuario
+     * 2 - Clientes está vacio
+     * 
+     */
+
+    if (cantidad == 0)
+        return 2;
+
+    for (int x = 0; x < cantidad; x++)
+    {
+        if (dni == clientes[x].dni)
+        {
+            cliente = clientes[x];
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 int cantidad_mayusculas(const char cadena[])
