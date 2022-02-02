@@ -229,6 +229,7 @@ const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
 const char CLIENTES_DAT[] = "./binarios/clientes.dat";
 const char INFORMES_DAT[] = "./binarios/informes.dat";
 const char TURNOS_DAT[] = "./binarios/turnos.dat";
+const char TURNOS_AUX_DAT[] = "./binarios/turnos_aux.dat";
 
 // Codigos de tipo de usuario
 const int COD_ADMIN = 1;

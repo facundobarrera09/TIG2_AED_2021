@@ -21,6 +21,7 @@ void test9();   // atoi
 void test10();  // crear informe
 void test11();  // cadena mas grande
 void test12();  // crear turno
+void test13();  // borrar turno
 
 int main()
 {
@@ -80,6 +81,10 @@ int main()
 
     case 12:
         test12();
+        break;
+
+    case 13:
+        test13();
         break;
     }
 }
@@ -403,7 +408,6 @@ void test11()
 
 void test12()
 {
-    
     Error *errores;
     Cliente turnos[MAX_TURNOS], clientes[MAX_CLIENTES];
     int cant_turnos, cant_clientes, estado;
@@ -428,6 +432,38 @@ void test12()
     {
         printf("Turno %d:\n", x);
         printf(" - DNI del cliente: %d\n", turnos[x].dni);
-        printf(" - Nombre del cliente: %d\n", turnos[x].nombre);
+        printf(" - Nombre del cliente: %s\n", turnos[x].nombre);
     }
 }
+
+void test13()
+{
+    Error *errores;
+    Cliente turnos[MAX_TURNOS], clientes[MAX_CLIENTES];
+    int cant_turnos, cant_clientes, estado;
+
+    if (leer_turnos(turnos, cant_turnos) != 0)
+        printf("Error al leer archivo\n");
+
+    for (int x = 0; x < cant_turnos; x++)
+    {
+        printf("Turno %d:\n", x);
+        printf(" - DNI del cliente: %d\n", turnos[x].dni);
+        printf(" - Nombre del cliente: %s\n", turnos[x].nombre);
+    }
+
+    printf("\nBorrando turno\n\n");
+    borrar_turno();
+
+    if (leer_turnos(turnos, cant_turnos) != 0)
+        printf("Error al leer archivo\n");
+
+    for (int x = 0; x < cant_turnos; x++)
+    {
+        printf("Turno %d:\n", x);
+        printf(" - DNI del cliente: %d\n", turnos[x].dni);
+        printf(" - Nombre del cliente: %s\n", turnos[x].nombre);
+    }
+}
+
+

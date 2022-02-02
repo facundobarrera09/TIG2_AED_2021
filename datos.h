@@ -273,6 +273,44 @@ int escribir_informe(Informe informe)
     return estado;
 }
 
+int leer_turnos(Cliente turnos[MAX_TURNOS], int &cantidad)
+{
+    /**
+     * INT DE RETORNO
+     *  0 - Lectura correcta (existen informes)
+     *  1 - Lectura incorrecta (no existen informes)
+     *  2 - Lectura incorrecta (no se pudo abrir el archivo)
+     */
+    int estado = -1;
+
+    cantidad = 0;
+    Cliente turno;
+    FILE *archivo = fopen(TURNOS_DAT, "rb");
+
+    if (archivo != NULL)
+    {
+        for (int x = 0; x < MAX_TURNOS; x++)
+        {
+            if (fread(&turno, sizeof(Cliente), 1, archivo) != 0)
+            {
+                turnos[x] = turno;
+                cantidad++;
+            }
+        }
+
+        if (cantidad != 0)
+            estado = 0;
+        else
+            estado = 1;
+    }
+    else
+        estado = 2;
+
+    fclose(archivo);
+
+    return estado;
+}
+
 int escribir_turno(Cliente cliente)
 {
     /**
@@ -299,6 +337,43 @@ int escribir_turno(Cliente cliente)
     fclose(arch);
 
     return estado;
+}
+
+int borrar_turno()
+{
+    /**
+     * @brief Borra el primer turno que encuentra
+     * 
+     */
+
+    FILE *arch = fopen(TURNOS_DAT, "rb"), *aux = fopen(TURNOS_AUX_DAT, "wb");
+    Cliente cliente;
+    int x = 0;
+
+    if (arch != NULL && aux != NULL)
+    {
+        while (fread(&cliente, sizeof(Cliente), 1, arch) != 0)
+        {
+            if (x == 0)
+            {
+                x++;
+                continue;
+            }
+            else
+            {
+                fwrite(&cliente, sizeof(Cliente), 1, aux);
+            }
+        }
+
+        fclose(arch);
+        fclose(aux);
+
+        remove(TURNOS_DAT);
+        rename(TURNOS_AUX_DAT, TURNOS_DAT);
+    }
+
+    fclose(arch);
+    fclose(aux);
 }
 
 #endif
