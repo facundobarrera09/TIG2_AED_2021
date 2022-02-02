@@ -20,6 +20,7 @@ void test8();   // crear profesional
 void test9();   // atoi
 void test10();  // crear informe
 void test11();  // cadena mas grande
+void test12();  // crear turno
 
 int main()
 {
@@ -75,6 +76,10 @@ int main()
 
     case 11:
         test11();
+        break;
+
+    case 12:
+        test12();
         break;
     }
 }
@@ -394,4 +399,35 @@ void test11()
     printf("%d\n", strcmp(cad2, cad1)); //  1
     printf("%d\n", strcmp(cad3, cad2)); // -1
     printf("%d\n", strcmp(cad3, cad1)); // -1
+}
+
+void test12()
+{
+    
+    Error *errores;
+    Cliente turnos[MAX_TURNOS], clientes[MAX_CLIENTES];
+    int cant_turnos, cant_clientes, estado;
+
+    leer_clientes(clientes, cant_clientes);
+
+    if (leer_turnos(turnos, cant_turnos) != 2)
+    {
+        estado = registrar_turno(clientes, cant_turnos, errores);
+        printf("\nestado=%d\n\n", estado);
+
+        if (estado != 0)
+        {
+            mostrar_errores(errores);
+            printf("\n");
+        }
+    }
+    else
+        printf("Error al leer archivo\n");
+
+    for (int x = 0; x < cant_turnos; x++)
+    {
+        printf("Turno %d:\n", x);
+        printf(" - DNI del cliente: %d\n", turnos[x].dni);
+        printf(" - Nombre del cliente: %d\n", turnos[x].nombre);
+    }
 }
