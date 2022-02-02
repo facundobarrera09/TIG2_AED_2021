@@ -84,7 +84,7 @@ void centro_estetica_asist(Error *&errores)
     // Iniciar sesion
     while (true)
     {
-        estado = inicio_de_sesion(sesion.usuario, COD_ADMIN, usuarios, cant_usuarios, errores);
+        estado = inicio_de_sesion(sesion.usuario, COD_ASIST, usuarios, cant_usuarios, errores);
 
         if (estado != 0)
         {
@@ -153,7 +153,36 @@ void centro_estetica_asist(Error *&errores)
 
 void dar_alta()
 {
-    
+    Cliente clientes[MAX_CLIENTES];
+    int cantidad;
+    Error *errores;
+
+    int estado;
+    int opcion, ejecutar = true;
+
+    estado = leer_clientes(clientes, cantidad);
+
+    if (estado != 2)
+    {
+        while (ejecutar)
+        {
+            estado = crear_cliente(clientes, cantidad, errores);
+
+            if (estado != 0)
+            {
+                mostrar_errores(errores);
+                printf("\n");
+                printf("Desea intentar de nuevo? [s/n] ");
+                _flushall();
+                opcion = getchar();
+
+                if (opcion != 's' && opcion != 'S')
+                    ejecutar = false;
+            }
+            else 
+                break;
+        }
+    }
 }
 
 void registrar_turno()
