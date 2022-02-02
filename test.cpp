@@ -412,7 +412,7 @@ void test12()
 
     if (leer_turnos(turnos, cant_turnos) != 2)
     {
-        estado = registrar_turno(clientes, cant_turnos, errores);
+        estado = registrar_turno(clientes, cant_clientes, errores);
         printf("\nestado=%d\n\n", estado);
 
         if (estado != 0)

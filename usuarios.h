@@ -9,6 +9,7 @@
 
 // Usuarios
 int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad);
+int buscar_cliente(Cliente &cliente, Cliente clientes[MAX_CLIENTES], int cantidad, int dni);
 int cantidad_mayusculas(const char cadena[]);
 int cantidad_digitos(const char cadena[]);
 bool contiene_caracteres_necesarios(const char cadena[]);
@@ -44,9 +45,14 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
     Profesional profesionales[MAX_PROF];
     int cant_clientes, cant_prof;
 
-    if (leer_clientes(clientes, cant_clientes) != 0 || leer_profesionales(profesionales, cant_prof) != 0)
+    if (leer_clientes(clientes, cant_clientes) != 0)
     {
-        insertar_error(errores, C_INFORME_CLI_PROF_VACIO);
+        insertar_error(errores, C_INFORME_PROF_VACIO);
+        return 3;
+    }
+    if (leer_profesionales(profesionales, cant_prof) != 0)
+    {
+        insertar_error(errores, C_INFORME_PROF_VACIO);
         return 3;
     }
 
@@ -717,7 +723,8 @@ int registrar_turno(Cliente clientes[MAX_CLIENTES], int cantidad, Error *&errore
 
     Menu menu;
     Cliente cliente;
-    int seleccion = 0;
+    int dni;
+    int seleccion = 1, estado;
     errores = NULL;
 
     bool ejecutar = true;
@@ -729,42 +736,48 @@ int registrar_turno(Cliente clientes[MAX_CLIENTES], int cantidad, Error *&errore
     modificar_dato(menu, "margen", "4");
     modificar_dato(menu, "titulo", "Registro de turnos");
 
-    modificar_dato(menu, "opcion", "0-DNI del cliente");
-    modificar_dato(menu, "valor", "0- ");
+    modificar_dato(menu, "opcion", "0-");
+    modificar_dato(menu, "opcion", "1-DNI del cliente");
+    modificar_dato(menu, "opcion", "2-");
+    modificar_dato(menu, "opcion", "3-");
+    modificar_dato(menu, "valor", "1- ");
 
-    modificar_dato(menu, "seleccion", "0");
+    modificar_dato(menu, "seleccion", "1");
 
     modificar_dato(menu, "control", "Enter para buscar");
 
     // Pedir ingreso de datos
-    while (ejecutar)
-    {
-        system("cls");
-    
-        mostrar_menu(menu);
-        printf("\n> ");
-        scanf("%s", entrada);
+    system("cls");
 
-        strcpy(buffer, "");
-        itoa(seleccion, buffer, 10);
-        strcat(buffer, "-");
-        strcat(buffer, entrada);
-        modificar_dato(menu, "valor", buffer);
+    mostrar_menu(menu);
+    printf("\n> ");
+    scanf("%s", entrada);
 
-        ejecutar = false;
-    }
+    strcpy(buffer, "");
+    itoa(seleccion, buffer, 10);
+    strcat(buffer, "-");
+    strcat(buffer, entrada);
+    modificar_dato(menu, "valor", buffer);
+
+    dni = atoi(entrada);
+
+    mostrar_menu(menu);
 
     // Verificar que los datos sean correctos
         // Verificar que los datos no esten vacios
-    if (strcmp(buffer, "") == 0)
+    if (dni == 0)
     {
         insertar_error(errores, C_CLIENTE_DNI_VACIO);
         return 1;
     }
 
         // Verificar que cliente exista
-    if (buscar_cliente(cliente, clientes, cantidad, atoi(buffer)) != 0)
+    estado = buscar_cliente(cliente, clientes, cantidad, dni);
+
+    if (estado == 1)
         insertar_error(errores, C_INFORME_CLIENTE_NO_EXISTE);
+    if (estado == 2)
+        insertar_error(errores, C_INFORME_CLI_VACIO);
 
     // Si hay errores, retornar
     if (errores != NULL)
