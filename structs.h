@@ -199,12 +199,34 @@ Fecha obtener_fecha(const char cadena[])
 {
     Fecha fecha;
     char buffer[10] = "";
+    int sig = 0;
 
-    memcpy(buffer, cadena, 2);
+    // Dia
+    if (cadena[sig+1] == '/')
+        memcpy(buffer, cadena, 1);
+    else
+    {
+        memcpy(buffer, cadena, 2);
+        sig++;
+    }
     fecha.dia = atoi(buffer);
-    memcpy(buffer, &cadena[3], 2);
+    sig += 2;
+
+    // Mes
+    if (cadena[sig+1] == '/')
+    {
+        memcpy(buffer, &cadena[sig], 1);
+    }
+    else
+    {
+        memcpy(buffer, &cadena[sig], 2);
+        sig++;
+    }
     fecha.mes = atoi(buffer);
-    memcpy(buffer, &cadena[6], 4);
+    sig += 2;
+
+    // Año
+    memcpy(buffer, &cadena[sig], 4);
     fecha.anio = atoi(buffer);
 
     return fecha;
@@ -221,6 +243,17 @@ Fecha obtener_fecha_actual()
     hoy = obtener_fecha(buffer);
 
     return hoy;
+}
+void fecha_a_cadena(Fecha fecha, char cadena[])
+{
+    int sig = 2;
+
+    itoa(fecha.dia, cadena, 10);
+    if (fecha.dia > 9) sig++;
+    itoa(fecha.mes, &cadena[sig], 10);
+    sig += 2;
+    if (fecha.mes > 9) sig++;
+    itoa(fecha.anio, &cadena[sig], 10);
 }
 
 // Direcciones de archivos

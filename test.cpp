@@ -300,7 +300,8 @@ void test7()
     strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm);
     hoy = obtener_fecha(buffer);
 
-    printf("fecha actual=%s\n", buffer);
+    printf("buffer fecha= %s\n", buffer);
+    printf("fecha hoy= %d/%d/%d", hoy.dia, hoy.mes, hoy.anio);
 }
 
 void test8()
