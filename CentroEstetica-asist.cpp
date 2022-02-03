@@ -8,7 +8,7 @@
 
 void centro_estetica_asist(Error *&errores);
 void dar_alta();
-void registrar_turno();
+void registrar_turno_de_cliente();
 void obtener_informe();
 
 int main()
@@ -130,7 +130,7 @@ void centro_estetica_asist(Error *&errores)
             break;
 
         case 2: // Registrar un turno
-            registrar_turno();
+            registrar_turno_de_cliente();
             break;
 
         case 3: // Obtener informe
@@ -185,12 +185,184 @@ void dar_alta()
     }
 }
 
-void registrar_turno()
+void registrar_turno_de_cliente()
 {
+    Cliente clientes[MAX_CLIENTES];
+    int cantidad;
+    Error *errores;
 
+    if (leer_clientes(clientes, cantidad) == 0)
+        if (registrar_turno(clientes, cantidad, errores) != 0)
+        {
+            printf("\n");
+            mostrar_errores(errores);
+        }
+        else;
+    else
+        printf("Error leyendo clientes\n");
 }
 
 void obtener_informe()
 {
+    Menu menu, listado, informe_encontrado;
 
+    Informe informes[MAX_INFORMES];
+    Profesional profesionales[MAX_PROF];
+    Cliente clientes[MAX_CLIENTES];
+    int cant_informes, cant_prof, cant_clientes;
+
+    int dni_cliente, id_prof;
+    Fecha fecha_informe;
+    Informe informe;
+    
+    int seleccion = 0;
+    char entrada[50] = "", buffer[55] = "";
+    bool ejecutar = true, encontrado = false;
+
+    modificar_dato(menu, "largo", "11");
+    modificar_dato(menu, "ancho", "65");
+    modificar_dato(menu, "margen", "4");
+
+    modificar_dato(menu, "titulo", "Centro de Estetica");
+    modificar_dato(menu, "titulo", "Busqueda de informes");
+
+    modificar_dato(menu, "opcion", "0-DNI del cliente");
+    modificar_dato(menu, "opcion", "1-ID del profesional");
+    modificar_dato(menu, "opcion", "2-Fecha de emision de informe");
+    modificar_dato(menu, "valor", "0-");
+    modificar_dato(menu, "valor", "1-");
+    modificar_dato(menu, "valor", "2-");
+    modificar_dato(menu, "seleccion", "0");
+
+    modificar_dato(menu, "control", "LS para listar prof.");
+    modificar_dato(menu, "control", "AN para anterior    ");
+    modificar_dato(menu, "control", "OK para terminar    ");
+
+    // Leer archivos e informar si hay errores
+    if (leer_informes(informes, cant_informes) == 0 && leer_profesionales(profesionales, cant_prof) == 0 && leer_clientes(clientes, cant_clientes) == 0)
+    {
+        // Llenar listado de profesionales
+        itoa(cant_prof+5, buffer, 10);
+        modificar_dato(listado, "largo", buffer);
+        modificar_dato(listado, "ancho", "65");
+        modificar_dato(listado, "margen", "4");
+        modificar_dato(listado, "titulo", "Listado de profesionales");
+        for (int x = 0; x < cant_prof; x++)
+        {
+            strcpy(buffer, "");
+            itoa(x, buffer, 10);
+            strcat(buffer, "-");
+            if (cant_prof > 9)
+                itoa(profesionales[x].id_profesional, &buffer[3], 10);
+            else
+                itoa(profesionales[x].id_profesional, &buffer[2], 10);
+            strcat(buffer, " - ");
+            strcat(buffer, profesionales[x].nombre);
+
+            modificar_dato(listado, "opcion", buffer);
+        }
+        modificar_dato(listado, "control", "Cualquier tecla para continuar");
+
+        // Mostrar menu y pedir ingreso de datos
+        while (ejecutar)
+        {
+            mostrar_menu(menu);
+            printf("\n> ");
+            scanf("%s", entrada);
+
+            if (strcmp(entrada, "LS") == 0)
+            {
+                mostrar_menu(listado);
+                system("pause > nul");
+            }
+            else if (strcmp(entrada, "AN") == 0)         // Opcion anterior
+            {
+                if (seleccion == 0) seleccion = 2;
+                else seleccion--;
+
+                itoa(seleccion, buffer, 10);
+                modificar_dato(menu, "seleccion", buffer);
+            }
+            else if (strcmp(entrada, "OK") == 0)    // Confirmar y terminar
+            {
+                obtener_cadena(menu.valores, 0, buffer);
+                dni_cliente = atoi(buffer);
+                obtener_cadena(menu.valores, 1, buffer);
+                id_prof = atoi(buffer);
+                obtener_cadena(menu.valores, 2, buffer);
+                fecha_informe = obtener_fecha(buffer);
+
+                ejecutar = false;
+            }
+            else
+            {
+                strcpy(buffer, "");
+                itoa(seleccion, buffer, 10);
+                strcat(buffer, "-");
+                strcat(buffer, entrada);
+                modificar_dato(menu, "valor", buffer);
+                
+                if (seleccion == 2) seleccion = 0;
+                else seleccion++;
+
+                itoa(seleccion, buffer, 10);
+                modificar_dato(menu, "seleccion", buffer);
+            }
+        }
+    
+        // Buscar informe
+        printf("dni=%d, id=%d, fecha=%d/%d/%d", dni_cliente, id_prof, fecha_informe.dia, fecha_informe.mes, fecha_informe.anio);
+        system("pause");
+        for (int x = 0; x < cant_informes; x++)
+        {
+            if (informes[x].dni_cliente == dni_cliente && informes[x].id_profesional == id_prof)
+                if (informes[x].fecha.anio == fecha_informe.anio)
+                    if (informes[x].fecha.mes == fecha_informe.mes)
+                        if (informes[x].fecha.dia == fecha_informe.dia)
+                        {
+                            informe = informes[x];
+                            encontrado = true;
+                            break;
+                        }
+        }
+
+        // Mostrar resultado de busqueda
+        modificar_dato(informe_encontrado, "largo", "12");
+        modificar_dato(informe_encontrado, "ancho", "65");
+        modificar_dato(informe_encontrado, "margen", "4");
+        modificar_dato(informe_encontrado, "titulo", "Centro de Estetica");
+        modificar_dato(informe_encontrado, "titulo", "Resultado de busqueda");
+
+        if (encontrado)
+        {
+            modificar_dato(informe_encontrado, "opcion", "0-ID del profesional");
+            modificar_dato(informe_encontrado, "opcion", "1-DNI del cliente");
+            modificar_dato(informe_encontrado, "opcion", "2-Fecha");
+            modificar_dato(informe_encontrado, "opcion", "3-Informe");
+            
+            strcpy(buffer, "0-");
+            itoa(informe.id_profesional, &buffer[2], 10);
+            modificar_dato(informe_encontrado, "valor", buffer);
+            
+            strcpy(buffer, "1-");
+            itoa(informe.dni_cliente, &buffer[2], 10);
+            modificar_dato(informe_encontrado, "valor", buffer);
+            
+            strcpy(buffer, "2-");
+            fecha_a_cadena(informe.fecha, &buffer[2]);
+            modificar_dato(informe_encontrado, "valor", buffer);
+            
+            strcpy(buffer, "3-");
+            strcat(buffer, informe.informe);
+            modificar_dato(informe_encontrado, "valor", buffer);
+        }
+        else
+        {
+            modificar_dato(informe_encontrado, "opcion", "0-No se encontro el informe");
+        }
+
+        mostrar_menu(informe_encontrado);
+    }
+    else
+        printf("No existen informes, profesionales o clientes registrados\n");
 }
