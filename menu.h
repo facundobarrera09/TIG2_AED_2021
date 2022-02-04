@@ -9,6 +9,7 @@
 
 struct Menu
 {
+    bool flex = false;
     int largo = 0, ancho = 0;
     int margen = 0;
     int seleccion = -1;
@@ -18,7 +19,7 @@ struct Menu
     ListaCadenas *controles = NULL;
 };
 
-void modificar_dato(Menu &menu, const char dato[], const char valor[])
+void modificar_dato(Menu &menu, const char dato[], const char valor[MAX_TAMANO_DATO])
 {
     /**
      * 
@@ -27,7 +28,12 @@ void modificar_dato(Menu &menu, const char dato[], const char valor[])
     int aux = 0;
     char temp[5] = "";
 
-    if (strcmp(dato, "largo") == 0) menu.largo = atoi(valor);
+    if (strcmp(dato, "largo") == 0) 
+    {
+        if (strcmp(valor, "flex") == 0) menu.flex = true;
+        else if (strcmp(valor, "no-flex") == 0) menu.flex = false;
+        else menu.largo = atoi(valor);
+    }
     if (strcmp(dato, "ancho") == 0) menu.ancho = atoi(valor);
     if (strcmp(dato, "margen") == 0) menu.margen = atoi(valor);
     if (strcmp(dato, "seleccion") == 0) menu.seleccion = atoi(valor);
@@ -69,7 +75,7 @@ void mostrar_menu(Menu menu)
     ListaCadenas *aux_titulos = menu.titulo;
     ListaCadenas *aux_opciones = menu.opciones;
     ListaCadenas *aux_controles = menu.controles;
-    char buffer[100] = "";
+    char buffer[MAX_LONG_INFORME] = "";
 
     // Valores por defecto ante entradas no validas o nulas
     if (menu.largo < 2) menu.largo = 20;
@@ -117,14 +123,39 @@ void mostrar_menu(Menu menu)
                     else strcpy(selec, " ");
 
                     printf("\b\b%s %s", selec, aux_opciones->cadena);
-                
-                    if (obtener_cadena(menu.valores, aux_opciones->id, buffer) == 0)
-                    {
-                        printf(": %s", buffer);
-                        y += 2 + strlen(buffer);
-                    }
 
                     y += strlen(aux_opciones->cadena);
+
+                    // Valores de las opciones
+                    if (obtener_cadena(menu.valores, aux_opciones->id, buffer) == 0)
+                    {
+                        printf(": ");
+                        y += 2;
+
+                        for (int p = 0; p < strlen(buffer); p++)
+                        {
+                            printf("%c", buffer[p]);
+                            y++;
+                            
+                            // Si se excede del espacio otorgado
+                            if (y >= menu.ancho-(menu.margen*2)+2)
+                            {
+                                // flex=true
+                                if (menu.flex == true)
+                                {
+                                    for (int espacio = 0; espacio < menu.margen; espacio++) printf(" ");
+                                    printf("\xBA\n\xBA");
+                                    for (y = 0; y < strlen(aux_opciones->cadena)+menu.margen+2; y++) printf(" ");
+                                }
+                                // flex=false
+                                else
+                                {
+                                    printf("\b\b\b...");
+                                    break;
+                                }
+                            }
+                        }
+                    }
 
                     aux_opciones = aux_opciones->sig;
                     ultimo_imprimir = imprimir;

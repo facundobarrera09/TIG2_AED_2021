@@ -60,9 +60,11 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
     char entrada[MAX_LONG_INFORME], buffer[100];
 
     // Establecer configuracion de la ventana
-    modificar_dato(menu, "largo", "12");
+    modificar_dato(menu, "largo", "11");
     modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "4");
+    modificar_dato(menu, "largo", "flex");
+
     modificar_dato(menu, "titulo", "Centro de Estetica");
     modificar_dato(menu, "titulo", "Cargar datos del informe");
 
@@ -119,7 +121,7 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
             
-            if (seleccion == 6) seleccion = 0;
+            if (seleccion == 3) seleccion = 0;
             else seleccion++;
 
             itoa(seleccion, buffer, 10);

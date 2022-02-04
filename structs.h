@@ -10,6 +10,30 @@
 
 #include <time.h>
 
+// CONSTANTES
+//      Direcciones de archivos
+const char USUARIOS_DAT[] = "./binarios/usuarios.dat";
+const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
+const char CLIENTES_DAT[] = "./binarios/clientes.dat";
+const char INFORMES_DAT[] = "./binarios/informes.dat";
+const char TURNOS_DAT[] = "./binarios/turnos.dat";
+const char TURNOS_AUX_DAT[] = "./binarios/turnos_aux.dat";
+
+//      Codigos de tipo de usuario
+const int COD_ADMIN = 1;
+const int COD_PROF = 2;
+const int COD_ASIST = 3;
+
+//      Valores maximos
+const int MAX_USUARIOS = 100;
+const int MAX_PROF = 100;
+const int MAX_INFORMES = 100;
+const int MAX_CLIENTES = 100;
+const int MAX_TURNOS = 100;
+
+const int MAX_LONG_INFORME = 380;
+const int MAX_TAMANO_DATO = 380;
+
 // Estructuras comunes
 struct Fecha
 {
@@ -60,7 +84,7 @@ struct Sesion
 struct ListaCadenas
 {
     int id;
-    char cadena[100];
+    char cadena[MAX_TAMANO_DATO];
     ListaCadenas *ant, *sig;
 };
 
@@ -255,26 +279,5 @@ void fecha_a_cadena(Fecha fecha, char cadena[])
     if (fecha.mes > 9) sig++;
     itoa(fecha.anio, &cadena[sig], 10);
 }
-
-// Direcciones de archivos
-const char USUARIOS_DAT[] = "./binarios/usuarios.dat";
-const char PROFESIONALES_DAT[] = "./binarios/profesionales.dat";
-const char CLIENTES_DAT[] = "./binarios/clientes.dat";
-const char INFORMES_DAT[] = "./binarios/informes.dat";
-const char TURNOS_DAT[] = "./binarios/turnos.dat";
-const char TURNOS_AUX_DAT[] = "./binarios/turnos_aux.dat";
-
-// Codigos de tipo de usuario
-const int COD_ADMIN = 1;
-const int COD_PROF = 2;
-const int COD_ASIST = 3;
-
-// Valores maximos
-const int MAX_USUARIOS = 100;
-const int MAX_PROF = 100;
-const int MAX_INFORMES = 100;
-const int MAX_CLIENTES = 100;
-const int MAX_LONG_INFORME = 380;
-const int MAX_TURNOS = 100;
 
 #endif

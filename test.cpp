@@ -198,7 +198,7 @@ void test4()
 
     modificar_dato(menu, "valor", "0-Facundo");
     modificar_dato(menu, "valor", "1-bArr3ra");
-    modificar_dato(menu, "valor", "2-ADMIN");
+    modificar_dato(menu, "valor", "2-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sem leo, tempor at augue eu, pharetra placerat metus. Fusce pellentesque mi vel quam porttitor, sit amet gravida turpis tempus. Curabitur sollicitudin pretium augue ac imperdiet. Ut congue et mi vel euismod. Vestibulum in eros molestie, tristique urna nec, tincidunt tortor.");
 
     modificar_dato(menu, "seleccion", "0");
 
@@ -206,7 +206,13 @@ void test4()
     modificar_dato(menu, "control", "NX para siguiente");
     modificar_dato(menu, "control", "OK para terminar ");
 
+    // Mostrar menu
     mostrar_menu(menu);
+    system("pause");
+
+    modificar_dato(menu, "largo", "flex");
+    mostrar_menu(menu);
+    system("pause");
 }
 
 void test5()
