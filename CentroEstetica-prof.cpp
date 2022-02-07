@@ -297,8 +297,7 @@ int main()
 	}
 	
 	int opcion;
-     
-	
+
     modificar_dato(menu, "largo", "14");
     modificar_dato(menu, "ancho", "71");
     modificar_dato(menu, "margen", "2");
