@@ -898,7 +898,7 @@ int buscar_cliente(Cliente &cliente, Cliente clientes[MAX_CLIENTES], int cantida
     return 1;
 }
 
-int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], int cantidad, char usuario[])
+int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], int cantidad, const char usuario[])
 {
     /**
      * INT DE RETORNO:
@@ -915,6 +915,32 @@ int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], i
     for (int x = 0; x < cantidad; x++)
     {
         if (strcmp(usuario, profesionales[x].usuario) == 0)
+        {
+            prof = profesionales[x];
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], int cantidad, int id)
+{
+    /**
+     * INT DE RETORNO:
+     * 
+     * 0 - Se encontro el profesional
+     * 1 - No se encontro el profesional
+     * 2 - Profesionales está vacio
+     * 
+     */
+
+    if (cantidad == 0)
+        return 2;
+
+    for (int x = 0; x < cantidad; x++)
+    {
+        if (id == profesionales[x].id_profesional)
         {
             prof = profesionales[x];
             return 0;
