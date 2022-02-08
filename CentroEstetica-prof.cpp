@@ -160,6 +160,7 @@ void llamar_paciente()
         modificar_dato(datos_paciente, "valor", buffer);
 
         mostrar_menu(datos_paciente);
+        printf("\n");
         system("pause");
     
         // Crear informe
@@ -173,8 +174,9 @@ void llamar_paciente()
 
             if (estado != 0)
             {
+                printf("\n");
                 mostrar_errores(errores);
-                printf("\n\n");
+                printf("\n");
                 printf("Desea intentar de nuevo? [s/n]: ");
                 _flushall();
                 opcion = getchar();
@@ -204,5 +206,166 @@ void llamar_paciente()
 
 void buscar_historial()
 {
+    Menu listado, informe;
+    int largo = 7;
 
+    Profesional profesionales[MAX_PROF], prof;
+    Informe informes[MAX_INFORMES], historial[MAX_INFORMES];
+    Cliente clientes[MAX_CLIENTES], cliente;
+    int cant_prof, cant_informes, cant_historial = 0, cant_clientes;
+    int dni_cliente;
+
+    char buffer[MAX_LONG_INFORME+5];
+
+    char entrada[10] = "";
+    int estado, opcion;
+    bool ejecutar = true;
+
+    // Listado de informes
+    modificar_dato(listado, "largo", "7");
+    modificar_dato(listado, "ancho", "65");
+    modificar_dato(listado, "margen", "4");
+    modificar_dato(listado, "titulo", "Listado de informes");
+    modificar_dato(listado, "control", "Seleccione una opcion");
+    modificar_dato(listado, "control", "EX para salir");
+
+    // Informe seleccionado
+    modificar_dato(informe, "largo", "flex");
+    modificar_dato(informe, "largo", "11");
+    modificar_dato(informe, "ancho", "65");
+    modificar_dato(informe, "margen", "4");
+
+    modificar_dato(informe, "opcion", "0-ID del profesional");
+    modificar_dato(informe, "opcion", "1-DNI del cliente");
+    modificar_dato(informe, "opcion", "2-Fecha");
+    modificar_dato(informe, "opcion", "3-Informe");
+    modificar_dato(informe, "opcion", "4-");
+    modificar_dato(informe, "valor", "0-");
+    modificar_dato(informe, "valor", "1-");
+    modificar_dato(informe, "valor", "2-");
+    modificar_dato(informe, "valor", "3-");
+
+    modificar_dato(informe, "control", "Enter para continuar");
+
+    // Principal
+    leer_profesionales(profesionales, cant_prof);
+    leer_clientes(clientes, cant_clientes);
+    estado = leer_informes(informes, cant_informes);
+    if (estado == 0)
+    {
+        printf("\nIngrese el DNI del paciente: ");
+        scanf("%d", &dni_cliente);
+
+        // Buscar informes
+        for (int x = 0; x < cant_informes; x++)
+        {
+            if (informes[x].dni_cliente == dni_cliente)
+            {
+                historial[cant_historial] = informes[x];
+                cant_historial++;
+                largo++;
+            }
+        }
+
+        // Generar lista de informes
+        if (cant_historial == 0)
+        {
+            modificar_dato(listado, "opcion", "0-No se encontraron informes");
+            modificar_dato(listado, "opcion", "1-");
+        }
+        else
+        {
+            for (int x = 0; x <= cant_historial; x++)
+            {
+                if (x == cant_historial)
+                {
+                    strcpy(buffer, "");
+                    itoa(x, buffer, 10);
+                    strcat(buffer, "-");
+                    modificar_dato(listado, "opcion", buffer);
+
+                    break;
+                }
+
+                int sig;
+
+                strcpy(buffer, "");
+                itoa(x, buffer, 10);
+                strcat(buffer, "-");
+                itoa(x, &buffer[2], 10);
+                strcat(buffer, " - Fecha: ");
+                sig = strlen(buffer);
+
+                fecha_a_cadena(historial[x].fecha, &buffer[sig]);
+                strcat(buffer, " - Prof: ");
+                sig = strlen(buffer);
+
+                buscar_profesional(prof, profesionales, cant_prof, historial[x].id_profesional);
+                strcat(buffer, prof.nombre);
+
+                modificar_dato(listado, "opcion", buffer);
+            }
+        }
+
+        itoa(largo, buffer, 10);
+        modificar_dato(listado, "largo", buffer);
+
+        // Mostrar informe y solicitar entrada
+        if (cant_historial != 0)
+        {
+            while (ejecutar)
+            {
+                mostrar_menu(listado);
+                printf("\n> ");
+                scanf("%s", entrada);
+
+                if (strcmp(entrada, "EX") == 0)
+                {
+                    ejecutar = false;
+                    break;
+                }
+                else
+                {
+                    opcion = atoi(entrada);
+                    if (opcion >= cant_historial) continue;
+
+                    buscar_cliente(cliente, clientes, cant_clientes, historial[opcion].dni_cliente);
+                    buscar_profesional(prof, profesionales, cant_prof, historial[opcion].id_profesional);
+                    eliminar_cadenas(informe.titulo);
+
+                    strcpy(buffer, "Informe de ");
+                    strcat(buffer, cliente.nombre);
+                    modificar_dato(informe, "titulo", buffer);
+
+                    strcpy(buffer, "Prof: ");
+                    strcat(buffer, prof.nombre);
+                    modificar_dato(informe, "titulo", buffer);
+
+                    strcpy(buffer, "0-");
+                    itoa(historial[opcion].id_profesional, &buffer[2], 10);
+                    modificar_dato(informe, "valor", buffer);
+
+                    strcpy(buffer, "1-");
+                    itoa(historial[opcion].dni_cliente, &buffer[2], 10);
+                    modificar_dato(informe, "valor", buffer);
+
+                    strcpy(buffer, "2-");
+                    fecha_a_cadena(historial[opcion].fecha, &buffer[2]);
+                    modificar_dato(informe, "valor", buffer);
+
+                    strcpy(buffer, "3-");
+                    strcat(buffer, historial[opcion].informe);
+                    modificar_dato(informe, "valor", buffer);
+
+                    mostrar_menu(informe);
+                    printf("\n");
+                    system("pause");
+                }
+            }
+        }
+        else
+            mostrar_menu(listado);
+    }
+    else
+        printf("No existen informes o no se pudo leer el archivo\n");
 }
