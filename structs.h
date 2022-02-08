@@ -279,5 +279,16 @@ void fecha_a_cadena(Fecha fecha, char cadena[])
     if (fecha.mes > 9) sig++;
     itoa(fecha.anio, &cadena[sig], 10);
 }
+int obtener_edad(Fecha nacimiento, Fecha actual)
+{
+    int edad = 0;
+
+    edad = actual.anio - nacimiento.anio;
+
+    if (actual.mes < nacimiento.mes || (actual.mes == nacimiento.mes && actual.dia < nacimiento.dia))
+        edad--;
+
+    return edad;
+}
 
 #endif
