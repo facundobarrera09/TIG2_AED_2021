@@ -208,6 +208,8 @@ void eliminar_cadenas(ListaCadenas *&lista)
         delete p;
         p = n;
     }
+
+    lista = NULL;
 }
 void mostrar_cadenas (ListaCadenas *lista)
 {
