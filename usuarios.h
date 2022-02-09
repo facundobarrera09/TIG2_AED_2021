@@ -89,6 +89,7 @@ int crear_informe(Informe datos, Informe informes[MAX_INFORMES], int &cantidad, 
         modificar_dato(menu, "valor", buffer);
 
         modificar_dato(menu, "seleccion", "1");
+        seleccion = 1;
     }
     if (datos.dni_cliente != 0)
     {
@@ -97,6 +98,7 @@ int crear_informe(Informe datos, Informe informes[MAX_INFORMES], int &cantidad, 
         modificar_dato(menu, "valor", buffer);
 
         modificar_dato(menu, "seleccion", "2");
+        seleccion = 2;
     }
     if (datos.fecha.dia != 0 && datos.fecha.mes != 0 && datos.fecha.anio != 0)
     {
@@ -105,6 +107,7 @@ int crear_informe(Informe datos, Informe informes[MAX_INFORMES], int &cantidad, 
         modificar_dato(menu, "valor", buffer);
 
         modificar_dato(menu, "seleccion", "3");
+        seleccion = 3;
     }
 
     strcpy(buffer, "");
