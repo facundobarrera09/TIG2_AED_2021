@@ -271,14 +271,17 @@ Fecha obtener_fecha_actual()
 }
 void fecha_a_cadena(Fecha fecha, char cadena[])
 {
-    int sig = 2;
+    int sig = 0;
 
-    itoa(fecha.dia, cadena, 10);
+    itoa(fecha.dia, &cadena[sig++], 10);
     if (fecha.dia > 9) sig++;
-    itoa(fecha.mes, &cadena[sig], 10);
-    sig += 2;
+    cadena[sig++] = '/';
+
+    itoa(fecha.mes, &cadena[sig++], 10);
     if (fecha.mes > 9) sig++;
-    itoa(fecha.anio, &cadena[sig], 10);
+    cadena[sig++] = '/';
+
+    itoa(fecha.anio, &cadena[sig++], 10);
 }
 int obtener_edad(Fecha nacimiento, Fecha actual)
 {
