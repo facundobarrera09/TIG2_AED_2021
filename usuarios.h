@@ -107,6 +107,8 @@ int crear_informe(Informe datos, Informe informes[MAX_INFORMES], int &cantidad, 
         modificar_dato(menu, "seleccion", "3");
     }
 
+    strcpy(buffer, "");
+
     // Pedir ingreso de datos
     while (ejecutar)
     {
