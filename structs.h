@@ -78,6 +78,7 @@ struct Informe
 struct Sesion
 {
     Usuario usuario;
+    Profesional datos_prof;
 };
 
 // Listas
