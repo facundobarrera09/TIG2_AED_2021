@@ -893,7 +893,7 @@ int buscar_cliente(Cliente &cliente, Cliente clientes[MAX_CLIENTES], int cantida
     return 1;
 }
 
-int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], int cantidad, int id)
+int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], int cantidad, char usuario[])
 {
     /**
      * INT DE RETORNO:
@@ -909,7 +909,7 @@ int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], i
 
     for (int x = 0; x < cantidad; x++)
     {
-        if (id == profesionales[x].id_profesional)
+        if (strcmp(usuario, profesionales[x].usuario) == 0)
         {
             prof = profesionales[x];
             return 0;
