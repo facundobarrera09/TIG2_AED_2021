@@ -24,7 +24,7 @@ bool es_id_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int id);
 bool es_usuario_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, const char *usuario);
 
 // FUNCIONES PRINCIPALES
-int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores)
+int crear_informe(Informe datos, Informe informes[MAX_INFORMES], int &cantidad, Error *&errores)
 {
     /**
      * INT DE RETORNO
@@ -81,6 +81,31 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
 
     modificar_dato(menu, "control", "AN para anterior");
     modificar_dato(menu, "control", "OK para terminar");
+
+    if (datos.id_profesional != 0)
+    {
+        strcpy(buffer, "0-");
+        itoa(datos.id_profesional, &buffer[2], 10);
+        modificar_dato(menu, "valor", buffer);
+
+        modificar_dato(menu, "seleccion", "1");
+    }
+    if (datos.dni_cliente != 0)
+    {
+        strcpy(buffer, "1-");
+        itoa(datos.dni_cliente, &buffer[2], 10);
+        modificar_dato(menu, "valor", buffer);
+
+        modificar_dato(menu, "seleccion", "2");
+    }
+    if (datos.fecha.dia != 0 && datos.fecha.mes != 0 && datos.fecha.anio != 0)
+    {
+        strcpy(buffer, "2-");
+        fecha_a_cadena(datos.fecha, &buffer[2]);
+        modificar_dato(menu, "valor", buffer);
+
+        modificar_dato(menu, "seleccion", "3");
+    }
 
     // Pedir ingreso de datos
     while (ejecutar)
@@ -157,6 +182,19 @@ int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores
     }
 
     return 0;
+}
+
+int crear_informe(Informe informes[MAX_INFORMES], int &cantidad, Error *&errores)
+{
+    Informe vacio;
+    vacio.dni_cliente = 0;
+    vacio.fecha.dia = 0;
+    vacio.fecha.mes = 0;
+    vacio.fecha.anio = 0;
+    vacio.id_profesional = 0;
+    strcpy(vacio.informe, "");
+
+    crear_informe(vacio, informes, cantidad, errores);
 }
 
 int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores)
