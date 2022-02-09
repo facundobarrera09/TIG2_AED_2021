@@ -7,6 +7,7 @@
 #include "error.h"
 #include "usuarios.h"
 
+void visualizar_lista();
 void llamar_paciente();
 void buscar_historial();
 
@@ -65,7 +66,7 @@ int main()
 	
 	int opcion;
 
-    modificar_dato(menu, "largo", "10");
+    modificar_dato(menu, "largo", "11");
     modificar_dato(menu, "ancho", "65");
     modificar_dato(menu, "margen", "4");
 
@@ -74,10 +75,11 @@ int main()
     modificar_dato(menu, "titulo", "Profesionales");
 
     // Opciones y valores
-    modificar_dato(menu, "opcion", "0-1 - Llamar al siguiente paciente");
-    modificar_dato(menu, "opcion", "1-2 - Obtener historial de un paciente");
-    modificar_dato(menu, "opcion", "2-");
-    modificar_dato(menu, "opcion", "3-0 - Salir");
+    modificar_dato(menu, "opcion", "1-1 - Visualizar lista de espera");
+    modificar_dato(menu, "opcion", "2-2 - Llamar al siguiente paciente");
+    modificar_dato(menu, "opcion", "3-3 - Obtener historial de un paciente");
+    modificar_dato(menu, "opcion", "4-");
+    modificar_dato(menu, "opcion", "5-0 - Salir");
 
     // Controles
     modificar_dato(menu, "control", "Seleccione una opcion");
@@ -89,9 +91,12 @@ int main()
 
         switch (opcion) {
             case 1:
-                llamar_paciente();
+                visualizar_lista();
                 break;
             case 2:
+                llamar_paciente();
+                break;
+            case 3:
                 buscar_historial();
                 break;
         }
@@ -102,6 +107,71 @@ int main()
     } while (opcion != 0);
 
     return 0;
+}
+
+void visualizar_lista()
+{
+    Menu lista;
+    int largo = 6;
+
+    Cliente clientes[MAX_CLIENTES], pendientes[MAX_TURNOS], cliente;
+    int cant_clientes, cant_pendientes;
+
+    char buffer[50];
+    int estado;
+
+    // Lista de turnos pendientes
+    modificar_dato(lista, "ancho", "65");
+    modificar_dato(lista, "margen", "4");
+    modificar_dato(lista, "titulo", "Atenciones pendientes");
+    modificar_dato(lista, "control", "Enter para continuar");
+
+    // Principal
+    leer_clientes(clientes, cant_clientes);
+    estado = leer_turnos(pendientes, cant_pendientes);
+    if (estado == 0)
+    {
+        largo += cant_pendientes;
+        itoa(largo, buffer, 10);
+        modificar_dato(lista, "largo", buffer);
+
+        for (int x = 0; x <= cant_pendientes; x++)
+        {
+            if (x == cant_pendientes)
+            {
+                strcpy(buffer, "");
+                itoa(x, buffer, 10);
+                strcat(buffer, "-");
+                modificar_dato(lista, "opcion", buffer);
+
+                break;
+            }
+
+            int sig = 0;
+
+            strcpy(buffer, "");
+            itoa(x, &buffer[sig++], 10);
+            if (x > 9) sig++;
+            strcat(buffer, "-"); sig++;
+            itoa(x, &buffer[sig++], 10);
+            if (x > 9) sig++;
+
+            strcat(buffer, " - Nombre: ");
+            sig = strlen(buffer);
+            buscar_cliente(cliente, clientes, cant_clientes, pendientes[x].dni);
+            strcat(buffer, cliente.nombre);
+
+            strcat(buffer, " - DNI: ");
+            sig = strlen(buffer);
+            itoa(pendientes[x].dni, &buffer[sig], 10);
+
+            modificar_dato(lista, "opcion", buffer);
+        }
+    
+        mostrar_menu(lista);
+    }
+    else
+        printf("No hay turnos");
 }
 
 void llamar_paciente()
@@ -287,12 +357,14 @@ void buscar_historial()
                     break;
                 }
 
-                int sig;
+                int sig = 0;
 
                 strcpy(buffer, "");
-                itoa(x, buffer, 10);
-                strcat(buffer, "-");
-                itoa(x, &buffer[2], 10);
+                itoa(x, &buffer[sig++], 10);
+                if (x > 9) sig++;
+                strcat(buffer, "-"); sig++;
+                itoa(x, &buffer[sig++], 10);
+                if (x > 9) sig++;
                 strcat(buffer, " - Fecha: ");
                 sig = strlen(buffer);
 
