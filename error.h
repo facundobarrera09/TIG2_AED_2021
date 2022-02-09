@@ -20,6 +20,8 @@ const int C_CONTRASENA_CARACTERES_INVALIDOS = 201;
 const int C_CONTRASENA_CARACTERES_CONSECUTIVOS = 202;
 const int C_CONTRASENA_DIGITOS_CONSECUTIVOS = 203;
 const int C_CONTRASENA_TAMANO = 204;
+//          Datos del profesional
+const int C_USUARIO_PROF = 250;
 //      Inicio de sesion
 const int C_INICIO_NO_ARCHIVO = 300;
 const int C_INICIO_NO_USUARIOS = 301;
@@ -58,6 +60,8 @@ const char D_CONTRASENA_CARACTERES_INVALIDOS[] = "La contrase\xA4 \ba debe ser a
 const char D_CONTRASENA_CARACTERES_CONSECUTIVOS[] = "La contrase\xA4 \ba no debe tener 2 letras alfabeticamente consecutivas";
 const char D_CONTRASENA_DIGITOS_CONSECUTIVOS[] = "La contrase\xA4 \ba no debe tener 3 numeros consecutivos";
 const char D_CONTRASENA_TAMANO[] = "La contrase\xA4 \ba debe tener entre 6 y 32 caracteres";
+//          Datos del profesional
+const char D_USUARIO_PROF[] = "No se pudo crear el profesional asociado al usuario";
 //      Inicio de sesion
 const char D_INICIO_NO_ARCHIVO[] = "No se pudo abrir el archivo \"usuarios.dat\"";
 const char D_INICIO_NO_USUARIOS[] = "No existen usuarios";
@@ -128,6 +132,10 @@ void obtener_descripcion_de_error(int codigo, char buffer[])
     case C_CONTRASENA_TAMANO:
         strcpy(buffer, D_CONTRASENA_TAMANO);
         break;
+
+    case C_USUARIO_PROF:
+        strcpy(buffer, D_USUARIO_PROF);
+        break;        
 
     case C_INICIO_NO_ARCHIVO:
         strcpy(buffer, D_INICIO_NO_ARCHIVO);

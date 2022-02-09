@@ -610,6 +610,9 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
     int seleccion = 0;
     errores = NULL;
 
+    Profesional profesionales[MAX_PROF];
+    int cant_prof;
+
     bool ejecutar = true;
     char entrada[36], buffer[100];
 
@@ -753,6 +756,17 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         return 1;
     }
     
+    // Si el tipo de usuario es PROFESIONAL
+    if (usuario.tipo == COD_PROF)
+    {
+        // Crear el profesional
+        if (crear_profesional(profesionales, cant_prof, usuario.usuario, errores) != 0)
+        {
+            insertar_error(errores, C_USUARIO_PROF);
+            return 1;
+        }
+    }
+
     // Crear usuario
         // Verificar si hay espacio
     if (cantidad+1 == MAX_USUARIOS)
