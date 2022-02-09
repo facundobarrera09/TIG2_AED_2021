@@ -289,7 +289,7 @@ int crear_cliente(Cliente clientes[MAX_CLIENTES], int &cantidad, Error *&errores
     return 0;
 }
 
-int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error *&errores)
+int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, const char usuario[], Error *&errores)
 {
     /**
      * INT DE RETORNO
@@ -306,7 +306,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
     int seleccion = 0;
     errores = NULL;
 
-    bool ejecutar = true;
+    bool ejecutar = true, ingreso_usuario = false;
     char entrada[36], buffer[100];
 
     // Establecer configuracion de la ventana
@@ -332,6 +332,19 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
     modificar_dato(menu, "control", "AN para anterior");
     modificar_dato(menu, "control", "OK para terminar");
 
+    // Verificar si se ingreso usuario
+    if (strcmp(usuario, "") != 0)
+    {
+        ingreso_usuario = true;
+
+        strcpy(buffer, "0-");
+        strcat(buffer, usuario);
+        modificar_dato(menu, "valor", buffer);
+        
+        modificar_dato(menu, "seleccion", "1");
+        seleccion = 1;
+    }
+
     // Pedir ingreso de datos
     while (ejecutar)
     {
@@ -344,7 +357,8 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
 
         if (strcmp(entrada, "AN") == 0)         // Siguiente opcion
         {
-            if (seleccion == 0) seleccion = 4;
+            if (ingreso_usuario && seleccion == 1) seleccion = 4;
+            else if (seleccion == 0) seleccion = 4;
             else seleccion--;
 
             itoa(seleccion, buffer, 10);
@@ -373,7 +387,11 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
             strcat(buffer, entrada);
             modificar_dato(menu, "valor", buffer);
 
-            if (seleccion == 4) seleccion = 0;
+            if (seleccion == 4)
+            {
+                if (ingreso_usuario) seleccion = 1;
+                else seleccion = 0;
+            }
             else seleccion++;
 
             itoa(seleccion, buffer, 10);
@@ -411,6 +429,11 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
     }
 
     return 0;
+}
+
+int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error *&errores)
+{
+    crear_profesional(profesionales, cantidad, "", errores);
 }
 
 int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad, Error *&errores)
