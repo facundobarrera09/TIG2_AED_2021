@@ -10,6 +10,7 @@
 // Usuarios
 int buscar_usuario(Usuario usuario, Usuario usuarios[MAX_USUARIOS], int cantidad);
 int buscar_cliente(Cliente &cliente, Cliente clientes[MAX_CLIENTES], int cantidad, int dni);
+int buscar_profesional(Profesional &prof, Profesional profesionales[MAX_PROF], int cantidad, const char usuario[]);
 int cantidad_mayusculas(const char cadena[]);
 int cantidad_digitos(const char cadena[]);
 bool contiene_caracteres_necesarios(const char cadena[]);
@@ -479,7 +480,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, Error 
     crear_profesional(profesionales, cantidad, "", errores);
 }
 
-int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad, Error *&errores)
+int crear_sesion(Sesion &sesion, int tipo, Usuario usuarios[MAX_USUARIOS], int cantidad, Error *&errores)
 {
     /**
      * INT DE RETORNO:
@@ -493,6 +494,8 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
      */
     Menu menu;
     Usuario usuario;
+    Profesional profesionales[MAX_PROF];
+    int cant_prof;
     int seleccion = 0;
     int estado_de_usuario;
     errores = NULL;
@@ -574,7 +577,12 @@ int inicio_de_sesion(Usuario &usuario_buf, int tipo, Usuario usuarios[MAX_USUARI
     switch (estado_de_usuario)
     {
     case 0:
-        usuario_buf = usuario;
+        if (usuario.tipo == COD_PROF)
+        {
+            if (leer_profesionales(profesionales, cant_prof) == 0)
+                buscar_profesional(sesion.datos_prof, profesionales, cant_prof, usuario.usuario);
+        }
+        sesion.usuario = usuario;
         return 0;
     case 1:
         insertar_error(errores, C_INICIO_NO_COINCIDE_CONTRASENA);

@@ -84,7 +84,7 @@ void centro_estetica_asist(Error *&errores)
     // Iniciar sesion
     while (true)
     {
-        estado = inicio_de_sesion(sesion.usuario, COD_ASIST, usuarios, cant_usuarios, errores);
+        estado = crear_sesion(sesion, COD_ASIST, usuarios, cant_usuarios, errores);
 
         if (estado != 0)
         {
@@ -311,8 +311,6 @@ void obtener_informe()
         }
     
         // Buscar informe
-        printf("dni=%d, id=%d, fecha=%d/%d/%d", dni_cliente, id_prof, fecha_informe.dia, fecha_informe.mes, fecha_informe.anio);
-        system("pause");
         for (int x = 0; x < cant_informes; x++)
         {
             if (informes[x].dni_cliente == dni_cliente && informes[x].id_profesional == id_prof)

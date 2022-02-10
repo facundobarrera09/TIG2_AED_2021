@@ -118,7 +118,7 @@ void centro_estetica_admin(Error *&errores)
     // Iniciar sesion
     while (true)
     {
-        estado = inicio_de_sesion(sesion.usuario, COD_ADMIN, usuarios, cant_usuarios, errores);
+        estado = crear_sesion(sesion, COD_ADMIN, usuarios, cant_usuarios, errores);
 
         if (estado != 0)
         {

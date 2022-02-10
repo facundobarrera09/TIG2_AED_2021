@@ -17,9 +17,8 @@ Fecha hoy;
 int main()
 {
     Menu menu;
-    Profesional profesionales[MAX_PROF];
 	Usuario usuarios[MAX_USUARIOS];
-	int cant_usuarios, cant_prof;
+	int cant_usuarios;
 	int estado;
 	Error *error_inicio;
     hoy = obtener_fecha_actual();
@@ -35,32 +34,17 @@ int main()
 	{
 		while(true)
 		{
-			estado = inicio_de_sesion(sesion.usuario,COD_PROF,usuarios,cant_usuarios,error_inicio);
+			estado = crear_sesion(sesion,COD_PROF,usuarios,cant_usuarios,error_inicio);
 			if (estado!=0)
 			{
+                printf("\n");
 				mostrar_errores(error_inicio);
+                printf("\n");
+                system("pause");
 				continue;
 			}
 			else
-            {
-                estado = leer_profesionales(profesionales, cant_prof);
-                if (estado == 0)
-                {
-                    estado = buscar_profesional(sesion.datos_prof, profesionales, cant_prof, sesion.usuario.usuario);
-                    if (estado != 0)
-                    {
-                        printf("No se encontro un profesional asociado al usuario");
-                        return 1;
-                    }
-                }
-                else
-                {
-                    printf("No se pudo leer archivo de profesionales");
-                    return 1;
-                }
-                
 			    break;
-            }
 		}
 	}
 	
