@@ -118,7 +118,7 @@ void centro_estetica_asist(Error *&errores)
     while (ejecutar)
     {
         mostrar_menu(menu);
-        printf("\n\n> ");
+        printf("\n> ");
         scanf("%d", &opcion);
 
         printf("\n");
