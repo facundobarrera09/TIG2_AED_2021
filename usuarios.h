@@ -420,7 +420,7 @@ int crear_profesional(Profesional profesionales[MAX_PROF], int &cantidad, const 
             prof.dni = atoi(buffer);
             obtener_cadena(menu.valores, 4, buffer);
             strcpy(prof.telefono, buffer);
-
+            
             ejecutar = false;
         }
         else
@@ -680,9 +680,11 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         }
         else if (strcmp(entrada, "OK") == 0)
         {
+            strcpy(buffer, "");
             obtener_cadena(menu.valores, 0, buffer);
             strcpy(usuario.usuario, buffer);
 
+            strcpy(buffer, "");
             obtener_cadena(menu.valores, 1, buffer);
             strcpy(usuario.contrasena, buffer);
 
@@ -695,7 +697,7 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
                 usuario.tipo = COD_ASIST;
             else
                 usuario.tipo = 0;
-            
+
             ejecutar = false;
         }
         else
@@ -708,8 +710,8 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
 
             if (tipo == 0)
             {
-                if (seleccion < 2) seleccion++;
-                else seleccion = 0;
+                if (seleccion == 2) seleccion = 0;
+                else seleccion++;
             }
             else
             {
@@ -763,16 +765,17 @@ int crear_usuario(Usuario usuarios[MAX_USUARIOS], int &cantidad, int tipo, Error
         //e = errores;
         return 1;
     }
-    
+
     // Si el tipo de usuario es PROFESIONAL
     if (usuario.tipo == COD_PROF)
     {
         // Crear el profesional
-        if (crear_profesional(profesionales, cant_prof, usuario.usuario, errores) != 0)
-        {
-            insertar_error(errores, C_USUARIO_PROF);
-            return 1;
-        }
+        if (leer_profesionales(profesionales, cant_prof) != 2)
+            if (crear_profesional(profesionales, cant_prof, usuario.usuario, errores) != 0)
+            {
+                insertar_error(errores, C_USUARIO_PROF);
+                return 1;
+            }
     }
 
     // Crear usuario
@@ -1130,6 +1133,8 @@ bool es_dni_unico(Cliente clientes[MAX_CLIENTES], int cantidad, int dni)
 bool es_dni_unico(Profesional profesionales[MAX_CLIENTES], int cantidad, int dni)
 {
     bool unico = true;
+
+    if (cantidad == 0) return unico;
 
     for (int x = 0; x < cantidad; x++)
         if (profesionales[x].dni == dni)

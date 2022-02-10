@@ -57,7 +57,7 @@ void centro_estetica_admin(Error *&errores)
     errores = NULL;
     Error *errores_creacion = NULL;
     bool ejecutar = true;
-    int estado, opcion;
+    int estado, opcion, opcion2;
 
     // Verificar si existen usuarios
     while (true)
@@ -152,7 +152,7 @@ void centro_estetica_admin(Error *&errores)
     while (ejecutar)
     {
         mostrar_menu(menu);
-        printf("\n\n> ");
+        printf("\n> ");
         scanf("%d", &opcion);
 
         printf("\n");
@@ -170,10 +170,20 @@ void centro_estetica_admin(Error *&errores)
                     if (estado == 1)
                         mostrar_errores(errores_creacion);
                     printf("\n");
-                    system("pause");
+                    
+                    printf("Desea intentar de nuevo? [s/n]: ");
+                    _flushall();
+                    opcion = getchar();
+                    if (opcion == 's' || opcion == 'S')
+                        continue;
+                    else
+                        break;
                 }
                 else
+                {
+                    printf("\nUsuario creado con exito\n");
                     break;
+                }
                 
                 mostrar_menu(menu);
                 printf("\nUsuario creado con exito\n");

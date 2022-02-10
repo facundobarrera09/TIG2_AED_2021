@@ -42,14 +42,14 @@ struct Fecha
 
 struct Usuario
 {
-    char usuario[10];
-    char contrasena[32];
+    char usuario[11];
+    char contrasena[33];
     int tipo;
 };
 
 struct Profesional
 {
-    char usuario[10];
+    char usuario[11];
     char nombre[60];
     int id_profesional;
     int dni;

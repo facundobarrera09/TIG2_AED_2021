@@ -91,13 +91,14 @@ int main()
 
 void test0()
 {
-    Usuario usuarios[MAX_USUARIOS], usuario;
+    Sesion sesion;
+    Usuario usuarios[MAX_USUARIOS];
     Error *errores;
     int cantidad = 3, tipo = 1, estado;
 
     if (leer_usuarios(usuarios, cantidad) == 0)
     {
-        estado = inicio_de_sesion(usuario, tipo, usuarios, cantidad, errores);
+        estado = crear_sesion(sesion, tipo, usuarios, cantidad, errores);
 
         printf("estado=%d\n", estado);
         mostrar_errores(errores);
@@ -318,7 +319,7 @@ void test8()
 
     if (leer_profesionales(profesionales, cantidad) != 2)
     {
-        estado = crear_profesional(profesionales, cantidad, errores);
+        estado = crear_profesional(profesionales, cantidad, "luciaBA", errores);
         printf("\nestado=%d\n\n", estado);
 
         if (estado != 0)
